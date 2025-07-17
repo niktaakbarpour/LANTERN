@@ -177,6 +177,9 @@ def fix_uts(uts):
 def process(args):
     sample, execeval = args
     src_uid = sample["source_data"]["src_uid"]
+    print(f"\n[⚠️  Missing 'choices'] src_uid = {src_uid}")
+    print("Full oai_response:")
+    print(json.dumps(sample.get("oai_response"), indent=2))
     unit_tests = json.loads(sample["source_data"]["hidden_unit_tests"])
     compiler = LANG_CLUSTER_TO_LANG_COMPILER[sample["source_data"]["lang_cluster"]]
     sample["unit_test_results"] = []
@@ -211,7 +214,7 @@ LANG_CLUSTER_TO_LANG_COMPILER = {
 }
 
 
-def run(base_dir, it, mode):
+def run(base_dir, it, mode, llm=None):
     # path = f'{os.environ["DUMP_FOLDER"]}/oai/apr_n_sample_20/'
     
     if it:

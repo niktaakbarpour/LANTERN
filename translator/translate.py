@@ -2,8 +2,8 @@ import os
 import time
 import tqdm
 import json
-import openai
-import requests
+# import openai
+# import requests
 # from openai import OpenAI
 import argparse
 import datasets
@@ -65,92 +65,46 @@ SHORT_LANG_MAP = {
 LANGS = sorted(set([v for k, v in SHORT_LANG_MAP.items()]))
 
 
-openai.api_key = os.environ["API_KEY"]
-openai.api_base = os.environ["API_BASE"]
-model_name = os.environ["MODEL_NAME"]
+# openai.api_key = os.environ["API_KEY"]
+# openai.api_base = os.environ["API_BASE"]
+# model_name = os.environ["MODEL_NAME"]
 
-
-
-def gen(prompt, temperature, nsample):
+def gen(prompt_text, temperature, nsample, llm):
     cnt = 0
-    while True:
-        if cnt == 999:
-            return None
+    while cnt < 999:
         try:
-            c = openai.ChatCompletion.create(
-                model=model_name,
-                messages=[
-                    {"role": "user", "content": f"{prompt}"},
-                ],
-                temperature=temperature,
-                top_p=1,
-                n=nsample,
+            messages = [{"role": "user", "content": prompt_text}]
+            tokens = llm.prepare_prompt(messages)
+            outputs = llm.model.generate(
+                tokens,
+                max_new_tokens=512,
                 do_sample=True,
-                frequency_penalty=0.0,
-                presence_penalty=0.0,
+                temperature=temperature,
+                top_p=1.0
             )
-            print('get openai response......')
+            print("get deepseek response......")
             break
         except Exception as e:
             cnt += 1
             time.sleep(5)
-            print(f"{e}")
-    c["prompt"] = prompt
-    return c
+            print(f"Gen Error: {e}")
+    else:
+        return None
 
-def gen_request(prompt, temperature, nsample):
-    url = "<url>"
+    raw = llm.tokenizer.decode(outputs[0], skip_special_tokens=True)
+    content = llm.extract_output(raw)
+    return {"choices": [{"message": {"content": content}}], "prompt": prompt_text}
 
-    payload = {
-        "model": "<model_name>",
-        "messages": [
-            {
-                "role": "user",
-                "content": f"{prompt}"
-            }
-        ],
-        "max_tokens": 4096,
-        "stop": ["null"],
-        "temperature": temperature,
-        "top_p": 1,
-        "do_sample": True,
-        "frequency_penalty": 0.0,
-        "presence_penalty": 0.0,
-        "n": nsample,
-        "response_format": {"type": "text"},
-    }
-    headers = {
-        "Authorization": "Bearer <header key>",
-        "Content-Type": "application/json"
-    }
-
-    cnt = 0
-
-    while True:
-        if cnt == 999:
-            return None
-        try:
-            response = requests.request("POST", url, json=payload, headers=headers)
-            res = json.loads(response.text)
-            if 'data' in res.keys() and res['data'] is None:
-                print(res['message'])
-                time.sleep(5)
-            else:
-                print('get request response......')
-                break
-        except Exception as e:
-            cnt += 1
-            time.sleep(5)
-            print(f"Gen Error:{e}")
-
-    
-    res['prompt'] = prompt
-
-    return res
+# Alias preserving interface
+def gen_request(prompt_text, temperature, nsample, llm):
+    res = gen(prompt_text, temperature, nsample, llm)
+    if res is None:
+        return None
+    return {"data": [{"content": res['choices'][0]['message']['content'], "type": "text"}], "prompt": prompt_text}
 
 
 
-def process_prompt(dt, temperature, trans_dir, target_lang, index, r_mode, dry_run=0):
+def process_prompt(dt, temperature, trans_dir, target_lang, index, r_mode, llm, dry_run=0):
     dt["source_lang"] = dt["lang_cluster"]
     dt["target_lang"] = target_lang
     language = f"{dt['source_lang']}--{dt['target_lang']}"
@@ -164,79 +118,57 @@ def process_prompt(dt, temperature, trans_dir, target_lang, index, r_mode, dry_r
         if dry_run:
             open(file_path, "w").write(f"{json.dumps(lm_io[0], indent=4)}")
         else:
-            out = gen(lm_io[0], temperature, 1)
+            out = gen(lm_io[0], temperature, 1, llm)
             # out = gen_request(lm_io[0], temperature, 1)
             export_data = {"oai_response": out, "source_data": dt}
             open(file_path, "w").write(f"{json.dumps(export_data, indent=4)}")
 
 
-def run(base_dir, num_proc, dry_run, it, mode, r_mode, dataset_path, config_path=""):
+def run(base_dir, num_proc, dry_run, it, mode, r_mode, dataset_path, llm, config_path=""):
     iter_dir = os.path.join(base_dir, f"iter_{it}")
     unfixed_file = os.path.join(iter_dir, "unfixed.json")
     if os.path.exists(unfixed_file):
         with open(unfixed_file, 'r') as f:
-            data = json.load(f)
-            unfixed_ids = list(data.keys())
+            unfixed_ids = list(json.load(f).keys())
     else:
-        raise Exception("The intermediate file unfixed.json does not exist!")
-    
-    trans_dir = os.path.join(iter_dir, f"trans")
-    if not os.path.exists(trans_dir):
-        os.makedirs(trans_dir, exist_ok=True)
+        raise FileNotFoundError("unfixed.json not found")
 
-    # for chatrepair
+    trans_dir = os.path.join(iter_dir, "trans")
+    os.makedirs(trans_dir, exist_ok=True)
+
+    # copy mode
     if mode == "copy":
-        print('copying...')
         cp_last_incorrect_samples(base_dir, it, unfixed_ids)
         return
 
+    # decision-based translation
     decision = TransDecision(base_dir, it, config_path)
-
     if mode in ["reasoning", "nohist", "nocot"]:
         build_target_db(base_dir, it)
 
+    apr_dataset = datasets_import.load_from_disk(dataset_path)
+    apr_dataset = apr_dataset.map(lambda x: {"lang_cluster": "Ruby"})
 
-    apr_dataset = datasets.load_from_disk(dataset_path)
-
-    
+    first_entry = apr_dataset.select(range(2))
     if r_mode == "ultimate2":
         unfixed_dataset = get_last_incorrect_samples(base_dir, it, unfixed_ids)
     else:
-        unfixed_dataset = apr_dataset.filter(lambda x: x['bug_code_uid'] in unfixed_ids)
-    # temperature_list = np.linspace(0, 2, args.nsample)
-    temperature_list = [0.3157894736842105]
-    with concurrent.futures.ProcessPoolExecutor(
-        max_workers=int(num_proc)
-    ) as executor:
-        futures = []
-        for idx, dt in tqdm.tqdm(
-            enumerate(unfixed_dataset),
-            total=len(unfixed_dataset),
-            desc=f"Preparing samples lang",
-        ):
-            target_lang = decision.decide_lang(dt, it, mode)
-            for temperature in temperature_list:
-                future = executor.submit(
-                    process_prompt,
-                    dt,
-                    temperature,
-                    trans_dir,
-                    target_lang,
-                    idx,
-                    r_mode,
-                    dry_run,
-                )
-                futures.append(future)
+        unfixed_dataset = first_entry.filter(lambda x: x['bug_code_uid'] in unfixed_ids)
 
-        for future in tqdm.tqdm(
-            concurrent.futures.as_completed(futures),
-            total=len(futures),
-            desc=f"Calling OpenAI API",
-        ):
-            try:
-                future.result()
-            except Exception as e:
-                print(f"Error occurred: {e}")
+    temperature_list = [0.3157894736842105]
+    with concurrent.futures.ProcessPoolExecutor(max_workers=int(num_proc)) as executor:
+        futures = []
+        for idx, dt in enumerate(tqdm.tqdm(unfixed_dataset, desc="Preparing samples lang")):
+            target_lang = decision.decide_lang(dt, it, mode)
+            for temp in temperature_list:
+                futures.append(
+                    executor.submit(
+                        process_prompt,
+                        dt, temp, trans_dir, target_lang, idx, r_mode, llm, dry_run
+                    )
+                )
+        for _ in tqdm.tqdm(concurrent.futures.as_completed(futures), total=len(futures), desc="Translating"):
+            pass
 
 
 if __name__ == "__main__":

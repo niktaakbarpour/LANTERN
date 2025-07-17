@@ -6,8 +6,8 @@ sys.path.append(project_root)
 import time
 import tqdm
 import json
-import openai
-import requests
+# import openai
+# import requests
 # from openai import OpenAI
 import argparse
 import datasets
@@ -17,7 +17,7 @@ from promptsource.templates import Template
 from middleware.repair_retrieval import add_hist, construct_conversation
 from middleware.history import load_last_repair, load_last_tests, get_last_incorrect_samples_cr
 from middleware import prompt
-
+from middleware.deepseek_local import DeepSeekCoder
 
 SHORT_LANG_MAP = {
     "GNU C++": "C++",
@@ -68,119 +68,72 @@ SHORT_LANG_MAP = {
 LANGS = sorted(set([v for k, v in SHORT_LANG_MAP.items()]))
 
 
-openai.api_key = os.environ["API_KEY"]
-openai.api_base = os.environ["API_BASE"]
-model_name = os.environ["MODEL_NAME"]
+# openai.api_key = os.environ["API_KEY"]
+# openai.api_base = os.environ["API_BASE"]
+# model_name = os.environ["MODEL_NAME"]
 
 
-def gen(prompt_text, temperature, nsample, mode, msg=None):
+def gen(prompt_text, temperature, nsample, llm):
+    """
+    Generate a response using the local DeepSeekCoder model.
+    Returns a dict matching the original structure: {"data":[{"content":...,"type":"text"}],"prompt":...}
+    """
     cnt = 0
-    messages = [
-                {"role": "system", "content": f"{prompt.PROMPTS['system']}"},
-                {"role": "user", "content": f"{prompt_text}"},
-            ]
-    while True:
-        if cnt == 999:
-            return None
+    while cnt < 999:
         try:
-            c = openai.ChatCompletion.create(
-                model=model_name,
-                messages=messages,
-                temperature=temperature,
-                top_p=1,
-                n=nsample,
+            messages = [
+                {"role": "system", "content": prompt.PROMPTS["system"]},
+                {"role": "user",   "content": prompt_text},
+            ]
+            # Prepare tokens and generate
+            input_tokens = llm.prepare_prompt(messages)
+            output_tokens = llm.model.generate(
+                input_tokens,
+                max_new_tokens=512,
                 do_sample=True,
-                frequency_penalty=0.0,
-                presence_penalty=0.0,
+                temperature=temperature,
+                top_p=1.0,
             )
+            print("get deepseek response......")
             break
         except Exception as e:
             cnt += 1
             time.sleep(5)
-            print(f"{e}")
-    c["prompt"] = prompt_text
-    return c
+            print(f"Gen Error: {e}")
+    else:
+        return None
 
-def gen_request(prompt_text, temperature, nsample, mode, msg=None):
-    url = "<url>"
-    messages = [
-                {"role": "system", "content": f"{prompt.PROMPTS['system']}"},
-                {"role": "user", "content": f"{prompt_text}"},
-            ]
+    text = llm.tokenizer.decode(output_tokens[0], skip_special_tokens=True)
+    content = llm.extract_output(text)
+    return {"data": [{"content": content, "type": "text"}], "prompt": prompt_text}
 
-    payload = {
-        "model": "<model_name>",
-        "messages": messages,
-        "max_tokens": 4096,
-        "stop": ["null"],
-        "temperature": temperature,
-        "top_p": 1,
-        "do_sample": True,
-        "frequency_penalty": 0.0,
-        "presence_penalty": 0.0,
-        "n": nsample,
-        "response_format": {"type": "text"},
-    }
-    headers = {
-        "Authorization": "Bearer <header key>",
-        "Content-Type": "application/json"
-    }
 
-    cnt = 0
-
-    while True:
-        if cnt == 999:
-            return None
-        try:
-            response = requests.request("POST", url, json=payload, headers=headers)
-            res = json.loads(response.text)
-            if 'data' in res.keys() and res['data'] is None:
-                print(res['message'])
-                time.sleep(5)
-            else:
-                print('get request response......')
-                break
-        except Exception as e:
-            cnt += 1
-            time.sleep(5)
-            print(f"{e}")
-
-    
-    res["prompt"] = prompt_text
-
-    return res
+def gen_request(prompt_text, temperature, nsample, llm):
+    """
+    Alias of gen(), preserving interface.
+    """
+    return gen(prompt_text, temperature, nsample, llm)
 
 
 
 
-def process_prompt(dt, temperature, nsample, output_dir, index, attempt, mode, msg=None, dry_run=0):
+def process_prompt(dt, temperature, nsample, output_dir, index, attempt, llm, dry_run=0):
     language = dt["lang_cluster"]
-    if mode == "ultimate2":
-        uid = dt["bug_code_uid"]
-        file_path = os.path.join(output_dir, f"{index}_{uid}_{temperature}_{language}.json")
-    else:
-        file_path = os.path.join(output_dir, f"{index}_{attempt}_{temperature}_{language}.json")
-    if mode == "ultimate":
-        s_prompt = f"You are an expert program repair system. You should carefully analyze problem descriptions and input/output specifications. You should reflect on previous failed repair attempts (the input, expected output, actual result and execution outcome of the test). You should make the analysis step by step. The output should be in json format."
-    elif mode == "ultimate2":
-        s_prompt = "You are an expert program repair system. You should carefully analyze problem descriptions and input/output specifications. The buggy code that cannot be fixed will be translated to other programming languages for you to fix at each iteration. You should reflect on previous failed tests and provide the fixed code with the experience from historical failures."
-        if msg[0]["role"] != "system":
-            system_msg = {"role": "system", "content": s_prompt}
-            msg.insert(0, system_msg)
-    else:
-        s_prompt = None
+    file_path = os.path.join(output_dir, f"{index}_{attempt}_{temperature}_{language}.json")
     if not os.path.exists(file_path):
-        # dt["prob_desc_sample_inputs"] = json.loads(dt["prob_desc_sample_inputs"])
-        # dt["prob_desc_sample_outputs"] = json.loads(dt["prob_desc_sample_outputs"])
+        dt["prob_desc_sample_inputs"]  = json.loads(dt["prob_desc_sample_inputs"])
+        dt["prob_desc_sample_outputs"] = json.loads(dt["prob_desc_sample_outputs"])
         lm_io = prompt.apr(dt)
-        assert len(lm_io) == 2, f"{json.dumps(lm_io, indent=4)}"
+        assert isinstance(lm_io, str) or (isinstance(lm_io, list) and len(lm_io) >= 1)
         if dry_run:
-            open(file_path, "w").write(f"{json.dumps(lm_io[0], indent=4)}")
+            with open(file_path, 'w') as f:
+                f.write(json.dumps(lm_io, indent=4))
         else:
-            out = gen(lm_io[0], temperature, nsample, mode, msg)
-            # out = gen_request(s_prompt, lm_io[0], temperature, nsample, mode, msg)
+            out = gen(lm_io, temperature, nsample, llm)
             export_data = {"oai_response": out, "source_data": dt}
-            open(file_path, "w").write(f"{json.dumps(export_data, indent=4)}")
+            with open(file_path, 'w') as f:
+                f.write(json.dumps(export_data, indent=4))
+
 
 def sanitize_code(code):
     prefixes = ["csharp", "cpp", "go", "javascript", "kotlin", "php", "python", "ruby", "rust", "c", "java"]
@@ -222,75 +175,29 @@ def load_json_files(dir):
     return json_files
 
 
-def run(base_dir, num_proc, dry_run, nsample, nattempt, it, mode, temperature, dataset_path):
-    
-    iter_dir = os.path.join(base_dir, f"iter_{it}")
-    re_gen_dir = os.path.join(iter_dir, f"repair")
-    if not os.path.exists(re_gen_dir):
-        os.makedirs(re_gen_dir, exist_ok=True)
+def run(base_dir, num_proc, dry_run, nsample, nattempt, temperature, dataset_path, llm):
+    output_dir = os.path.join(base_dir, "repair")
+    os.makedirs(output_dir, exist_ok=True)
 
-    unfixed_path = os.path.join(iter_dir, "unfixed.json")
-    with open(unfixed_path, "r") as uf:
-        unfixed_ids = json.load(uf).keys()
+    apr_dataset = datasets.load_from_disk(dataset_path)
+    apr_dataset = apr_dataset.map(lambda x: {"lang_cluster": "Ruby"})
 
-    if mode not in ["cmp"]:
-        transed_dir = os.path.join(iter_dir, "trans")
-        transed_dataset = load_json_files(transed_dir)
-    elif mode == 'cmp':
-        apr_dataset = datasets.load_from_disk(dataset_path)
-        transed_dataset = apr_dataset.filter(lambda x: x["bug_code_uid"] in unfixed_ids)
-    # elif mode == 'ultimate2':
-    #     transed_dataset = get_last_incorrect_samples_cr(base_dir, it, unfixed_ids)
-
-    if mode == "ultimate2":
-        last_repair = load_last_repair(base_dir, it)
-        last_tests = load_last_tests(base_dir, it)
-
-    # temperature_list = np.linspace(0, 2, args.nsample)
+    first_entry = apr_dataset.select(range(2))
     temperature_list = [temperature]
-    with concurrent.futures.ProcessPoolExecutor(
-        max_workers=int(num_proc)
-    ) as executor:
+    with concurrent.futures.ProcessPoolExecutor(max_workers=int(num_proc)) as executor:
         futures = []
-        for idx, dt in tqdm.tqdm(
-            enumerate(transed_dataset),
-            total=len(transed_dataset),
-            desc=f"Preparing samples lang",
-        ):
-            if mode == "ultimate":
-                dt = add_hist(base_dir, dt, it)
-            msg = None
-            if mode == "ultimate2":
-                msg = construct_conversation(base_dir, it, dt, last_repair, last_tests)
-                # with open("/root/TR/test/msg.txt", "a") as msg_file:
-                #     msg_file.write(str(msg))
-                nattempt = 1
+        for idx, dt in enumerate(first_entry.to_list()):
             for attempt in range(nattempt):
-                for temperature in temperature_list:
-                    future = executor.submit(
-                        process_prompt,
-                        dt,
-                        temperature,
-                        nsample,
-                        re_gen_dir,
-                        idx,
-                        attempt,
-                        mode,
-                        msg,
-                        dry_run,
+                for temp in temperature_list:
+                    futures.append(
+                        executor.submit(
+                            process_prompt,
+                            dt, temp, nsample,
+                            output_dir, idx, attempt, llm, dry_run
+                        )
                     )
-                    futures.append(future)
-
-        for future in tqdm.tqdm(
-            concurrent.futures.as_completed(futures),
-            total=len(futures),
-            desc=f"Calling OpenAI API",
-        ):
-            try:
-                future.result()
-            except Exception as e:
-                print(f"Error occurred: {e}")
-
+        for _ in tqdm.tqdm(concurrent.futures.as_completed(futures), total=len(futures), desc="Generating repairs"):
+            pass
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

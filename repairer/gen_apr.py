@@ -6,15 +6,17 @@ sys.path.append(project_root)
 import time
 import tqdm
 import json
-import openai
+# import openai
 # from openai import OpenAI
 import argparse
 import datasets
 import concurrent
 import numpy as np
 from promptsource.templates import Template
-import requests
+from middleware.deepseek_local import Message
+# import requests
 from middleware import prompt
+from datasets import Dataset
 
 SHORT_LANG_MAP = {
     "GNU C++": "C++",
@@ -65,150 +67,102 @@ SHORT_LANG_MAP = {
 LANGS = sorted(set([v for k, v in SHORT_LANG_MAP.items()]))
 
 
-openai.api_key = os.environ["API_KEY"]
-openai.api_base = os.environ["API_BASE"]
-model_name = os.environ["MODEL_NAME"]
+# openai.api_key = os.environ["API_KEY"]
+# openai.api_base = os.environ["API_BASE"]
+# model_name = os.environ["MODEL_NAME"]
 
 
 
-def gen(prompt_text, temperature, nsample):
+def gen(prompt_text, temperature, nsample, llm):
+    """
+    Generate a response using the local DeepSeekCoder model.
+    Returns a dict matching the original structure: {"data":[{"content":...,"type":"text"}],"prompt":...}
+    """
     cnt = 0
-    while True:
-        if cnt == 999:
-            return None
+    while cnt < 999:
         try:
-            c = openai.ChatCompletion.create(
-                model=model_name,
-                messages=[
-                    {"role": "system", "content": f"{prompt.PROMPTS['system']}"},
-                    {"role": "user", "content": f"{prompt_text}"},
-                ],
-                temperature=temperature,
-                top_p=1,
-                n=nsample,
+            messages = [
+                Message(role="system", content=prompt.PROMPTS["system"]),
+                Message(role="user", content=prompt_text),
+            ]
+            # Prepare tokens and generate
+            input_tokens = llm.prepare_prompt(messages)
+            output_tokens = llm.model.generate(
+                input_tokens,
+                max_new_tokens=512,
                 do_sample=True,
-                frequency_penalty=0.0,
-                presence_penalty=0.0,
+                temperature=temperature,
+                top_p=1.0,
             )
+            print("get deepseek response......")
             break
         except Exception as e:
             cnt += 1
             time.sleep(5)
-            print(f"{e}")
-    c["prompt"] = prompt_text
-    return c
+            print(f"Gen Error: {e}")
+    else:
+        return None
 
-def gen_request(prompt_text, temperature, nsample):
-    url = "<url>"
+    text = llm.tokenizer.decode(output_tokens[0], skip_special_tokens=True)
+    content = llm.extract_output(text)
+    return {"data": [{"content": content, "type": "text"}], "prompt": prompt_text}
 
-    payload = {
-        "model": "<model_name>",
-        "messages": [
-            {"role": "system", "content": f"{prompt.PROMPTS['system']}"},
-            {
-                "role": "user",
-                "content": f"{prompt_text}"
-            }
-        ],
-        "max_tokens": 4096,
-        "stop": ["null"],
-        "temperature": temperature,
-        "top_p": 1,
-        "do_sample": True,
-        "frequency_penalty": 0.0,
-        "presence_penalty": 0.0,
-        "n": nsample,
-        "response_format": {"type": "text"},
-    }
-    headers = {
-        "Authorization": "Bearer <header key>",
-        "Content-Type": "application/json"
-    }
-
-    cnt = 0
-
-    while True:
-        if cnt == 999:
-            return None
-        try:
-            response = requests.request("POST", url, json=payload, headers=headers)
-            res = json.loads(response.text)
-            if 'data' in res.keys() and res['data'] is None:
-                print(res['message'])
-                time.sleep(5)
-            else:
-                print('get request response......')
-                break
-        except Exception as e:
-            cnt += 1
-            time.sleep(5)
-            print(f"Gen Error:{e}")
-
-    
-    res['prompt'] = prompt_text
-
-    return res
+def gen_request(prompt_text, temperature, nsample, llm):
+    """
+    Alias of gen(), preserving interface.
+    """
+    return gen(prompt_text, temperature, nsample)
 
 
-def process_prompt(dt, temperature, nsample, output_dir, index, attempt, dry_run=0):
+def process_prompt(dt, temperature, nsample, output_dir, index, attempt, llm, dry_run=0):
     language = dt["lang_cluster"]
     file_path = os.path.join(output_dir, f"{index}_{attempt}_{temperature}_{language}.json")
-    if not os.path.exists(file_path):# temporary for codellama
-        dt["prob_desc_sample_inputs"] = json.loads(dt["prob_desc_sample_inputs"])
+    if not os.path.exists(file_path):
+        dt["prob_desc_sample_inputs"]  = json.loads(dt["prob_desc_sample_inputs"])
         dt["prob_desc_sample_outputs"] = json.loads(dt["prob_desc_sample_outputs"])
         lm_io = prompt.apr(dt)
-        assert len(lm_io) == 2, f"{json.dumps(lm_io, indent=4)}"
+        assert isinstance(lm_io, str) or (isinstance(lm_io, list) and len(lm_io) >= 1)
         if dry_run:
-            open(file_path, "w").write(f"{json.dumps(lm_io[0], indent=4)}")
+            with open(file_path, 'w') as f:
+                f.write(json.dumps(lm_io, indent=4))
         else:
-            out = gen(lm_io[0], temperature, nsample)
-            # out = gen_request(lm_io[0], temperature, nsample)
+            out = gen(lm_io, temperature, nsample, llm)
             export_data = {"oai_response": out, "source_data": dt}
-            open(file_path, "w").write(f"{json.dumps(export_data, indent=4)}")
+            with open(file_path, 'w') as f:
+                f.write(json.dumps(export_data, indent=4))
 
-
-def run(base_dir, num_proc, dry_run, nsample, nattempt, temperature, dataset_path):
-    
+def run(base_dir, num_proc, dry_run, nsample, nattempt, temperature, dataset_path, llm):
     output_dir = os.path.join(base_dir, "repair")
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir, exist_ok=True)
+    os.makedirs(output_dir, exist_ok=True)
 
     apr_dataset = datasets.load_from_disk(dataset_path)
-    # temperature_list = np.linspace(0, 2, args.nsample)
+    apr_dataset = apr_dataset.map(lambda x: {"lang_cluster": "Ruby"})
+
+    first_entry = apr_dataset.select(range(2))
+
+
+    langs = ["Ruby"]
+
+
+    print("Bypassing language filter for single-row test")
+
+    # apr_dataset = apr_dataset.filter(lambda example: example["lang_cluster"] in langs)
+
     temperature_list = [temperature]
-    with concurrent.futures.ProcessPoolExecutor(
-        max_workers=int(num_proc)
-    ) as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=int(num_proc)) as executor:
         futures = []
-        for idx, dt in tqdm.tqdm(
-            enumerate(apr_dataset),
-            total=len(apr_dataset),
-            desc=f"Preparing samples lang",
-        ):
+        for idx, dt in enumerate(first_entry.to_list()):
             for attempt in range(nattempt):
-                for temperature in temperature_list:
-                    future = executor.submit(
-                        process_prompt,
-                        dt,
-                        temperature,
-                        nsample,
-                        output_dir,
-                        idx,
-                        attempt,
-                        dry_run,
+                for temp in temperature_list:
+                    futures.append(
+                        executor.submit(
+                            process_prompt,
+                            dt, temp, nsample,
+                            output_dir, idx, attempt, llm, dry_run
+                        )
                     )
-                    futures.append(future)
-
-        for future in tqdm.tqdm(
-            concurrent.futures.as_completed(futures),
-            total=len(futures),
-            desc=f"Calling OpenAI API",
-        ):
-            try:
-                future.result()
-            except Exception as e:
-                print(f"Error occurred: {e}")
-
+        for _ in tqdm.tqdm(concurrent.futures.as_completed(futures), total=len(futures), desc="Generating repairs"):
+            pass
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

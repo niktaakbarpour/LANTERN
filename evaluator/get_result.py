@@ -82,7 +82,7 @@ def estimate_top_at_K(results, k, tk):
     return top_correct / num_sample
 
 
-def __run(base_dir, k, it, name, note):
+def __run(base_dir, k, it, name, note, llm=None):
     output_dir = os.path.join(base_dir, "cal_results")
     path = base_dir
     output_path = os.path.join(path, "eval_apr_val_execeval")
@@ -195,13 +195,13 @@ def __run(base_dir, k, it, name, note):
     for lang in langs:
         print(f" & {lang}", end="")
     print()
-    avg = 0
-    for lang in langs:
-        print(f" & {round(pass_at_k[lang]['pass@5']*100, 2)}", end="")
-        avg += pass_at_k[lang]["pass@10"] * 100
-    avg /= len(langs)
-    print(f" & {round(avg, 2)}")
-    pass_at_k['avg'] = avg
+    # avg = 0
+    # for lang in langs:
+    #     print(f" & {round(pass_at_k[lang]['pass@5']*100, 2)}", end="")
+    #     avg += pass_at_k[lang]["pass@10"] * 100
+    # avg /= len(langs)
+    # print(f" & {round(avg, 2)}")
+    # pass_at_k['avg'] = avg
 
     # preview Top@5
     # for lang in langs:
@@ -228,7 +228,7 @@ def __run(base_dir, k, it, name, note):
         json.dump(pass_at_k, final_results)
     print(f"Complete results are saved in {output_file}")
 
-def run(base_dir, k, it, name, note):
+def run(base_dir, k, it, name, note, llm=None):
     output_dir = os.path.join(base_dir, "cal_results")
     path = base_dir
     output_path = os.path.join(path, "eval_apr_val_execeval")
@@ -329,13 +329,13 @@ def run(base_dir, k, it, name, note):
     for lang in langs:
         print(f" & {lang}", end="")
     print()
-    avg = 0
-    for lang in langs:
-        print(f" & {round(pass_at_k[lang]['pass@5']*100, 2)}", end="")
-        avg += pass_at_k[lang]["pass@5"] * 100
-    avg /= len(langs)
-    print(f" & {round(avg, 2)}")
-    pass_at_k['avg'] = avg
+    # avg = 0
+    # for lang in langs:
+    #     print(f" & {round(pass_at_k[lang]['pass@5']*100, 2)}", end="")
+    #     avg += pass_at_k[lang]["pass@5"] * 100
+    # avg /= len(langs)
+    # print(f" & {round(avg, 2)}")
+    # pass_at_k['avg'] = avg
 
     now = time.gmtime()
     os.makedirs(output_dir, exist_ok=True)

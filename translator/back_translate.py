@@ -2,8 +2,8 @@ import os
 import time
 import tqdm
 import json
-import openai
-import requests
+# import openai
+# import requests
 # from openai import OpenAI
 import argparse
 import datasets
@@ -62,90 +62,49 @@ SHORT_LANG_MAP = {
 LANGS = sorted(set([v for k, v in SHORT_LANG_MAP.items()]))
 
 
-openai.api_key = os.environ["API_KEY"]
-openai.api_base = os.environ["API_BASE"]
-model_name = os.environ["MODEL_NAME"]
+# openai.api_key = os.environ["API_KEY"]
+# openai.api_base = os.environ["API_BASE"]
+# model_name = os.environ["MODEL_NAME"]
 
-
-def gen(prompt, temperature, nsample):
+def gen(prompt_text, temperature, nsample, llm):
     cnt = 0
-    while True:
-        if cnt == 999:
-            return None
+    while cnt < 999:
         try:
-            c = openai.ChatCompletion.create(
-                model=model_name,
-                messages=[
-                    {"role": "user", "content": f"{prompt}"},
-                ],
-                temperature=temperature,
-                top_p=1,
-                n=nsample,
+            messages = [
+                {"role": "user", "content": prompt_text}
+            ]
+            tokens = llm.prepare_prompt(messages)
+            outputs = llm.model.generate(
+                tokens,
+                max_new_tokens=512,
                 do_sample=True,
-                frequency_penalty=0.0,
-                presence_penalty=0.0,
+                temperature=temperature,
+                top_p=1.0,
             )
-            print('get openai response......')
+            print("get deepseek response......")
             break
         except Exception as e:
             cnt += 1
             time.sleep(5)
-            print(f"{e}")
-    c["prompt"] = prompt
-    return c
+            print(f"Gen Error: {e}")
+    else:
+        return None
 
-def gen_request(prompt, temperature, nsample):
-    url = "<url>"
+    text = llm.tokenizer.decode(outputs[0], skip_special_tokens=True)
+    content = llm.extract_output(text)
+    # mimic OpenAI structure
+    return {"choices": [{"message": {"content": content}}], "prompt": prompt_text}
 
-    payload = {
-        "model": "<model_name>",
-        "messages": [
-            {
-                "role": "user",
-                "content": f"{prompt}"
-            }
-        ],
-        "max_tokens": 4096,
-        "stop": ["null"],
-        "temperature": temperature,
-        "top_p": 1,
-        "do_sample": True,
-        "frequency_penalty": 0.0,
-        "presence_penalty": 0.0,
-        "n": nsample,
-        "response_format": {"type": "text"},
-    }
-    headers = {
-        "Authorization": "Bearer <header key>",
-        "Content-Type": "application/json"
-    }
-
-    cnt = 0
-
-    while True:
-        if cnt == 999:
-            return None
-        try:
-            response = requests.request("POST", url, json=payload, headers=headers)
-            res = json.loads(response.text)
-            if 'data' in res.keys() and res['data'] is None:
-                print(res['message'])
-                time.sleep(5)
-            else:
-                print('get request response......')
-                break
-        except Exception as e:
-            cnt += 1
-            time.sleep(5)
-            print(f"{e}")
-
-    
-    res['prompt'] = prompt
-
-    return res
+def gen_request(prompt_text, temperature, nsample, llm):
+    # alias to gen, returns data/type format
+    res = gen(prompt_text, temperature, nsample, llm)
+    if res is None:
+        return None
+    return {"data": [{"content": res['choices'][0]['message']['content'], "type": "text"}],
+            "prompt": prompt_text}
 
 
-def process_prompt(dt, temperature, back_trans_dir, dry_run=0):
+def process_prompt(dt, temperature, back_trans_dir, llm, dry_run=0):
     file_name = dt["transed_file"]
     file_path = os.path.join(back_trans_dir, f"{file_name}.json")
     if not os.path.exists(file_path):
@@ -154,7 +113,7 @@ def process_prompt(dt, temperature, back_trans_dir, dry_run=0):
         if dry_run:
             open(file_path, "w").write(f"{json.dumps(lm_io[0], indent=4)}")
         else:
-            out = gen(lm_io[0], temperature, 1)
+            out = gen(lm_io[0], temperature, 1, llm)
             # out = gen_request(lm_io[0], temperature, 1)
             export_data = {"oai_response": out, "source_data": dt}
             open(file_path, "w").write(f"{json.dumps(export_data, indent=4)}")
@@ -202,61 +161,29 @@ def load_json_files(dir):
     return json_files
 
 
-def run(base_dir, num_proc, dry_run, it, mode):
+def run(base_dir, num_proc, dry_run, it, mode, llm):
     iter_dir = os.path.join(base_dir, f"iter_{it}")
-    back_trans_dir = os.path.join(iter_dir, f"back_trans")
-    if not os.path.exists(back_trans_dir):
-        os.makedirs(back_trans_dir, exist_ok=True)
-    # for chatrepair
+    back_trans_dir = os.path.join(iter_dir, "back_trans")
+    os.makedirs(back_trans_dir, exist_ok=True)
+
+    # For ultimate2 mode: just copy repair to back_trans
     if mode == 'ultimate2':
-        print('copying...')
-        source_dir = f"{base_dir}/iter_{it}/repair"
-        destination_dir = f"{base_dir}/iter_{it}/back_trans/"
-
-        # Iterate over all files in the source directory
-        for file_name in os.listdir(source_dir):
-            full_file_name = os.path.join(source_dir, file_name)
-            # Check if it's a file (not a directory)
-            if os.path.isfile(full_file_name):
-                # Copy the file to the destination directory
-                shutil.copy(full_file_name, destination_dir)
+        src = os.path.join(iter_dir, 'repair')
+        for f in os.listdir(src):
+            shutil.copy(os.path.join(src, f), back_trans_dir)
         return
-    
 
+    # Load trans-repair outputs
+    transed = load_json_files(os.path.join(iter_dir, 'repair'))
+    temps = [0.3157894736842105]
 
-    trans_repaired_dir = os.path.join(iter_dir, "repair")
-    trans_repaired_dataset = load_json_files(trans_repaired_dir)
-
-    # temperature_list = np.linspace(0, 2, args.nsample)
-    temperature_list = [0.3157894736842105]
-    with concurrent.futures.ProcessPoolExecutor(
-        max_workers=int(num_proc)
-    ) as executor:
+    with concurrent.futures.ProcessPoolExecutor(max_workers=int(num_proc)) as executor:
         futures = []
-        for idx, dt in tqdm.tqdm(
-            enumerate(trans_repaired_dataset),
-            total=len(trans_repaired_dataset),
-            desc=f"Preparing samples lang",
-        ):
-            for temperature in temperature_list:
-                future = executor.submit(
-                    process_prompt,
-                    dt,
-                    temperature,
-                    back_trans_dir,
-                    dry_run,
-                )
-                futures.append(future)
-
-        for future in tqdm.tqdm(
-            concurrent.futures.as_completed(futures),
-            total=len(futures),
-            desc=f"Calling OpenAI API",
-        ):
-            try:
-                future.result()
-            except Exception as e:
-                print(f"Error occurred: {e}")
+        for dt in transed:
+            for temp in temps:
+                futures.append(executor.submit(process_prompt, dt, temp, back_trans_dir, llm, dry_run))
+        for _ in tqdm.tqdm(concurrent.futures.as_completed(futures), total=len(futures), desc="Back-translating"):
+            pass
 
 
 if __name__ == "__main__":

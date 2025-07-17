@@ -46,7 +46,7 @@ def save_unfixed(unfixed, output_dir):
         json.dump(unfixed, f)
 
 
-def run(base_dir, it, unfixed_k):
+def run(base_dir, it, unfixed_k, llm=None):
     if it < 1:
         raise Exception("The iteration number cannot be less than 1!")
 
