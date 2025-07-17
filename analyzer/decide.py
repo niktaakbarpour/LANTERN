@@ -6,8 +6,8 @@ sys.path.append(project_root)
 import time
 import tqdm
 import json
-import openai
-import requests
+# import openai
+# import requests
 # from openai import OpenAI
 import argparse
 import datasets
@@ -67,119 +67,125 @@ SHORT_LANG_MAP = {
 LANGS = sorted(set([v for k, v in SHORT_LANG_MAP.items()]))
 
 
-openai.api_key = os.environ["API_KEY"]
-openai.api_base = os.environ["API_BASE"]
-model_name = os.environ["MODEL_NAME"]
+# openai.api_key = os.environ["API_KEY"]
+# openai.api_base = os.environ["API_BASE"]
+# model_name = os.environ["MODEL_NAME"]
 
 
+import time
 
-def gen(prompt_text, temperature, nsample):
+
+def gen(prompt_text, temperature, nsample, llm):
     cnt = 0
     while True:
         if cnt == 999:
             return None
         try:
-            c = openai.ChatCompletion.create(
-                model=model_name,
-                messages=[
-                    {"role": "system", "content": f"{prompt.PROMPTS['system']}"},
-                    {"role": "user", "content": f"{prompt_text}"},
-                ],
-                temperature=temperature,
-                top_p=1,
-                n=nsample,
+            messages = [
+                {"role": "system", "content": prompt.PROMPTS["system"]},
+                {"role": "user", "content": prompt_text},
+            ]
+
+            # Prepare prompt
+            prompt_tokens = llm.prepare_prompt(messages)
+
+            # Generate output
+            output_tokens = llm.model.generate(
+                prompt_tokens,
+                max_new_tokens=512,
                 do_sample=True,
-                frequency_penalty=0.0,
-                presence_penalty=0.0,
+                temperature=temperature,
+                top_p=1.0,
             )
-            print('get openai response......')
+
+            print("get deepseek response......")
+            break
+
+        except Exception as e:
+            cnt += 1
+            time.sleep(5)
+            print(f"{e}")
+
+    output_text = llm.tokenizer.decode(output_tokens[0], skip_special_tokens=True)
+    message = llm.extract_output(output_text)
+
+    # ✅ Return format that matches original expectations
+    return {
+        "data": [
+            {
+                "content": message,
+                "type": "text"
+            }
+        ],
+        "prompt": prompt_text
+    }
+
+
+def gen_request(prompt_text, temperature, nsample, llm):
+    cnt = 0
+    while True:
+        if cnt == 999:
+            return None
+        try:
+            messages = [
+                {"role": "system", "content": prompt.PROMPTS["system"]},
+                {"role": "user",   "content": prompt_text},
+            ]
+            prompt_tokens = llm.prepare_prompt(messages)
+            output_tokens = llm.model.generate(
+                prompt_tokens,
+                max_new_tokens=4096,
+                do_sample=True,
+                temperature=temperature,
+                top_p=1.0,
+            )
+            print("get deepseek response......")
             break
         except Exception as e:
             cnt += 1
             time.sleep(5)
             print(f"{e}")
-    c["prompt"] = prompt_text
-    return c
 
-def gen_request(prompt_text, temperature, nsample):
-    url = "<url>"
+    output_text = llm.tokenizer.decode(output_tokens[0], skip_special_tokens=True)
+    message = llm.extract_output(output_text)
 
-    payload = {
-        "model": "<model_name>",
-        "messages": [
-            {"role": "system", "content": f"{prompt.PROMPTS['system']}"},
-            {
-                "role": "user",
-                "content": f"{prompt_text}"
-            }
+    return {
+        "data": [
+            {"content": message, "type": "text"}
         ],
-        "max_tokens": 4096,
-        "stop": ["null"],
-        "temperature": temperature,
-        "top_p": 1,
-        "do_sample": True,
-        "frequency_penalty": 0.0,
-        "presence_penalty": 0.0,
-        "n": nsample,
-        "response_format": {"type": "text"},
-    }
-    headers = {
-        "Authorization": "Bearer <header key>",
-        "Content-Type": "application/json"
+        "prompt": prompt_text
     }
 
-    cnt = 0
-
-    while True:
-        if cnt == 999:
-            return None
-        try:
-            response = requests.request("POST", url, json=payload, headers=headers)
-            res = json.loads(response.text)
-            if 'data' in res.keys() and res['data'] is None:
-                print(res['message'])
-                time.sleep(5)
-            else:
-                print('get request response......')
-                break
-        except Exception as e:
-            cnt += 1
-            time.sleep(5)
-            print(f"{e}")
-
-    
-    res['prompt'] = prompt_text
-
-    return res
 
 
 
-def process_prompt(dt, bug_retrieval, temperature, mode, dec_dir, index, dry_run=0):
+def process_prompt(dt, bug_retrieval, temperature, mode, dec_dir, index, llm, dry_run=0):
     file_path = os.path.join(dec_dir, f"{index}_{temperature}_{dt['lang_cluster']}.json")
     if not os.path.exists(file_path):
-        dt["prob_desc_sample_inputs"] = json.loads(dt["prob_desc_sample_inputs"])
+        dt["prob_desc_sample_inputs"]  = json.loads(dt["prob_desc_sample_inputs"])
         dt["prob_desc_sample_outputs"] = json.loads(dt["prob_desc_sample_outputs"])
-        if mode == 'nohist':
-            lm_io = prompt.nohist(bug_retrieval)
-        else:
-            lm_io = prompt.decision(bug_retrieval)
+        lm_io = prompt.nohist(bug_retrieval) if mode == 'nohist' else prompt.decision(bug_retrieval)
         assert len(lm_io) == 2, f"{json.dumps(lm_io, indent=4)}"
         if dry_run:
-            open(file_path, "w").write(f"{json.dumps(lm_io[0], indent=4)}")
+            with open(file_path, "w") as f:
+                f.write(json.dumps(lm_io[0], indent=4))
         else:
-            out = gen(lm_io[0], temperature, 1)
-            # out = gen_request(lm_io[0], temperature, 1)
+            out = gen(lm_io[0], temperature, 1, llm)
             export_data = {"oai_response": out, "source_data": dt}
-            open(file_path, "w").write(f"{json.dumps(export_data, indent=4)}")
+            with open(file_path, "w") as f:
+                f.write(json.dumps(export_data, indent=4))
 
 
-def run(base_dir, num_proc, dry_run, it, mode, hist_top_k, dataset_path):
+def run(base_dir, num_proc, dry_run, it, mode, hist_top_k, dataset_path, llm):
     iter_dir = os.path.join(base_dir, f"iter_{it}")
     dec_dir = os.path.join(iter_dir, f"decide")
     if not os.path.exists(dec_dir):
         os.makedirs(dec_dir, exist_ok=True)
 
     apr_dataset = datasets.load_from_disk(dataset_path)
+    apr_dataset = apr_dataset.map(lambda x: {"lang_cluster": "Ruby"})
+
+    first_entry = apr_dataset[0]
 
     unfixed_file = os.path.join(iter_dir, "unfixed.json")
     if os.path.exists(unfixed_file):
@@ -189,13 +195,13 @@ def run(base_dir, num_proc, dry_run, it, mode, hist_top_k, dataset_path):
     else:
         raise Exception("The intermediate file unfixed.json does not exist!")
 
-    unfixed_dataset = apr_dataset.filter(lambda x: x['bug_code_uid'] in unfixed_ids)
+    unfixed_dataset = first_entry.filter(lambda x: x['bug_code_uid'] in unfixed_ids)
     # temperature_list = np.linspace(0, 2, args.nsample)
     temperature_list = [0.3157894736842105]
 
     retrieval.init_vec_db(base_dir, dataset_path)
     retrieval.init_cos_similarity(base_dir)
-    bug_properties, cos = retrieval.prepare_db(base_dir, apr_dataset)
+    bug_properties, cos = retrieval.prepare_db(base_dir, first_entry)
     retrieval.update_pass_10(base_dir, it)
     
     decision_path = os.path.join(base_dir, f"iter_{it}/decision.json")
@@ -229,6 +235,7 @@ def run(base_dir, num_proc, dry_run, it, mode, hist_top_k, dataset_path):
                     mode,
                     dec_dir,
                     idx,
+                    llm,
                     dry_run,
                 )
                 futures.append(future)

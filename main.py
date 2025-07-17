@@ -1,7 +1,10 @@
 from middleware.coordinator import Coordinator
 import argparse
+from middleware.deepseek_local import DeepSeekCoder
 
 if __name__ == "__main__":
+    
+    llm = DeepSeekCoder("/scratch/st-fhendija-1/nikta/deep_model")
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--config",
@@ -16,6 +19,6 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    cd = Coordinator(args.config, args.restart)
-    cd.run()
+    cd = Coordinator(args.config, args.restart, llm=llm)
+    cd._base_run()
 
