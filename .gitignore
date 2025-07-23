@@ -1,0 +1,16 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+.env/
+
+# Build and packaging
+build/
+dist/
+*.egg-info/
+deepseek-coder-6.7b-instruct/
+dataset/apr/

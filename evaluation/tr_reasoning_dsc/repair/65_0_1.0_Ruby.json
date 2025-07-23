@@ -1,0 +1,56 @@
+{
+    "oai_response": {
+        "data": [
+            {
+                "content": "ruby\\n# Read input\\na, ta, b, tb, h, m = gets.chomp.tr(':', ' ').split.map(&:to_i)\\n\\n# Calculate departure and arrival times\\nx1 = h * 60 + m\\ny1 = x1 + ta\\n\\n# Initialize counter\\nr = 0\\n\\n# Iterate over possible times for buses from city B\\n300.step(1440 - b, b) do |x2|\\n\\t# Calculate arrival time\\n\\ty2 = x2 + tb\\n\\n\\t# If the buses from A and B intersect, increment counter\\n\\tr += 1 if [x1, y1].max < [x2, y2].min\\nend\\n\\n# Print result\\nputs r\\n",
+                "type": "text"
+            }
+        ],
+        "prompt": [
+            "Fix a buggy program written in Ruby language to solve the following programming problem:\nDescription: Buses run between the cities A and B, the first one is at 05:00 AM and the last one departs not later than at 11:59 PM. A bus from the city A departs every a minutes and arrives to the city B in a ta minutes, and a bus from the city B departs every b minutes and arrives to the city A in a tb minutes.The driver Simion wants to make his job diverse, so he counts the buses going towards him. Simion doesn't count the buses he meet at the start and finish.You know the time when Simion departed from the city A to the city B. Calculate the number of buses Simion will meet to be sure in his counting.\nInput Specification: The first line contains two integers a,\u2009ta (1\u2009\u2264\u2009a,\u2009ta\u2009\u2264\u2009120) \u2014 the frequency of the buses from the city A to the city B and the travel time. Both values are given in minutes. The second line contains two integers b,\u2009tb (1\u2009\u2264\u2009b,\u2009tb\u2009\u2264\u2009120) \u2014 the frequency of the buses from the city B to the city A and the travel time. Both values are given in minutes. The last line contains the departure time of Simion from the city A in the format hh:mm. It is guaranteed that there are a bus from the city A at that time. Note that the hours and the minutes are given with exactly two digits.\nOutput Specification: Print the only integer z \u2014 the number of buses Simion will meet on the way. Note that you should not count the encounters in cities A and B.\n\nSample Input:\n10 30\n10 35\n05:20\nSample Output:\n5\n\nSample Input:\n60 120\n24 100\n13:00\nSample Output:\n9\n\nNotes: NoteIn the first example Simion departs form the city A at 05:20 AM and arrives to the city B at 05:50 AM. He will meet the first 5 buses from the city B that departed in the period [05:00 AM - 05:40 AM]. Also Simion will meet a bus in the city B at 05:50 AM, but he will not count it.Also note that the first encounter will be between 05:26 AM and 05:27 AM (if we suggest that the buses are go with the sustained speed).\nTake input from standard input and output to standard output\n\nHere is the code with a bug of WRONG_ANSWER:\n\na,ta,b,tb,h,m=$<.read.tr(':',' ').split.map(&:to_i)\nx1=h*60+m;y1=x1+ta\nr=0\n300.step(1440-b,b){|x2|\n\ty2=x2+tb\n\tr+=1 if [x1,x2].max < [y1,y2].min\n}\np r\n\nProvide the fixed Ruby code without any description or extra tokens.\n\nFixed source code:",
+            ""
+        ]
+    },
+    "source_data": {
+        "delete_cnt": 0,
+        "fix_code_uid": "",
+        "difficulty": 1600,
+        "replace_cnt": 1,
+        "fix_ops_cnt": 1,
+        "prob_desc_output_spec": "Print the only integer z \u2014 the number of buses Simion will meet on the way. Note that you should not count the encounters in cities A and B.",
+        "apr_id": "9100d845cc3d6ecac6a502ad3ad9641f",
+        "bug_source_code": "a,ta,b,tb,h,m=$<.read.tr(':',' ').split.map(&:to_i)\nx1=h*60+m;y1=x1+ta\nr=0\n300.step(1440-b,b){|x2|\n\ty2=x2+tb\n\tr+=1 if [x1,x2].max < [y1,y2].min\n}\np r",
+        "prob_desc_input_spec": "The first line contains two integers a,\u2009ta (1\u2009\u2264\u2009a,\u2009ta\u2009\u2264\u2009120) \u2014 the frequency of the buses from the city A to the city B and the travel time. Both values are given in minutes. The second line contains two integers b,\u2009tb (1\u2009\u2264\u2009b,\u2009tb\u2009\u2264\u2009120) \u2014 the frequency of the buses from the city B to the city A and the travel time. Both values are given in minutes. The last line contains the departure time of Simion from the city A in the format hh:mm. It is guaranteed that there are a bus from the city A at that time. Note that the hours and the minutes are given with exactly two digits.",
+        "src_uid": "1c4cf1c3cb464a483511a8a61f8685a7",
+        "bug_code_uid": "6fe0fccd1f97000321f1ec5427c486e5",
+        "equal_cnt": 2,
+        "prob_desc_time_limit": "1 second",
+        "similarity_score": 0.9932885766029358,
+        "bug_exec_outcome": "WRONG_ANSWER",
+        "lang_cluster": "Ruby",
+        "potential_dominant_fix_op": "replace",
+        "prob_desc_sample_inputs": [
+            "10 30\n10 35\n05:20",
+            "60 120\n24 100\n13:00"
+        ],
+        "prob_desc_input_from": "standard input",
+        "prob_desc_description": "Buses run between the cities A and B, the first one is at 05:00 AM and the last one departs not later than at 11:59 PM. A bus from the city A departs every a minutes and arrives to the city B in a ta minutes, and a bus from the city B departs every b minutes and arrives to the city A in a tb minutes.The driver Simion wants to make his job diverse, so he counts the buses going towards him. Simion doesn't count the buses he meet at the start and finish.You know the time when Simion departed from the city A to the city B. Calculate the number of buses Simion will meet to be sure in his counting.",
+        "lang": "Ruby",
+        "fix_exec_outcome": "",
+        "insert_cnt": 0,
+        "fix_source_code": "",
+        "prob_desc_notes": "NoteIn the first example Simion departs form the city A at 05:20 AM and arrives to the city B at 05:50 AM. He will meet the first 5 buses from the city B that departed in the period [05:00 AM - 05:40 AM]. Also Simion will meet a bus in the city B at 05:50 AM, but he will not count it.Also note that the first encounter will be between 05:26 AM and 05:27 AM (if we suggest that the buses are go with the sustained speed).",
+        "file_name": "Ruby.jsonl",
+        "tags": [
+            "implementation"
+        ],
+        "prob_desc_output_to": "standard output",
+        "prob_desc_created_at": "1461164400",
+        "prob_desc_memory_limit": "256 megabytes",
+        "prob_desc_sample_outputs": [
+            "5",
+            "9"
+        ],
+        "hidden_unit_tests": "[{\"input\": \"10 30\\r\\n10 35\\r\\n05:20\\r\\n\", \"output\": [\"5\"]}, {\"input\": \"60 120\\r\\n24 100\\r\\n13:00\\r\\n\", \"output\": [\"9\"]}, {\"input\": \"30 60\\r\\n60 60\\r\\n22:30\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"30 60\\r\\n10 60\\r\\n23:30\\r\\n\", \"output\": [\"8\"]}, {\"input\": \"5 45\\r\\n4 60\\r\\n21:00\\r\\n\", \"output\": [\"26\"]}, {\"input\": \"1 1\\r\\n1 1\\r\\n10:28\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"4 1\\r\\n5 4\\r\\n18:40\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"8 8\\r\\n1 1\\r\\n13:24\\r\\n\", \"output\": [\"8\"]}, {\"input\": \"20 4\\r\\n1 20\\r\\n06:20\\r\\n\", \"output\": [\"23\"]}, {\"input\": \"15 24\\r\\n23 6\\r\\n21:15\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"30 19\\r\\n21 4\\r\\n10:30\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"31 15\\r\\n36 25\\r\\n07:04\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"24 3\\r\\n54 9\\r\\n18:12\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"18 69\\r\\n62 54\\r\\n08:00\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"33 58\\r\\n70 78\\r\\n22:36\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"68 34\\r\\n84 78\\r\\n10:40\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"15 14\\r\\n32 65\\r\\n05:45\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"40 74\\r\\n100 42\\r\\n05:40\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"65 49\\r\\n24 90\\r\\n07:10\\r\\n\", \"output\": [\"6\"]}, {\"input\": \"1 1\\r\\n1 1\\r\\n23:59\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"23 118\\r\\n118 20\\r\\n23:24\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"3 88\\r\\n17 38\\r\\n22:33\\r\\n\", \"output\": [\"8\"]}, {\"input\": \"3 1\\r\\n2 3\\r\\n05:03\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"1 1\\r\\n3 2\\r\\n08:44\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"1 3\\r\\n1 2\\r\\n21:43\\r\\n\", \"output\": [\"4\"]}, {\"input\": \"2 28\\r\\n2 12\\r\\n05:12\\r\\n\", \"output\": [\"19\"]}, {\"input\": \"60 120\\r\\n17 120\\r\\n23:00\\r\\n\", \"output\": [\"11\"]}, {\"input\": \"1 55\\r\\n1 54\\r\\n23:59\\r\\n\", \"output\": [\"54\"]}, {\"input\": \"66 75\\r\\n1 82\\r\\n06:06\\r\\n\", \"output\": [\"141\"]}, {\"input\": \"1 90\\r\\n1 88\\r\\n23:59\\r\\n\", \"output\": [\"88\"]}, {\"input\": \"1 120\\r\\n1 100\\r\\n23:59\\r\\n\", \"output\": [\"100\"]}]"
+    }
+}

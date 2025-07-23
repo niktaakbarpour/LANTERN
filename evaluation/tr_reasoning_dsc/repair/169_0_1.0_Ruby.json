@@ -1,0 +1,58 @@
+{
+    "oai_response": {
+        "data": [
+            {
+                "content": "ruby\\nx = Integer(gets.chomp)\\n\\nif x % 2 == 0\\n  puts \"white\"\\n  puts \"1 #{x + 1}\"\\nelse\\n  puts \"black\"\\nend\\n",
+                "type": "text"
+            }
+        ],
+        "prompt": [
+            "Fix a buggy program written in Ruby language to solve the following programming problem:\nDescription: Vasya decided to learn to play chess. Classic chess doesn't seem interesting to him, so he plays his own sort of chess.The queen is the piece that captures all squares on its vertical, horizontal and diagonal lines. If the cell is located on the same vertical, horizontal or diagonal line with queen, and the cell contains a piece of the enemy color, the queen is able to move to this square. After that the enemy's piece is removed from the board. The queen cannot move to a cell containing an enemy piece if there is some other piece between it and the queen. There is an n\u2009\u00d7\u2009n chessboard. We'll denote a cell on the intersection of the r-th row and c-th column as (r,\u2009c). The square (1,\u20091) contains the white queen and the square (1,\u2009n) contains the black queen. All other squares contain green pawns that don't belong to anyone.The players move in turns. The player that moves first plays for the white queen, his opponent plays for the black queen.On each move the player has to capture some piece with his queen (that is, move to a square that contains either a green pawn or the enemy queen). The player loses if either he cannot capture any piece during his move or the opponent took his queen during the previous move. Help Vasya determine who wins if both players play with an optimal strategy on the board n\u2009\u00d7\u2009n.\nInput Specification: The input contains a single number n (2\u2009\u2264\u2009n\u2009\u2264\u2009109) \u2014 the size of the board.\nOutput Specification: On the first line print the answer to problem \u2014 string \"white\" or string \"black\", depending on who wins if the both players play optimally.  If the answer is \"white\", then you should also print two integers r and c representing the cell (r,\u2009c), where the first player should make his first move to win. If there are multiple such cells, print the one with the minimum r. If there are still multiple squares, print the one with the minimum c.\n\nSample Input:\n2\nSample Output:\nwhite\n1 2\n\nSample Input:\n3\nSample Output:\nblack\n\nNotes: NoteIn the first sample test the white queen can capture the black queen at the first move, so the white player wins.In the second test from the statement if the white queen captures the green pawn located on the central vertical line, then it will be captured by the black queen during the next move. So the only move for the white player is to capture the green pawn located at (2,\u20091). Similarly, the black queen doesn't have any other options but to capture the green pawn located at (2,\u20093), otherwise if it goes to the middle vertical line, it will be captured by the white queen.During the next move the same thing happens \u2014 neither the white, nor the black queen has other options rather than to capture green pawns situated above them. Thus, the white queen ends up on square (3,\u20091), and the black queen ends up on square (3,\u20093). In this situation the white queen has to capture any of the green pawns located on the middle vertical line, after that it will be captured by the black queen. Thus, the player who plays for the black queen wins.\nTake input from standard input and output to standard output\n\nHere is the code with a bug of WRONG_ANSWER:\n\nx= Integer(gets.chomp)\n\nif (x%2==0)\n  p \"white\"\n  p'1 2'\nelse\n  p'black'\nend\n\nProvide the fixed Ruby code without any description or extra tokens.\n\nFixed source code:",
+            ""
+        ]
+    },
+    "source_data": {
+        "delete_cnt": 0,
+        "fix_code_uid": "",
+        "difficulty": 1700,
+        "replace_cnt": 2,
+        "fix_ops_cnt": 6,
+        "prob_desc_output_spec": "On the first line print the answer to problem \u2014 string \"white\" or string \"black\", depending on who wins if the both players play optimally.  If the answer is \"white\", then you should also print two integers r and c representing the cell (r,\u2009c), where the first player should make his first move to win. If there are multiple such cells, print the one with the minimum r. If there are still multiple squares, print the one with the minimum c.",
+        "apr_id": "d5486caf5e94d50e27babec5503c64a2",
+        "bug_source_code": "x= Integer(gets.chomp)\n\nif (x%2==0)\n  p \"white\"\n  p'1 2'\nelse\n  p'black'\nend",
+        "prob_desc_input_spec": "The input contains a single number n (2\u2009\u2264\u2009n\u2009\u2264\u2009109) \u2014 the size of the board.",
+        "src_uid": "52e07d176aa1d370788f94ee2e61df93",
+        "bug_code_uid": "4da9ff85deb069a3237621531a3b075a",
+        "equal_cnt": 7,
+        "prob_desc_time_limit": "2 seconds",
+        "similarity_score": 0.891566276550293,
+        "bug_exec_outcome": "WRONG_ANSWER",
+        "lang_cluster": "Ruby",
+        "potential_dominant_fix_op": "insert",
+        "prob_desc_sample_inputs": [
+            "2",
+            "3"
+        ],
+        "prob_desc_input_from": "standard input",
+        "prob_desc_description": "Vasya decided to learn to play chess. Classic chess doesn't seem interesting to him, so he plays his own sort of chess.The queen is the piece that captures all squares on its vertical, horizontal and diagonal lines. If the cell is located on the same vertical, horizontal or diagonal line with queen, and the cell contains a piece of the enemy color, the queen is able to move to this square. After that the enemy's piece is removed from the board. The queen cannot move to a cell containing an enemy piece if there is some other piece between it and the queen. There is an n\u2009\u00d7\u2009n chessboard. We'll denote a cell on the intersection of the r-th row and c-th column as (r,\u2009c). The square (1,\u20091) contains the white queen and the square (1,\u2009n) contains the black queen. All other squares contain green pawns that don't belong to anyone.The players move in turns. The player that moves first plays for the white queen, his opponent plays for the black queen.On each move the player has to capture some piece with his queen (that is, move to a square that contains either a green pawn or the enemy queen). The player loses if either he cannot capture any piece during his move or the opponent took his queen during the previous move. Help Vasya determine who wins if both players play with an optimal strategy on the board n\u2009\u00d7\u2009n.",
+        "lang": "Ruby",
+        "fix_exec_outcome": "",
+        "insert_cnt": 4,
+        "fix_source_code": "",
+        "prob_desc_notes": "NoteIn the first sample test the white queen can capture the black queen at the first move, so the white player wins.In the second test from the statement if the white queen captures the green pawn located on the central vertical line, then it will be captured by the black queen during the next move. So the only move for the white player is to capture the green pawn located at (2,\u20091). Similarly, the black queen doesn't have any other options but to capture the green pawn located at (2,\u20093), otherwise if it goes to the middle vertical line, it will be captured by the white queen.During the next move the same thing happens \u2014 neither the white, nor the black queen has other options rather than to capture green pawns situated above them. Thus, the white queen ends up on square (3,\u20091), and the black queen ends up on square (3,\u20093). In this situation the white queen has to capture any of the green pawns located on the middle vertical line, after that it will be captured by the black queen. Thus, the player who plays for the black queen wins.",
+        "file_name": "Ruby.jsonl",
+        "tags": [
+            "math",
+            "games",
+            "constructive algorithms"
+        ],
+        "prob_desc_output_to": "standard output",
+        "prob_desc_created_at": "1417618800",
+        "prob_desc_memory_limit": "256 megabytes",
+        "prob_desc_sample_outputs": [
+            "white\n1 2",
+            "black"
+        ],
+        "hidden_unit_tests": "[{\"input\": \"2\\r\\n\", \"output\": [\"white\\n1 2\", \"white\\r\\n1 2\"]}, {\"input\": \"3\\r\\n\", \"output\": [\"black\"]}, {\"input\": \"4\\r\\n\", \"output\": [\"white\\n1 2\", \"white\\r\\n1 2\"]}, {\"input\": \"6\\r\\n\", \"output\": [\"white\\n1 2\", \"white\\r\\n1 2\"]}, {\"input\": \"10\\r\\n\", \"output\": [\"white\\n1 2\", \"white\\r\\n1 2\"]}, {\"input\": \"16\\r\\n\", \"output\": [\"white\\n1 2\", \"white\\r\\n1 2\"]}, {\"input\": \"100\\r\\n\", \"output\": [\"white\\n1 2\", \"white\\r\\n1 2\"]}, {\"input\": \"10006\\r\\n\", \"output\": [\"white\\n1 2\", \"white\\r\\n1 2\"]}, {\"input\": \"99966246\\r\\n\", \"output\": [\"white\\n1 2\", \"white\\r\\n1 2\"]}, {\"input\": \"1000000000\\r\\n\", \"output\": [\"white\\n1 2\", \"white\\r\\n1 2\"]}, {\"input\": \"999999999\\r\\n\", \"output\": [\"black\"]}, {\"input\": \"999999997\\r\\n\", \"output\": [\"black\"]}, {\"input\": \"900001\\r\\n\", \"output\": [\"black\"]}, {\"input\": \"775681\\r\\n\", \"output\": [\"black\"]}, {\"input\": \"666666\\r\\n\", \"output\": [\"white\\n1 2\", \"white\\r\\n1 2\"]}, {\"input\": \"12345\\r\\n\", \"output\": [\"black\"]}, {\"input\": \"111111\\r\\n\", \"output\": [\"black\"]}, {\"input\": \"346367\\r\\n\", \"output\": [\"black\"]}, {\"input\": \"13\\r\\n\", \"output\": [\"black\"]}, {\"input\": \"11\\r\\n\", \"output\": [\"black\"]}, {\"input\": \"9\\r\\n\", \"output\": [\"black\"]}, {\"input\": \"7\\r\\n\", \"output\": [\"black\"]}, {\"input\": \"5\\r\\n\", \"output\": [\"black\"]}, {\"input\": \"19\\r\\n\", \"output\": [\"black\"]}, {\"input\": \"939698497\\r\\n\", \"output\": [\"black\"]}, {\"input\": \"999999996\\r\\n\", \"output\": [\"white\\n1 2\", \"white\\r\\n1 2\"]}]"
+    }
+}

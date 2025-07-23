@@ -1,0 +1,59 @@
+{
+    "oai_response": {
+        "data": [
+            {
+                "content": "User: ['Fix a buggy program written in Ruby language to solve the following programming problem:\\nDescription: You can not just take the file and send it. When Polycarp trying to send a file in the social network \"Codehorses\", he encountered an unexpected problem. If the name of the file contains three or more \"x\" (lowercase Latin letters \"x\") in a row, the system considers that the file content does not correspond to the social network topic. In this case, the file is not sent and an error message is displayed.Determine the minimum number of characters to remove from the file name so after that the name does not contain \"xxx\" as a substring. Print 0 if the file name does not initially contain a forbidden substring \"xxx\".You can delete characters in arbitrary positions (not necessarily consecutive). If you delete a character, then the length of a string is reduced by $$$1$$$. For example, if you delete the character in the position $$$2$$$ from the string \"exxxii\", then the resulting string is \"exxii\".\\nInput Specification: The first line contains integer $$$n$$$ $$$(3 \\\\le n \\\\le 100)$$$ \u2014 the length of the file name. The second line contains a string of length $$$n$$$ consisting of lowercase Latin letters only \u2014 the file name.\\nOutput Specification: Print the minimum number of characters to remove from the file name so after that the name does not contain \"xxx\" as a substring. If initially the file name dost not contain a forbidden substring \"xxx\", print 0.\\n\\nSample Input:\\n6\\nxxxiii\\nSample Output:\\n1\\n\\nSample Input:\\n5\\nxxoxx\\nSample Output:\\n0\\n\\nSample Input:\\n10\\nxxxxxxxxxx\\nSample Output:\\n8\\n\\nNotes: NoteIn the first example Polycarp tried to send a file with name contains number $$$33$$$, written in Roman numerals. But he can not just send the file, because it name contains three letters \"x\" in a row. To send the file he needs to remove any one of this letters.\\nTake input from standard input and output to standard output\\n\\nHere is the code with a bug of WRONG_ANSWER:\\n\\nclass Main\\n  #def get_problem_link\\n  #  problem_link = \"https://codeforces.com/contest/978/problem/B\"\\n  #  return problem_link\\n  #end\\n\\n  #def get_submission_link\\n  #  submission_link = \\'\\'\\n  #  return submisson_link\\n  #end\\n\\n  #begin\\n  #of codeforces interface\\n  def run_interface\\n    n = gets.to_i\\n    k = gets.split(\\' \\')\\n    puts solution(n, k)\\n  end\\n  #end\\n  #of codeforces interface\\n\\n  def solution(n, array_of_strings)\\n      res = 0\\n      counter = 0\\n      array_of_strings.each {|value|\\n        if value === \"x\"\\n          counter +=1\\n        else\\n          counter = 0\\n        end\\n        if counter > 2\\n          res +=1\\n        end\\n      }\\n      return res\\n  end\\n\\nend\\n\\n#then upload to codeforces uncomment this line:\\nMain.new.run_interface\\n\\n\\nProvide the fixed Ruby code without any description or extra tokens.\\n\\nFixed source code:', '']",
+                "type": "text"
+            }
+        ],
+        "prompt": [
+            "Fix a buggy program written in Ruby language to solve the following programming problem:\nDescription: You can not just take the file and send it. When Polycarp trying to send a file in the social network \"Codehorses\", he encountered an unexpected problem. If the name of the file contains three or more \"x\" (lowercase Latin letters \"x\") in a row, the system considers that the file content does not correspond to the social network topic. In this case, the file is not sent and an error message is displayed.Determine the minimum number of characters to remove from the file name so after that the name does not contain \"xxx\" as a substring. Print 0 if the file name does not initially contain a forbidden substring \"xxx\".You can delete characters in arbitrary positions (not necessarily consecutive). If you delete a character, then the length of a string is reduced by $$$1$$$. For example, if you delete the character in the position $$$2$$$ from the string \"exxxii\", then the resulting string is \"exxii\".\nInput Specification: The first line contains integer $$$n$$$ $$$(3 \\le n \\le 100)$$$ \u2014 the length of the file name. The second line contains a string of length $$$n$$$ consisting of lowercase Latin letters only \u2014 the file name.\nOutput Specification: Print the minimum number of characters to remove from the file name so after that the name does not contain \"xxx\" as a substring. If initially the file name dost not contain a forbidden substring \"xxx\", print 0.\n\nSample Input:\n6\nxxxiii\nSample Output:\n1\n\nSample Input:\n5\nxxoxx\nSample Output:\n0\n\nSample Input:\n10\nxxxxxxxxxx\nSample Output:\n8\n\nNotes: NoteIn the first example Polycarp tried to send a file with name contains number $$$33$$$, written in Roman numerals. But he can not just send the file, because it name contains three letters \"x\" in a row. To send the file he needs to remove any one of this letters.\nTake input from standard input and output to standard output\n\nHere is the code with a bug of WRONG_ANSWER:\n\nclass Main\n  #def get_problem_link\n  #  problem_link = \"https://codeforces.com/contest/978/problem/B\"\n  #  return problem_link\n  #end\n\n  #def get_submission_link\n  #  submission_link = ''\n  #  return submisson_link\n  #end\n\n  #begin\n  #of codeforces interface\n  def run_interface\n    n = gets.to_i\n    k = gets.split(' ')\n    puts solution(n, k)\n  end\n  #end\n  #of codeforces interface\n\n  def solution(n, array_of_strings)\n      res = 0\n      counter = 0\n      array_of_strings.each {|value|\n        if value === \"x\"\n          counter +=1\n        else\n          counter = 0\n        end\n        if counter > 2\n          res +=1\n        end\n      }\n      return res\n  end\n\nend\n\n#then upload to codeforces uncomment this line:\nMain.new.run_interface\n\n\nProvide the fixed Ruby code without any description or extra tokens.\n\nFixed source code:",
+            ""
+        ]
+    },
+    "source_data": {
+        "delete_cnt": 1,
+        "fix_code_uid": "",
+        "difficulty": 800,
+        "replace_cnt": 4,
+        "fix_ops_cnt": 6,
+        "prob_desc_output_spec": "Print the minimum number of characters to remove from the file name so after that the name does not contain \"xxx\" as a substring. If initially the file name dost not contain a forbidden substring \"xxx\", print 0.",
+        "apr_id": "0ab4fb2271facdb4f4b6a52930780daf",
+        "bug_source_code": "class Main\n  #def get_problem_link\n  #  problem_link = \"https://codeforces.com/contest/978/problem/B\"\n  #  return problem_link\n  #end\n\n  #def get_submission_link\n  #  submission_link = ''\n  #  return submisson_link\n  #end\n\n  #begin\n  #of codeforces interface\n  def run_interface\n    n = gets.to_i\n    k = gets.split(' ')\n    puts solution(n, k)\n  end\n  #end\n  #of codeforces interface\n\n  def solution(n, array_of_strings)\n      res = 0\n      counter = 0\n      array_of_strings.each {|value|\n        if value === \"x\"\n          counter +=1\n        else\n          counter = 0\n        end\n        if counter > 2\n          res +=1\n        end\n      }\n      return res\n  end\n\nend\n\n#then upload to codeforces uncomment this line:\nMain.new.run_interface\n",
+        "prob_desc_input_spec": "The first line contains integer $$$n$$$ $$$(3 \\le n \\le 100)$$$ \u2014 the length of the file name. The second line contains a string of length $$$n$$$ consisting of lowercase Latin letters only \u2014 the file name.",
+        "src_uid": "8de14db41d0acee116bd5d8079cb2b02",
+        "bug_code_uid": "88c2718d138260013707a18827706ae2",
+        "equal_cnt": 7,
+        "prob_desc_time_limit": "1 second",
+        "similarity_score": 0.5072886347770691,
+        "bug_exec_outcome": "WRONG_ANSWER",
+        "lang_cluster": "Ruby",
+        "potential_dominant_fix_op": "replace",
+        "prob_desc_sample_inputs": [
+            "6\nxxxiii",
+            "5\nxxoxx",
+            "10\nxxxxxxxxxx"
+        ],
+        "prob_desc_input_from": "standard input",
+        "prob_desc_description": "You can not just take the file and send it. When Polycarp trying to send a file in the social network \"Codehorses\", he encountered an unexpected problem. If the name of the file contains three or more \"x\" (lowercase Latin letters \"x\") in a row, the system considers that the file content does not correspond to the social network topic. In this case, the file is not sent and an error message is displayed.Determine the minimum number of characters to remove from the file name so after that the name does not contain \"xxx\" as a substring. Print 0 if the file name does not initially contain a forbidden substring \"xxx\".You can delete characters in arbitrary positions (not necessarily consecutive). If you delete a character, then the length of a string is reduced by $$$1$$$. For example, if you delete the character in the position $$$2$$$ from the string \"exxxii\", then the resulting string is \"exxii\".",
+        "lang": "Ruby",
+        "fix_exec_outcome": "",
+        "insert_cnt": 1,
+        "fix_source_code": "",
+        "prob_desc_notes": "NoteIn the first example Polycarp tried to send a file with name contains number $$$33$$$, written in Roman numerals. But he can not just send the file, because it name contains three letters \"x\" in a row. To send the file he needs to remove any one of this letters.",
+        "file_name": "Ruby.jsonl",
+        "tags": [
+            "strings",
+            "greedy"
+        ],
+        "prob_desc_output_to": "standard output",
+        "prob_desc_created_at": "1582202100",
+        "prob_desc_memory_limit": "256 megabytes",
+        "prob_desc_sample_outputs": [
+            "1",
+            "0",
+            "8"
+        ],
+        "hidden_unit_tests": "[{\"input\": \"6\\r\\nxxxiii\\r\\n\", \"output\": [\"1\\r\\n\", \"1\", \"1\\n\"]}, {\"input\": \"5\\r\\nxxoxx\\r\\n\", \"output\": [\"0\\r\\n\", \"0\\n\", \"0\"]}, {\"input\": \"10\\r\\nxxxxxxxxxx\\r\\n\", \"output\": [\"8\\n\", \"8\", \"8\\r\\n\"]}, {\"input\": \"100\\r\\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\r\\n\", \"output\": [\"98\", \"98\\n\", \"98\\r\\n\"]}, {\"input\": \"99\\r\\nxxaxxaxxaxxaxxaxxaxxaxxaxxaxxaxxaxxaxxaxxaxxaxxaxxaxxaxxaxxaxxaxxaxxaxxaxxaxxaxxaxxaxxaxxaxxaxxaxxa\\r\\n\", \"output\": [\"0\\r\\n\", \"0\\n\", \"0\"]}, {\"input\": \"3\\r\\nxxx\\r\\n\", \"output\": [\"1\\r\\n\", \"1\", \"1\\n\"]}, {\"input\": \"77\\r\\naaabbbcccdddeeefffggghhhiiijjjkkklllmmmnnnooopppqqqrrrssstttuuuvvvwwwxxyyyzzz\\r\\n\", \"output\": [\"0\\r\\n\", \"0\\n\", \"0\"]}, {\"input\": \"100\\r\\nuxxxxxlmexxxxxxxwnxxexxxxxcxxfydxxxxxxvmdxxxxxxisxxxxxxxxidkxxxpxxxxxxxxmnuxxxxjxxxqcxxwmxxxxxxxxmrx\\r\\n\", \"output\": [\"41\", \"41\\r\\n\", \"41\\n\"]}, {\"input\": \"100\\r\\nxxxxxxxxxxxjtxxxxxxxxcxxxxxxcfxxxxzxxxxxxgxxxxxbxxxxbxxxxxxxxdycxxxxokixxxkizxxgcxxxxxxxxexxxxxfxxxc\\r\\n\", \"output\": [\"49\", \"49\\n\", \"49\\r\\n\"]}, {\"input\": \"100\\r\\nuxxxxxlmexxxxxxxwnxxexxxxxcxxfydxxxxxxvmdxxxxxxisxxxxxxxxidkxxxpxxxxxxxxmnuxxxxjxxxqcxxwmxxxxxwxxxxx\\r\\n\", \"output\": [\"41\", \"41\\r\\n\", \"41\\n\"]}, {\"input\": \"34\\r\\naaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\\r\\n\", \"output\": [\"0\\r\\n\", \"0\\n\", \"0\"]}, {\"input\": \"5\\r\\nfcyju\\r\\n\", \"output\": [\"0\\r\\n\", \"0\\n\", \"0\"]}, {\"input\": \"100\\r\\nihygyvdvyeifomhxhkhdkimquvgallbqharcyriyqkidnwykozuhvkwdldlztpabgyuflikychqpdenwzgtlzotyumjgdsrbxxxx\\r\\n\", \"output\": [\"2\", \"2\\n\", \"2\\r\\n\"]}]"
+    }
+}

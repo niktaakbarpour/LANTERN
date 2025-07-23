@@ -1,0 +1,59 @@
+{
+    "oai_response": {
+        "data": [
+            {
+                "content": "ruby\\nN = gets.to_i\\nlayers = Math.sqrt(N**2/4).ceil\\nputs layers\\n",
+                "type": "text"
+            }
+        ],
+        "prompt": [
+            "Fix a buggy program written in Ruby language to solve the following programming problem:\nDescription: You are given an integer N. Consider all possible segments on the coordinate axis with endpoints at integer points with coordinates between 0 and N, inclusive; there will be  of them.You want to draw these segments in several layers so that in each layer the segments don't overlap (they might touch at the endpoints though). You can not move the segments to a different location on the coordinate axis. Find the minimal number of layers you have to use for the given N.\nInput Specification: The only input line contains a single integer N (1\u2009\u2264\u2009N\u2009\u2264\u2009100).\nOutput Specification: Output a single integer - the minimal number of layers required to draw the segments for the given N.\n\nSample Input:\n2\nSample Output:\n2\n\nSample Input:\n3\nSample Output:\n4\n\nSample Input:\n4\nSample Output:\n6\n\nNotes: NoteAs an example, here are the segments and their optimal arrangement into layers for N\u2009=\u20094.  \nTake input from standard input and output to standard output\n\nHere is the code with a bug of WRONG_ANSWER:\n\np -~gets.to_i**2/4\n\nProvide the fixed Ruby code without any description or extra tokens.\n\nFixed source code:",
+            ""
+        ]
+    },
+    "source_data": {
+        "delete_cnt": 0,
+        "fix_code_uid": "",
+        "difficulty": 1300,
+        "replace_cnt": 1,
+        "fix_ops_cnt": 2,
+        "prob_desc_output_spec": "Output a single integer - the minimal number of layers required to draw the segments for the given N.",
+        "apr_id": "2ba299f837eabdaf1a10888d0ae78fdf",
+        "bug_source_code": "p -~gets.to_i**2/4",
+        "prob_desc_input_spec": "The only input line contains a single integer N (1\u2009\u2264\u2009N\u2009\u2264\u2009100).",
+        "src_uid": "f8af5dfcf841a7f105ac4c144eb51319",
+        "bug_code_uid": "19c2c7d566ae9fb5c73855cc6bf851ce",
+        "equal_cnt": 3,
+        "prob_desc_time_limit": "2 seconds",
+        "similarity_score": 0.8421052694320679,
+        "bug_exec_outcome": "WRONG_ANSWER",
+        "lang_cluster": "Ruby",
+        "potential_dominant_fix_op": "replace",
+        "prob_desc_sample_inputs": [
+            "2",
+            "3",
+            "4"
+        ],
+        "prob_desc_input_from": "standard input",
+        "prob_desc_description": "You are given an integer N. Consider all possible segments on the coordinate axis with endpoints at integer points with coordinates between 0 and N, inclusive; there will be  of them.You want to draw these segments in several layers so that in each layer the segments don't overlap (they might touch at the endpoints though). You can not move the segments to a different location on the coordinate axis. Find the minimal number of layers you have to use for the given N.",
+        "lang": "Ruby",
+        "fix_exec_outcome": "",
+        "insert_cnt": 1,
+        "fix_source_code": "",
+        "prob_desc_notes": "NoteAs an example, here are the segments and their optimal arrangement into layers for N\u2009=\u20094.  ",
+        "file_name": "Ruby.jsonl",
+        "tags": [
+            "math",
+            "constructive algorithms"
+        ],
+        "prob_desc_output_to": "standard output",
+        "prob_desc_created_at": "1514392500",
+        "prob_desc_memory_limit": "256 megabytes",
+        "prob_desc_sample_outputs": [
+            "2",
+            "4",
+            "6"
+        ],
+        "hidden_unit_tests": "[{\"input\": \"2\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"3\\r\\n\", \"output\": [\"4\"]}, {\"input\": \"4\\r\\n\", \"output\": [\"6\"]}, {\"input\": \"21\\r\\n\", \"output\": [\"121\"]}, {\"input\": \"100\\r\\n\", \"output\": [\"2550\"]}, {\"input\": \"1\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"5\\r\\n\", \"output\": [\"9\"]}, {\"input\": \"6\\r\\n\", \"output\": [\"12\"]}, {\"input\": \"7\\r\\n\", \"output\": [\"16\"]}, {\"input\": \"8\\r\\n\", \"output\": [\"20\"]}, {\"input\": \"9\\r\\n\", \"output\": [\"25\"]}, {\"input\": \"10\\r\\n\", \"output\": [\"30\"]}, {\"input\": \"11\\r\\n\", \"output\": [\"36\"]}, {\"input\": \"12\\r\\n\", \"output\": [\"42\"]}, {\"input\": \"13\\r\\n\", \"output\": [\"49\"]}, {\"input\": \"14\\r\\n\", \"output\": [\"56\"]}, {\"input\": \"15\\r\\n\", \"output\": [\"64\"]}, {\"input\": \"16\\r\\n\", \"output\": [\"72\"]}, {\"input\": \"17\\r\\n\", \"output\": [\"81\"]}, {\"input\": \"18\\r\\n\", \"output\": [\"90\"]}, {\"input\": \"19\\r\\n\", \"output\": [\"100\"]}, {\"input\": \"20\\r\\n\", \"output\": [\"110\"]}, {\"input\": \"22\\r\\n\", \"output\": [\"132\"]}, {\"input\": \"23\\r\\n\", \"output\": [\"144\"]}, {\"input\": \"24\\r\\n\", \"output\": [\"156\"]}, {\"input\": \"25\\r\\n\", \"output\": [\"169\"]}, {\"input\": \"26\\r\\n\", \"output\": [\"182\"]}, {\"input\": \"27\\r\\n\", \"output\": [\"196\"]}, {\"input\": \"28\\r\\n\", \"output\": [\"210\"]}, {\"input\": \"29\\r\\n\", \"output\": [\"225\"]}, {\"input\": \"30\\r\\n\", \"output\": [\"240\"]}, {\"input\": \"31\\r\\n\", \"output\": [\"256\"]}, {\"input\": \"32\\r\\n\", \"output\": [\"272\"]}, {\"input\": \"33\\r\\n\", \"output\": [\"289\"]}, {\"input\": \"34\\r\\n\", \"output\": [\"306\"]}, {\"input\": \"35\\r\\n\", \"output\": [\"324\"]}, {\"input\": \"36\\r\\n\", \"output\": [\"342\"]}, {\"input\": \"37\\r\\n\", \"output\": [\"361\"]}, {\"input\": \"38\\r\\n\", \"output\": [\"380\"]}, {\"input\": \"39\\r\\n\", \"output\": [\"400\"]}, {\"input\": \"40\\r\\n\", \"output\": [\"420\"]}, {\"input\": \"41\\r\\n\", \"output\": [\"441\"]}, {\"input\": \"42\\r\\n\", \"output\": [\"462\"]}, {\"input\": \"43\\r\\n\", \"output\": [\"484\"]}, {\"input\": \"44\\r\\n\", \"output\": [\"506\"]}, {\"input\": \"45\\r\\n\", \"output\": [\"529\"]}, {\"input\": \"46\\r\\n\", \"output\": [\"552\"]}, {\"input\": \"47\\r\\n\", \"output\": [\"576\"]}, {\"input\": \"48\\r\\n\", \"output\": [\"600\"]}, {\"input\": \"49\\r\\n\", \"output\": [\"625\"]}, {\"input\": \"50\\r\\n\", \"output\": [\"650\"]}, {\"input\": \"51\\r\\n\", \"output\": [\"676\"]}, {\"input\": \"52\\r\\n\", \"output\": [\"702\"]}, {\"input\": \"53\\r\\n\", \"output\": [\"729\"]}, {\"input\": \"54\\r\\n\", \"output\": [\"756\"]}, {\"input\": \"55\\r\\n\", \"output\": [\"784\"]}, {\"input\": \"56\\r\\n\", \"output\": [\"812\"]}, {\"input\": \"57\\r\\n\", \"output\": [\"841\"]}, {\"input\": \"58\\r\\n\", \"output\": [\"870\"]}, {\"input\": \"59\\r\\n\", \"output\": [\"900\"]}, {\"input\": \"60\\r\\n\", \"output\": [\"930\"]}, {\"input\": \"61\\r\\n\", \"output\": [\"961\"]}, {\"input\": \"62\\r\\n\", \"output\": [\"992\"]}, {\"input\": \"63\\r\\n\", \"output\": [\"1024\"]}, {\"input\": \"64\\r\\n\", \"output\": [\"1056\"]}, {\"input\": \"65\\r\\n\", \"output\": [\"1089\"]}, {\"input\": \"66\\r\\n\", \"output\": [\"1122\"]}, {\"input\": \"67\\r\\n\", \"output\": [\"1156\"]}, {\"input\": \"68\\r\\n\", \"output\": [\"1190\"]}, {\"input\": \"69\\r\\n\", \"output\": [\"1225\"]}, {\"input\": \"70\\r\\n\", \"output\": [\"1260\"]}, {\"input\": \"71\\r\\n\", \"output\": [\"1296\"]}, {\"input\": \"72\\r\\n\", \"output\": [\"1332\"]}, {\"input\": \"73\\r\\n\", \"output\": [\"1369\"]}, {\"input\": \"74\\r\\n\", \"output\": [\"1406\"]}, {\"input\": \"75\\r\\n\", \"output\": [\"1444\"]}, {\"input\": \"76\\r\\n\", \"output\": [\"1482\"]}, {\"input\": \"77\\r\\n\", \"output\": [\"1521\"]}, {\"input\": \"78\\r\\n\", \"output\": [\"1560\"]}, {\"input\": \"79\\r\\n\", \"output\": [\"1600\"]}, {\"input\": \"80\\r\\n\", \"output\": [\"1640\"]}, {\"input\": \"81\\r\\n\", \"output\": [\"1681\"]}, {\"input\": \"82\\r\\n\", \"output\": [\"1722\"]}, {\"input\": \"83\\r\\n\", \"output\": [\"1764\"]}, {\"input\": \"84\\r\\n\", \"output\": [\"1806\"]}, {\"input\": \"85\\r\\n\", \"output\": [\"1849\"]}, {\"input\": \"86\\r\\n\", \"output\": [\"1892\"]}, {\"input\": \"87\\r\\n\", \"output\": [\"1936\"]}, {\"input\": \"88\\r\\n\", \"output\": [\"1980\"]}, {\"input\": \"89\\r\\n\", \"output\": [\"2025\"]}, {\"input\": \"90\\r\\n\", \"output\": [\"2070\"]}, {\"input\": \"91\\r\\n\", \"output\": [\"2116\"]}, {\"input\": \"92\\r\\n\", \"output\": [\"2162\"]}, {\"input\": \"93\\r\\n\", \"output\": [\"2209\"]}, {\"input\": \"94\\r\\n\", \"output\": [\"2256\"]}, {\"input\": \"95\\r\\n\", \"output\": [\"2304\"]}, {\"input\": \"96\\r\\n\", \"output\": [\"2352\"]}, {\"input\": \"97\\r\\n\", \"output\": [\"2401\"]}, {\"input\": \"98\\r\\n\", \"output\": [\"2450\"]}, {\"input\": \"99\\r\\n\", \"output\": [\"2500\"]}]"
+    }
+}

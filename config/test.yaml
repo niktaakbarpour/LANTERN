@@ -1,0 +1,25 @@
+base_dir: /home/ariasd/Downloads/LANTERN-main/evaluation/tr_reasoning_dsc
+dataset_path: /home/ariasd/Downloads/LANTERN-main/dataset/apr
+dry_run: 0
+gen:
+  nattempt: 1
+  nsample: 1
+  temperature: 1.0
+hist_top_k: 15
+langs:
+- Ruby
+log_dir: logs
+name: reasoning trans-repair DSC
+num_proc: 17
+repair:
+  mode: vanilla
+result:
+  k: 1
+state:
+  action: save_history
+  it: 0
+termination:
+  max_it: 11
+translate:
+  mode: reasoning
+unfixed_k: 0

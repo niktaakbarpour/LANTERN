@@ -1,0 +1,58 @@
+{
+    "oai_response": {
+        "data": [
+            {
+                "content": "while str = STDIN.gets\\n  array = str.split(' ').map{|_| _.to_i}\\n  ave = array.sum / 3\\n  puts array.map{|_| (ave - _).abs}.sum\\nend\\n",
+                "type": "text"
+            }
+        ],
+        "prompt": [
+            "Fix a buggy program written in Ruby language to solve the following programming problem:\nDescription: There are three friend living on the straight line Ox in Lineland. The first friend lives at the point x1, the second friend lives at the point x2, and the third friend lives at the point x3. They plan to celebrate the New Year together, so they need to meet at one point. What is the minimum total distance they have to travel in order to meet at some point and celebrate the New Year?It's guaranteed that the optimal answer is always integer.\nInput Specification: The first line of the input contains three distinct integers x1, x2 and x3 (1\u2009\u2264\u2009x1,\u2009x2,\u2009x3\u2009\u2264\u2009100)\u00a0\u2014 the coordinates of the houses of the first, the second and the third friends respectively. \nOutput Specification: Print one integer\u00a0\u2014 the minimum total distance the friends need to travel in order to meet together.\n\nSample Input:\n7 1 4\nSample Output:\n6\n\nSample Input:\n30 20 10\nSample Output:\n20\n\nNotes: NoteIn the first sample, friends should meet at the point 4. Thus, the first friend has to travel the distance of 3 (from the point 7 to the point 4), the second friend also has to travel the distance of 3 (from the point 1 to the point 4), while the third friend should not go anywhere because he lives at the point 4.\nTake input from standard input and output to standard output\n\nHere is the code with a bug of WRONG_ANSWER:\n\nwhile str = STDIN.gets\n  array = str.split(' ').map{|_| _.to_i}\n  ave = array.inject(0.0){|r, i| r += i } / array.size\n  puts array.map{|_| (ave - _).abs}.inject {|sum, n| sum + n}.to_i\nend\n\n\nProvide the fixed Ruby code without any description or extra tokens.\n\nFixed source code:",
+            ""
+        ]
+    },
+    "source_data": {
+        "delete_cnt": 0,
+        "fix_code_uid": "",
+        "difficulty": 800,
+        "replace_cnt": 4,
+        "fix_ops_cnt": 4,
+        "prob_desc_output_spec": "Print one integer\u00a0\u2014 the minimum total distance the friends need to travel in order to meet together.",
+        "apr_id": "625ccc90bb7de285c25826d9a3782653",
+        "bug_source_code": "while str = STDIN.gets\n  array = str.split(' ').map{|_| _.to_i}\n  ave = array.inject(0.0){|r, i| r += i } / array.size\n  puts array.map{|_| (ave - _).abs}.inject {|sum, n| sum + n}.to_i\nend\n",
+        "prob_desc_input_spec": "The first line of the input contains three distinct integers x1, x2 and x3 (1\u2009\u2264\u2009x1,\u2009x2,\u2009x3\u2009\u2264\u2009100)\u00a0\u2014 the coordinates of the houses of the first, the second and the third friends respectively. ",
+        "src_uid": "7bffa6e8d2d21bbb3b7f4aec109b3319",
+        "bug_code_uid": "cae9add132d9f4ba9658861b582196f1",
+        "equal_cnt": 5,
+        "prob_desc_time_limit": "1 second",
+        "similarity_score": 0.3932853639125824,
+        "bug_exec_outcome": "WRONG_ANSWER",
+        "lang_cluster": "Ruby",
+        "potential_dominant_fix_op": "replace",
+        "prob_desc_sample_inputs": [
+            "7 1 4",
+            "30 20 10"
+        ],
+        "prob_desc_input_from": "standard input",
+        "prob_desc_description": "There are three friend living on the straight line Ox in Lineland. The first friend lives at the point x1, the second friend lives at the point x2, and the third friend lives at the point x3. They plan to celebrate the New Year together, so they need to meet at one point. What is the minimum total distance they have to travel in order to meet at some point and celebrate the New Year?It's guaranteed that the optimal answer is always integer.",
+        "lang": "Ruby",
+        "fix_exec_outcome": "",
+        "insert_cnt": 0,
+        "fix_source_code": "",
+        "prob_desc_notes": "NoteIn the first sample, friends should meet at the point 4. Thus, the first friend has to travel the distance of 3 (from the point 7 to the point 4), the second friend also has to travel the distance of 3 (from the point 1 to the point 4), while the third friend should not go anywhere because he lives at the point 4.",
+        "file_name": "Ruby.jsonl",
+        "tags": [
+            "math",
+            "sortings",
+            "implementation"
+        ],
+        "prob_desc_output_to": "standard output",
+        "prob_desc_created_at": "1475494500",
+        "prob_desc_memory_limit": "256 megabytes",
+        "prob_desc_sample_outputs": [
+            "6",
+            "20"
+        ],
+        "hidden_unit_tests": "[{\"input\": \"7 1 4\\r\\n\", \"output\": [\"6\"]}, {\"input\": \"30 20 10\\r\\n\", \"output\": [\"20\"]}, {\"input\": \"1 4 100\\r\\n\", \"output\": [\"99\"]}, {\"input\": \"100 1 91\\r\\n\", \"output\": [\"99\"]}, {\"input\": \"1 45 100\\r\\n\", \"output\": [\"99\"]}, {\"input\": \"1 2 3\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"71 85 88\\r\\n\", \"output\": [\"17\"]}, {\"input\": \"30 38 99\\r\\n\", \"output\": [\"69\"]}, {\"input\": \"23 82 95\\r\\n\", \"output\": [\"72\"]}, {\"input\": \"22 41 47\\r\\n\", \"output\": [\"25\"]}, {\"input\": \"9 94 77\\r\\n\", \"output\": [\"85\"]}, {\"input\": \"1 53 51\\r\\n\", \"output\": [\"52\"]}, {\"input\": \"25 97 93\\r\\n\", \"output\": [\"72\"]}, {\"input\": \"42 53 51\\r\\n\", \"output\": [\"11\"]}, {\"input\": \"81 96 94\\r\\n\", \"output\": [\"15\"]}, {\"input\": \"21 5 93\\r\\n\", \"output\": [\"88\"]}, {\"input\": \"50 13 75\\r\\n\", \"output\": [\"62\"]}, {\"input\": \"41 28 98\\r\\n\", \"output\": [\"70\"]}, {\"input\": \"69 46 82\\r\\n\", \"output\": [\"36\"]}, {\"input\": \"87 28 89\\r\\n\", \"output\": [\"61\"]}, {\"input\": \"44 45 40\\r\\n\", \"output\": [\"5\"]}, {\"input\": \"86 97 68\\r\\n\", \"output\": [\"29\"]}, {\"input\": \"43 92 30\\r\\n\", \"output\": [\"62\"]}, {\"input\": \"16 70 1\\r\\n\", \"output\": [\"69\"]}, {\"input\": \"40 46 19\\r\\n\", \"output\": [\"27\"]}, {\"input\": \"71 38 56\\r\\n\", \"output\": [\"33\"]}, {\"input\": \"82 21 80\\r\\n\", \"output\": [\"61\"]}, {\"input\": \"75 8 35\\r\\n\", \"output\": [\"67\"]}, {\"input\": \"75 24 28\\r\\n\", \"output\": [\"51\"]}, {\"input\": \"78 23 56\\r\\n\", \"output\": [\"55\"]}, {\"input\": \"85 31 10\\r\\n\", \"output\": [\"75\"]}, {\"input\": \"76 50 9\\r\\n\", \"output\": [\"67\"]}, {\"input\": \"95 37 34\\r\\n\", \"output\": [\"61\"]}, {\"input\": \"84 61 35\\r\\n\", \"output\": [\"49\"]}, {\"input\": \"87 85 37\\r\\n\", \"output\": [\"50\"]}, {\"input\": \"1 3 2\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"4 2 6\\r\\n\", \"output\": [\"4\"]}, {\"input\": \"6 9 3\\r\\n\", \"output\": [\"6\"]}, {\"input\": \"12 4 8\\r\\n\", \"output\": [\"8\"]}, {\"input\": \"15 10 5\\r\\n\", \"output\": [\"10\"]}, {\"input\": \"1 50 17\\r\\n\", \"output\": [\"49\"]}, {\"input\": \"10 5 15\\r\\n\", \"output\": [\"10\"]}, {\"input\": \"8 1 9\\r\\n\", \"output\": [\"8\"]}, {\"input\": \"3 5 4\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"2 1 3\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"1 8 2\\r\\n\", \"output\": [\"7\"]}, {\"input\": \"1 100 2\\r\\n\", \"output\": [\"99\"]}, {\"input\": \"1 4 6\\r\\n\", \"output\": [\"5\"]}]"
+    }
+}

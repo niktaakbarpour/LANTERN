@@ -1,0 +1,57 @@
+{
+    "oai_response": {
+        "data": [
+            {
+                "content": "input = gets.chomp\nif input.match?(/\\A[-+]?[0-9]*\\z/)\n  puts (input.to_i & 1) == 1 ? \"Ehab\" : \"Mahmoud\"\nelse\n  puts \"Invalid input. Please enter an integer.\"\nend",
+                "type": "text"
+            }
+        ],
+        "prompt": [
+            "Fix a buggy program written in Ruby language to solve the following programming problem:\nDescription: Mahmoud and Ehab play a game called the even-odd game. Ehab chooses his favorite integer n and then they take turns, starting from Mahmoud. In each player's turn, he has to choose an integer a and subtract it from n such that:  1\u2009\u2264\u2009a\u2009\u2264\u2009n.  If it's Mahmoud's turn, a has to be even, but if it's Ehab's turn, a has to be odd. If the current player can't choose any number satisfying the conditions, he loses. Can you determine the winner if they both play optimally?\nInput Specification: The only line contains an integer n (1\u2009\u2264\u2009n\u2009\u2264\u2009109), the number at the beginning of the game.\nOutput Specification: Output \"Mahmoud\" (without quotes) if Mahmoud wins and \"Ehab\" (without quotes) otherwise.\n\nSample Input:\n1\nSample Output:\nEhab\n\nSample Input:\n2\nSample Output:\nMahmoud\n\nNotes: NoteIn the first sample, Mahmoud can't choose any integer a initially because there is no positive even integer less than or equal to 1 so Ehab wins.In the second sample, Mahmoud has to choose a\u2009=\u20092 and subtract it from n. It's Ehab's turn and n\u2009=\u20090. There is no positive odd integer less than or equal to 0 so Mahmoud wins.\nTake input from standard input and output to standard output\n\nHere is the code with a bug of WRONG_ANSWER:\n\nputs (gets.to_i&1)?\"Ehab\":\"Mahmoud\"\n\n\nProvide the fixed Ruby code without any description or extra tokens.\n\nFixed source code:",
+            ""
+        ]
+    },
+    "source_data": {
+        "delete_cnt": 0,
+        "fix_code_uid": "",
+        "difficulty": 800,
+        "replace_cnt": 0,
+        "fix_ops_cnt": 1,
+        "prob_desc_output_spec": "Output \"Mahmoud\" (without quotes) if Mahmoud wins and \"Ehab\" (without quotes) otherwise.",
+        "apr_id": "4fb6ec4039d364e73bc614c78329db03",
+        "bug_source_code": "puts (gets.to_i&1)?\"Ehab\":\"Mahmoud\"\n",
+        "prob_desc_input_spec": "The only line contains an integer n (1\u2009\u2264\u2009n\u2009\u2264\u2009109), the number at the beginning of the game.",
+        "src_uid": "5e74750f44142624e6da41d4b35beb9a",
+        "bug_code_uid": "fd277b45c6029dbda0065dec0a6ec8af",
+        "equal_cnt": 2,
+        "prob_desc_time_limit": "1 second",
+        "similarity_score": 0.9599999785423279,
+        "bug_exec_outcome": "WRONG_ANSWER",
+        "lang_cluster": "Ruby",
+        "potential_dominant_fix_op": "insert",
+        "prob_desc_sample_inputs": [
+            "1",
+            "2"
+        ],
+        "prob_desc_input_from": "standard input",
+        "prob_desc_description": "Mahmoud and Ehab play a game called the even-odd game. Ehab chooses his favorite integer n and then they take turns, starting from Mahmoud. In each player's turn, he has to choose an integer a and subtract it from n such that:  1\u2009\u2264\u2009a\u2009\u2264\u2009n.  If it's Mahmoud's turn, a has to be even, but if it's Ehab's turn, a has to be odd. If the current player can't choose any number satisfying the conditions, he loses. Can you determine the winner if they both play optimally?",
+        "lang": "Ruby",
+        "fix_exec_outcome": "",
+        "insert_cnt": 1,
+        "fix_source_code": "",
+        "prob_desc_notes": "NoteIn the first sample, Mahmoud can't choose any integer a initially because there is no positive even integer less than or equal to 1 so Ehab wins.In the second sample, Mahmoud has to choose a\u2009=\u20092 and subtract it from n. It's Ehab's turn and n\u2009=\u20090. There is no positive odd integer less than or equal to 0 so Mahmoud wins.",
+        "file_name": "Ruby.jsonl",
+        "tags": [
+            "math",
+            "games"
+        ],
+        "prob_desc_output_to": "standard output",
+        "prob_desc_created_at": "1522771500",
+        "prob_desc_memory_limit": "256 megabytes",
+        "prob_desc_sample_outputs": [
+            "Ehab",
+            "Mahmoud"
+        ],
+        "hidden_unit_tests": "[{\"input\": \"1\\r\\n\", \"output\": [\"Ehab\"]}, {\"input\": \"2\\r\\n\", \"output\": [\"Mahmoud\"]}, {\"input\": \"10000\\r\\n\", \"output\": [\"Mahmoud\"]}, {\"input\": \"33333\\r\\n\", \"output\": [\"Ehab\"]}, {\"input\": \"5\\r\\n\", \"output\": [\"Ehab\"]}, {\"input\": \"1000000000\\r\\n\", \"output\": [\"Mahmoud\"]}, {\"input\": \"999999999\\r\\n\", \"output\": [\"Ehab\"]}, {\"input\": \"123123123\\r\\n\", \"output\": [\"Ehab\"]}, {\"input\": \"22222221\\r\\n\", \"output\": [\"Ehab\"]}, {\"input\": \"22222220\\r\\n\", \"output\": [\"Mahmoud\"]}, {\"input\": \"3\\r\\n\", \"output\": [\"Ehab\"]}, {\"input\": \"4\\r\\n\", \"output\": [\"Mahmoud\"]}, {\"input\": \"6\\r\\n\", \"output\": [\"Mahmoud\"]}, {\"input\": \"7\\r\\n\", \"output\": [\"Ehab\"]}, {\"input\": \"8\\r\\n\", \"output\": [\"Mahmoud\"]}, {\"input\": \"9\\r\\n\", \"output\": [\"Ehab\"]}, {\"input\": \"10\\r\\n\", \"output\": [\"Mahmoud\"]}, {\"input\": \"536870912\\r\\n\", \"output\": [\"Mahmoud\"]}, {\"input\": \"536870913\\r\\n\", \"output\": [\"Ehab\"]}, {\"input\": \"536870911\\r\\n\", \"output\": [\"Ehab\"]}]"
+    }
+}
