@@ -1,0 +1,59 @@
+{
+    "oai_response": {
+        "choices": [
+            {
+                "message": {
+                    "role": "assistant",
+                    "content": "```csharp\nusing System;\n\nnamespace AlgoTasks\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            long n = long.Parse(Console.ReadLine());\n            bool turn = true; // starting with Mahmoud\n            while(n > 0)\n            {\n                if (turn)\n                {\n                    if (n % 2 == 0)\n                        n -= 2;\n                    else\n                        n--;\n                    turn = false;\n                }\n                else\n                {\n                    if (n % 2 != 0)\n                        n--;\n                    else\n                    {\n                        if (n - 2 >= 0)\n                            n -= 2;\n                        else\n                            n = 0;\n                    }\n                    turn = true;\n                }\n            }\n            if (!turn)\n                Console.WriteLine(\"Ehab\");\n            else\n                Console.WriteLine(\"Mahmoud\");\n        }\n    }\n}\n```"
+                }
+            }
+        ],
+        "prompt": [
+            "Fix a buggy program written in C# language to solve the following programming problem:\nDescription: Mahmoud and Ehab play a game called the even-odd game. Ehab chooses his favorite integer n and then they take turns, starting from Mahmoud. In each player's turn, he has to choose an integer a and subtract it from n such that:  1\u2009\u2264\u2009a\u2009\u2264\u2009n.  If it's Mahmoud's turn, a has to be even, but if it's Ehab's turn, a has to be odd. If the current player can't choose any number satisfying the conditions, he loses. Can you determine the winner if they both play optimally?\nInput Specification: The only line contains an integer n (1\u2009\u2264\u2009n\u2009\u2264\u2009109), the number at the beginning of the game.\nOutput Specification: Output \"Mahmoud\" (without quotes) if Mahmoud wins and \"Ehab\" (without quotes) otherwise.\n\nSample Input:\n1\nSample Output:\nEhab\n\nSample Input:\n2\nSample Output:\nMahmoud\n\nNotes: NoteIn the first sample, Mahmoud can't choose any integer a initially because there is no positive even integer less than or equal to 1 so Ehab wins.In the second sample, Mahmoud has to choose a\u2009=\u20092 and subtract it from n. It's Ehab's turn and n\u2009=\u20090. There is no positive odd integer less than or equal to 0 so Mahmoud wins.\nTake input from standard input and output to standard output\n\nHere is the code with a bug of WRONG_ANSWER:\n\nusing System;\nusing System.Linq;\nusing System.Collections.Generic;\n\nnamespace AlgoTasks\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            //---------------------------------------------------------------------\n            long n = long.Parse(Console.ReadLine());\n            bool turn = false /*\u041c\u0430\u0445\u043c\u0443\u0434*/;\n            while(true)\n            {\n                if (!turn)\n                {\n                    if (n - 2 >= 0) n -= 2;\n                    else\n                    {\n                        Console.WriteLine(\"Ehab\");\n                        return;\n                    }\n                    turn = true;\n                }\n                else\n                {\n                    if (n - 1 >= 0) n--;\n                    else\n                    {\n                        Console.WriteLine(\"Mahmoud\");\n                        return;\n                    }\n                    turn = false;\n                }\n            }\n            //---------------------------------------------------------------------\n            /*int n = int.Parse(Console.ReadLine());\n            int[] x = Console.ReadLine().Split(' ').Select(s => int.Parse(s)).ToArray();\n\n            //5\n            //3 10 8 6 11\n            //4\n            //1\n            //10\n            //3\n            //11\n\n            //0\n            //4\n            //1\n            //5\n\n            x = new SortedSet<int>(x).ToArray();\n            int maxPrice = x[n - 1];\n            n = x.Length;\n            int[] dp = new int[maxPrice + 1];\n            int c = 1;\n            for (int i = 0; i < n; i++)\n                dp[x[i]] = c++;\n\n            for (int i = 1; i <= maxPrice; i++)\n                dp[i] = Math.Max(dp[i], dp[i - 1]);\n\n            int q = int.Parse(Console.ReadLine());\n            for (int i = 0; i < q; i++)\n            {\n                long m = long.Parse(Console.ReadLine());\n                if (m >= maxPrice)\n                    Console.WriteLine(dp[maxPrice]);\n                else\n                    Console.WriteLine(dp[m]);\n            }*/\n            //---------------------------------------------------------------------\n        }\n    }\n}\n\n\nProvide the fixed C# code without any description or extra tokens.\n\nFixed source code:",
+            ""
+        ]
+    },
+    "source_data": {
+        "delete_cnt": 1,
+        "fix_code_uid": "",
+        "difficulty": 800,
+        "replace_cnt": 2,
+        "fix_ops_cnt": 3,
+        "prob_desc_output_spec": "Output \"Mahmoud\" (without quotes) if Mahmoud wins and \"Ehab\" (without quotes) otherwise.",
+        "apr_id": "7bc69e27d5ea7709975ea1c91a47072a",
+        "bug_source_code": "using System;\nusing System.Linq;\nusing System.Collections.Generic;\n\nnamespace AlgoTasks\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            //---------------------------------------------------------------------\n            long n = long.Parse(Console.ReadLine());\n            bool turn = false /*\u041c\u0430\u0445\u043c\u0443\u0434*/;\n            while(true)\n            {\n                if (!turn)\n                {\n                    if (n - 2 >= 0) n -= 2;\n                    else\n                    {\n                        Console.WriteLine(\"Ehab\");\n                        return;\n                    }\n                    turn = true;\n                }\n                else\n                {\n                    if (n - 1 >= 0) n--;\n                    else\n                    {\n                        Console.WriteLine(\"Mahmoud\");\n                        return;\n                    }\n                    turn = false;\n                }\n            }\n            //---------------------------------------------------------------------\n            /*int n = int.Parse(Console.ReadLine());\n            int[] x = Console.ReadLine().Split(' ').Select(s => int.Parse(s)).ToArray();\n\n            //5\n            //3 10 8 6 11\n            //4\n            //1\n            //10\n            //3\n            //11\n\n            //0\n            //4\n            //1\n            //5\n\n            x = new SortedSet<int>(x).ToArray();\n            int maxPrice = x[n - 1];\n            n = x.Length;\n            int[] dp = new int[maxPrice + 1];\n            int c = 1;\n            for (int i = 0; i < n; i++)\n                dp[x[i]] = c++;\n\n            for (int i = 1; i <= maxPrice; i++)\n                dp[i] = Math.Max(dp[i], dp[i - 1]);\n\n            int q = int.Parse(Console.ReadLine());\n            for (int i = 0; i < q; i++)\n            {\n                long m = long.Parse(Console.ReadLine());\n                if (m >= maxPrice)\n                    Console.WriteLine(dp[maxPrice]);\n                else\n                    Console.WriteLine(dp[m]);\n            }*/\n            //---------------------------------------------------------------------\n        }\n    }\n}\n",
+        "prob_desc_input_spec": "The only line contains an integer n (1\u2009\u2264\u2009n\u2009\u2264\u2009109), the number at the beginning of the game.",
+        "src_uid": "5e74750f44142624e6da41d4b35beb9a",
+        "bug_code_uid": "a9ffe6092e376683996bee7ef59f7938",
+        "equal_cnt": 4,
+        "prob_desc_time_limit": "1 second",
+        "similarity_score": 0.8185146450996399,
+        "bug_exec_outcome": "WRONG_ANSWER",
+        "lang_cluster": "C#",
+        "potential_dominant_fix_op": "replace",
+        "prob_desc_sample_inputs": [
+            "1",
+            "2"
+        ],
+        "prob_desc_input_from": "standard input",
+        "prob_desc_description": "Mahmoud and Ehab play a game called the even-odd game. Ehab chooses his favorite integer n and then they take turns, starting from Mahmoud. In each player's turn, he has to choose an integer a and subtract it from n such that:  1\u2009\u2264\u2009a\u2009\u2264\u2009n.  If it's Mahmoud's turn, a has to be even, but if it's Ehab's turn, a has to be odd. If the current player can't choose any number satisfying the conditions, he loses. Can you determine the winner if they both play optimally?",
+        "lang": "Mono C#",
+        "fix_exec_outcome": "",
+        "insert_cnt": 0,
+        "fix_source_code": "",
+        "prob_desc_notes": "NoteIn the first sample, Mahmoud can't choose any integer a initially because there is no positive even integer less than or equal to 1 so Ehab wins.In the second sample, Mahmoud has to choose a\u2009=\u20092 and subtract it from n. It's Ehab's turn and n\u2009=\u20090. There is no positive odd integer less than or equal to 0 so Mahmoud wins.",
+        "file_name": "C#.jsonl",
+        "tags": [
+            "math",
+            "games"
+        ],
+        "prob_desc_output_to": "standard output",
+        "prob_desc_created_at": "1522771500",
+        "prob_desc_memory_limit": "256 megabytes",
+        "prob_desc_sample_outputs": [
+            "Ehab",
+            "Mahmoud"
+        ],
+        "hidden_unit_tests": "[{\"input\": \"1\\r\\n\", \"output\": [\"Ehab\"]}, {\"input\": \"2\\r\\n\", \"output\": [\"Mahmoud\"]}, {\"input\": \"10000\\r\\n\", \"output\": [\"Mahmoud\"]}, {\"input\": \"33333\\r\\n\", \"output\": [\"Ehab\"]}, {\"input\": \"5\\r\\n\", \"output\": [\"Ehab\"]}, {\"input\": \"1000000000\\r\\n\", \"output\": [\"Mahmoud\"]}, {\"input\": \"999999999\\r\\n\", \"output\": [\"Ehab\"]}, {\"input\": \"123123123\\r\\n\", \"output\": [\"Ehab\"]}, {\"input\": \"22222221\\r\\n\", \"output\": [\"Ehab\"]}, {\"input\": \"22222220\\r\\n\", \"output\": [\"Mahmoud\"]}, {\"input\": \"3\\r\\n\", \"output\": [\"Ehab\"]}, {\"input\": \"4\\r\\n\", \"output\": [\"Mahmoud\"]}, {\"input\": \"6\\r\\n\", \"output\": [\"Mahmoud\"]}, {\"input\": \"7\\r\\n\", \"output\": [\"Ehab\"]}, {\"input\": \"8\\r\\n\", \"output\": [\"Mahmoud\"]}, {\"input\": \"9\\r\\n\", \"output\": [\"Ehab\"]}, {\"input\": \"10\\r\\n\", \"output\": [\"Mahmoud\"]}, {\"input\": \"536870912\\r\\n\", \"output\": [\"Mahmoud\"]}, {\"input\": \"536870913\\r\\n\", \"output\": [\"Ehab\"]}, {\"input\": \"536870911\\r\\n\", \"output\": [\"Ehab\"]}]"
+    }
+}

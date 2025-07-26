@@ -1,0 +1,60 @@
+{
+    "oai_response": {
+        "choices": [
+            {
+                "message": {
+                    "role": "assistant",
+                    "content": "```ruby\ndef check(n, x, y)\n  while n > 0\n    return false if n % 10 != x && n % 10 != y\n    n /= 10\n  end\n  true\nend\n\nn = gets.to_i\ncount = 0\n(1..n).each do |i|\n  count += 1 if check(i, 4, 7) || check(i, 7, 4)\nend\nputs count\n```"
+                }
+            }
+        ],
+        "prompt": [
+            "Fix a buggy program written in Ruby language to solve the following programming problem:\nDescription: Polycarpus loves lucky numbers. Everybody knows that lucky numbers are positive integers, whose decimal representation (without leading zeroes) contain only the lucky digits x and y. For example, if x\u2009=\u20094, and y\u2009=\u20097, then numbers 47, 744, 4 are lucky.Let's call a positive integer a undoubtedly lucky, if there are such digits x and y (0\u2009\u2264\u2009x,\u2009y\u2009\u2264\u20099), that the decimal representation of number a (without leading zeroes) contains only digits x and y.Polycarpus has integer n. He wants to know how many positive integers that do not exceed n, are undoubtedly lucky. Help him, count this number.\nInput Specification: The first line contains a single integer n (1\u2009\u2264\u2009n\u2009\u2264\u2009109) \u2014 Polycarpus's number.\nOutput Specification: Print a single integer that says, how many positive integers that do not exceed n are undoubtedly lucky.\n\nSample Input:\n10\nSample Output:\n10\n\nSample Input:\n123\nSample Output:\n113\n\nNotes: NoteIn the first test sample all numbers that do not exceed 10 are undoubtedly lucky.In the second sample numbers 102, 103, 104, 105, 106, 107, 108, 109, 120, 123 are not undoubtedly lucky.\nTake input from standard input and output to standard output\n\nHere is the code with a bug of TIME_LIMIT_EXCEEDED:\n\nrequire 'set'\n\ndef check n\n  set=Set.new\n  while set.size<=2 && n>0\n    set<<n%10\n    n/=10\n  end\n  \n  set.size<=2\nend\n\nn=gets.to_i\n\ncount=0\n\n(1..n).each{|i|\n  count+=1 if check i\n}\n\nputs count\n\nProvide the fixed Ruby code without any description or extra tokens.\n\nFixed source code:",
+            ""
+        ]
+    },
+    "source_data": {
+        "delete_cnt": 0,
+        "fix_code_uid": "",
+        "difficulty": 1600,
+        "replace_cnt": 9,
+        "fix_ops_cnt": 11,
+        "prob_desc_output_spec": "Print a single integer that says, how many positive integers that do not exceed n are undoubtedly lucky.",
+        "apr_id": "c74cd8eea78e80ce1f0f9b10457e4728",
+        "bug_source_code": "require 'set'\n\ndef check n\n  set=Set.new\n  while set.size<=2 && n>0\n    set<<n%10\n    n/=10\n  end\n  \n  set.size<=2\nend\n\nn=gets.to_i\n\ncount=0\n\n(1..n).each{|i|\n  count+=1 if check i\n}\n\nputs count",
+        "prob_desc_input_spec": "The first line contains a single integer n (1\u2009\u2264\u2009n\u2009\u2264\u2009109) \u2014 Polycarpus's number.",
+        "src_uid": "0f7f10557602c8c2f2eb80762709ffc4",
+        "bug_code_uid": "d3dad683f36c19505a178376b2ec4a6f",
+        "equal_cnt": 11,
+        "prob_desc_time_limit": "2 seconds",
+        "similarity_score": 0.30733945965766907,
+        "bug_exec_outcome": "TIME_LIMIT_EXCEEDED",
+        "lang_cluster": "Ruby",
+        "potential_dominant_fix_op": "replace",
+        "prob_desc_sample_inputs": [
+            "10",
+            "123"
+        ],
+        "prob_desc_input_from": "standard input",
+        "prob_desc_description": "Polycarpus loves lucky numbers. Everybody knows that lucky numbers are positive integers, whose decimal representation (without leading zeroes) contain only the lucky digits x and y. For example, if x\u2009=\u20094, and y\u2009=\u20097, then numbers 47, 744, 4 are lucky.Let's call a positive integer a undoubtedly lucky, if there are such digits x and y (0\u2009\u2264\u2009x,\u2009y\u2009\u2264\u20099), that the decimal representation of number a (without leading zeroes) contains only digits x and y.Polycarpus has integer n. He wants to know how many positive integers that do not exceed n, are undoubtedly lucky. Help him, count this number.",
+        "lang": "Ruby",
+        "fix_exec_outcome": "",
+        "insert_cnt": 2,
+        "fix_source_code": "",
+        "prob_desc_notes": "NoteIn the first test sample all numbers that do not exceed 10 are undoubtedly lucky.In the second sample numbers 102, 103, 104, 105, 106, 107, 108, 109, 120, 123 are not undoubtedly lucky.",
+        "file_name": "Ruby.jsonl",
+        "tags": [
+            "dfs and similar",
+            "brute force",
+            "bitmasks"
+        ],
+        "prob_desc_output_to": "standard output",
+        "prob_desc_created_at": "1353079800",
+        "prob_desc_memory_limit": "256 megabytes",
+        "prob_desc_sample_outputs": [
+            "10",
+            "113"
+        ],
+        "hidden_unit_tests": "[{\"input\": \"10\\r\\n\", \"output\": [\"10\"]}, {\"input\": \"123\\r\\n\", \"output\": [\"113\"]}, {\"input\": \"1\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"2\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"1000\\r\\n\", \"output\": [\"352\"]}, {\"input\": \"1000000000\\r\\n\", \"output\": [\"40744\"]}, {\"input\": \"999999999\\r\\n\", \"output\": [\"40743\"]}, {\"input\": \"999999998\\r\\n\", \"output\": [\"40742\"]}, {\"input\": \"999999997\\r\\n\", \"output\": [\"40741\"]}, {\"input\": \"909090901\\r\\n\", \"output\": [\"38532\"]}, {\"input\": \"142498040\\r\\n\", \"output\": [\"21671\"]}, {\"input\": \"603356456\\r\\n\", \"output\": [\"31623\"]}, {\"input\": \"64214872\\r\\n\", \"output\": [\"15759\"]}, {\"input\": \"820040584\\r\\n\", \"output\": [\"36407\"]}, {\"input\": \"442198\\r\\n\", \"output\": [\"3071\"]}, {\"input\": \"784262\\r\\n\", \"output\": [\"4079\"]}, {\"input\": \"642678\\r\\n\", \"output\": [\"3615\"]}, {\"input\": \"468390\\r\\n\", \"output\": [\"3223\"]}, {\"input\": \"326806\\r\\n\", \"output\": [\"2759\"]}, {\"input\": \"940\\r\\n\", \"output\": [\"331\"]}, {\"input\": \"356\\r\\n\", \"output\": [\"175\"]}, {\"input\": \"68\\r\\n\", \"output\": [\"68\"]}, {\"input\": \"132\\r\\n\", \"output\": [\"114\"]}, {\"input\": \"72\\r\\n\", \"output\": [\"72\"]}, {\"input\": \"89\\r\\n\", \"output\": [\"89\"]}, {\"input\": \"3\\r\\n\", \"output\": [\"3\"]}, {\"input\": \"4\\r\\n\", \"output\": [\"4\"]}, {\"input\": \"5\\r\\n\", \"output\": [\"5\"]}, {\"input\": \"6\\r\\n\", \"output\": [\"6\"]}, {\"input\": \"7\\r\\n\", \"output\": [\"7\"]}, {\"input\": \"8\\r\\n\", \"output\": [\"8\"]}, {\"input\": \"9\\r\\n\", \"output\": [\"9\"]}, {\"input\": \"101\\r\\n\", \"output\": [\"101\"]}, {\"input\": \"102\\r\\n\", \"output\": [\"101\"]}]"
+    }
+}

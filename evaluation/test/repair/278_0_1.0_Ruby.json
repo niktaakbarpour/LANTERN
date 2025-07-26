@@ -1,0 +1,58 @@
+{
+    "oai_response": {
+        "choices": [
+            {
+                "message": {
+                    "role": "assistant",
+                    "content": "```ruby\na, b = gets.chomp.split.map(&:to_i)\n\ndef factorial(n)\n  (1..n).reduce(:*) || 1\nend\n\ndef gcd(a, b)\n  while b != 0\n    a, b = b, a % b\n  end\n  a\nend\n\nputs gcd(factorial(a), factorial(b))\n```"
+                }
+            }
+        ],
+        "prompt": [
+            "Fix a buggy program written in Ruby language to solve the following programming problem:\nDescription: Holidays have finished. Thanks to the help of the hacker Leha, Noora managed to enter the university of her dreams which is located in a town Pavlopolis. It's well known that universities provide students with dormitory for the period of university studies. Consequently Noora had to leave Vi\u010dkopolis and move to Pavlopolis. Thus Leha was left completely alone in a quiet town Vi\u010dkopolis. He almost even fell into a depression from boredom!Leha came up with a task for himself to relax a little. He chooses two integers A and B and then calculates the greatest common divisor of integers \"A factorial\" and \"B factorial\". Formally the hacker wants to find out GCD(A!,\u2009B!). It's well known that the factorial of an integer x is a product of all positive integers less than or equal to x. Thus x!\u2009=\u20091\u00b72\u00b73\u00b7...\u00b7(x\u2009-\u20091)\u00b7x. For example 4!\u2009=\u20091\u00b72\u00b73\u00b74\u2009=\u200924. Recall that GCD(x,\u2009y) is the largest positive integer q that divides (without a remainder) both x and y.Leha has learned how to solve this task very effective. You are able to cope with it not worse, aren't you?\nInput Specification: The first and single line contains two integers A and B (1\u2009\u2264\u2009A,\u2009B\u2009\u2264\u2009109,\u2009min(A,\u2009B)\u2009\u2264\u200912).\nOutput Specification: Print a single integer denoting the greatest common divisor of integers A! and B!.\n\nSample Input:\n4 3\nSample Output:\n6\n\nNotes: NoteConsider the sample.4!\u2009=\u20091\u00b72\u00b73\u00b74\u2009=\u200924. 3!\u2009=\u20091\u00b72\u00b73\u2009=\u20096. The greatest common divisor of integers 24 and 6 is exactly 6.\nTake input from standard input and output to standard output\n\nHere is the code with a bug of TIME_LIMIT_EXCEEDED:\n\nb = gets\na = b.split(\" \").sort\nres = 1 ; i=1 ; mn = a[0].to_i\n\nuntil i > mn\n      res = res * i\n      i+=1\nend\n\nprint res \n\nProvide the fixed Ruby code without any description or extra tokens.\n\nFixed source code:",
+            ""
+        ]
+    },
+    "source_data": {
+        "delete_cnt": 3,
+        "fix_code_uid": "",
+        "difficulty": 800,
+        "replace_cnt": 5,
+        "fix_ops_cnt": 12,
+        "prob_desc_output_spec": "Print a single integer denoting the greatest common divisor of integers A! and B!.",
+        "apr_id": "e6ee5b28813b0c189853d3f1cba33068",
+        "bug_source_code": "b = gets\na = b.split(\" \").sort\nres = 1 ; i=1 ; mn = a[0].to_i\n\nuntil i > mn\n      res = res * i\n      i+=1\nend\n\nprint res ",
+        "prob_desc_input_spec": "The first and single line contains two integers A and B (1\u2009\u2264\u2009A,\u2009B\u2009\u2264\u2009109,\u2009min(A,\u2009B)\u2009\u2264\u200912).",
+        "src_uid": "7bf30ceb24b66d91382e97767f9feeb6",
+        "bug_code_uid": "418ab77ec38c772d9e163f7a40ea2573",
+        "equal_cnt": 12,
+        "prob_desc_time_limit": "1 second",
+        "similarity_score": 0.43816253542900085,
+        "bug_exec_outcome": "TIME_LIMIT_EXCEEDED",
+        "lang_cluster": "Ruby",
+        "potential_dominant_fix_op": "replace",
+        "prob_desc_sample_inputs": [
+            "4 3"
+        ],
+        "prob_desc_input_from": "standard input",
+        "prob_desc_description": "Holidays have finished. Thanks to the help of the hacker Leha, Noora managed to enter the university of her dreams which is located in a town Pavlopolis. It's well known that universities provide students with dormitory for the period of university studies. Consequently Noora had to leave Vi\u010dkopolis and move to Pavlopolis. Thus Leha was left completely alone in a quiet town Vi\u010dkopolis. He almost even fell into a depression from boredom!Leha came up with a task for himself to relax a little. He chooses two integers A and B and then calculates the greatest common divisor of integers \"A factorial\" and \"B factorial\". Formally the hacker wants to find out GCD(A!,\u2009B!). It's well known that the factorial of an integer x is a product of all positive integers less than or equal to x. Thus x!\u2009=\u20091\u00b72\u00b73\u00b7...\u00b7(x\u2009-\u20091)\u00b7x. For example 4!\u2009=\u20091\u00b72\u00b73\u00b74\u2009=\u200924. Recall that GCD(x,\u2009y) is the largest positive integer q that divides (without a remainder) both x and y.Leha has learned how to solve this task very effective. You are able to cope with it not worse, aren't you?",
+        "lang": "Ruby",
+        "fix_exec_outcome": "",
+        "insert_cnt": 4,
+        "fix_source_code": "",
+        "prob_desc_notes": "NoteConsider the sample.4!\u2009=\u20091\u00b72\u00b73\u00b74\u2009=\u200924. 3!\u2009=\u20091\u00b72\u00b73\u2009=\u20096. The greatest common divisor of integers 24 and 6 is exactly 6.",
+        "file_name": "Ruby.jsonl",
+        "tags": [
+            "number theory",
+            "math",
+            "implementation"
+        ],
+        "prob_desc_output_to": "standard output",
+        "prob_desc_created_at": "1499011500",
+        "prob_desc_memory_limit": "256 megabytes",
+        "prob_desc_sample_outputs": [
+            "6"
+        ],
+        "hidden_unit_tests": "[{\"input\": \"4 3\\r\\n\", \"output\": [\"6\"]}, {\"input\": \"10 399603090\\r\\n\", \"output\": [\"3628800\"]}, {\"input\": \"6 973151934\\r\\n\", \"output\": [\"720\"]}, {\"input\": \"2 841668075\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"7 415216919\\r\\n\", \"output\": [\"5040\"]}, {\"input\": \"3 283733059\\r\\n\", \"output\": [\"6\"]}, {\"input\": \"11 562314608\\r\\n\", \"output\": [\"39916800\"]}, {\"input\": \"3 990639260\\r\\n\", \"output\": [\"6\"]}, {\"input\": \"11 859155400\\r\\n\", \"output\": [\"39916800\"]}, {\"input\": \"1 1\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"5 3\\r\\n\", \"output\": [\"6\"]}, {\"input\": \"1 4\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"5 4\\r\\n\", \"output\": [\"24\"]}, {\"input\": \"1 12\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"9 7\\r\\n\", \"output\": [\"5040\"]}, {\"input\": \"2 3\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"6 11\\r\\n\", \"output\": [\"720\"]}, {\"input\": \"6 7\\r\\n\", \"output\": [\"720\"]}, {\"input\": \"11 11\\r\\n\", \"output\": [\"39916800\"]}, {\"input\": \"4 999832660\\r\\n\", \"output\": [\"24\"]}, {\"input\": \"7 999228288\\r\\n\", \"output\": [\"5040\"]}, {\"input\": \"11 999257105\\r\\n\", \"output\": [\"39916800\"]}, {\"input\": \"11 999286606\\r\\n\", \"output\": [\"39916800\"]}, {\"input\": \"3 999279109\\r\\n\", \"output\": [\"6\"]}, {\"input\": \"999632727 11\\r\\n\", \"output\": [\"39916800\"]}, {\"input\": \"999625230 7\\r\\n\", \"output\": [\"5040\"]}, {\"input\": \"999617047 3\\r\\n\", \"output\": [\"6\"]}, {\"input\": \"999646548 7\\r\\n\", \"output\": [\"5040\"]}, {\"input\": \"999639051 3\\r\\n\", \"output\": [\"6\"]}, {\"input\": \"12 12\\r\\n\", \"output\": [\"479001600\"]}, {\"input\": \"12 1\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"1213 5\\r\\n\", \"output\": [\"120\"]}, {\"input\": \"8 9\\r\\n\", \"output\": [\"40320\"]}, {\"input\": \"12 9\\r\\n\", \"output\": [\"362880\"]}, {\"input\": \"12 1000000000\\r\\n\", \"output\": [\"479001600\"]}, {\"input\": \"1000000000 1\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"12 13\\r\\n\", \"output\": [\"479001600\"]}, {\"input\": \"2 29845\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"10 21\\r\\n\", \"output\": [\"3628800\"]}, {\"input\": \"12 20\\r\\n\", \"output\": [\"479001600\"]}, {\"input\": \"15 12\\r\\n\", \"output\": [\"479001600\"]}, {\"input\": \"1000000000 12\\r\\n\", \"output\": [\"479001600\"]}, {\"input\": \"11 30\\r\\n\", \"output\": [\"39916800\"]}, {\"input\": \"17 12\\r\\n\", \"output\": [\"479001600\"]}, {\"input\": \"4 19\\r\\n\", \"output\": [\"24\"]}, {\"input\": \"12 15\\r\\n\", \"output\": [\"479001600\"]}, {\"input\": \"20 6\\r\\n\", \"output\": [\"720\"]}, {\"input\": \"10 20\\r\\n\", \"output\": [\"3628800\"]}, {\"input\": \"10 10\\r\\n\", \"output\": [\"3628800\"]}, {\"input\": \"22 12\\r\\n\", \"output\": [\"479001600\"]}, {\"input\": \"20 12\\r\\n\", \"output\": [\"479001600\"]}, {\"input\": \"12 23\\r\\n\", \"output\": [\"479001600\"]}, {\"input\": \"12 22\\r\\n\", \"output\": [\"479001600\"]}, {\"input\": \"18 3\\r\\n\", \"output\": [\"6\"]}, {\"input\": \"14 10\\r\\n\", \"output\": [\"3628800\"]}, {\"input\": \"14 12\\r\\n\", \"output\": [\"479001600\"]}, {\"input\": \"8 3\\r\\n\", \"output\": [\"6\"]}, {\"input\": \"5 5\\r\\n\", \"output\": [\"120\"]}]"
+    }
+}

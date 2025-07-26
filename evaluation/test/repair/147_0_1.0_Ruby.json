@@ -1,0 +1,58 @@
+{
+    "oai_response": {
+        "choices": [
+            {
+                "message": {
+                    "role": "assistant",
+                    "content": "```ruby\na, b = gets.split.map(&:to_i), gets.split.map(&:to_i)\n\nmin = 10\na.each do |i|\n  b.each do |j|\n    if (i * 10 + j) < min\n      min = i * 10 + j\n    end\n if (i * 10 + j) < min && min >= 10\n       min = i * 10 + j\n    end\nend\nend\n\nputs min < 10 ? 10 : min\n```"
+                }
+            }
+        ],
+        "prompt": [
+            "Fix a buggy program written in Ruby language to solve the following programming problem:\nDescription: You are given two lists of non-zero digits.Let's call an integer pretty if its (base 10) representation has at least one digit from the first list and at least one digit from the second list. What is the smallest positive pretty integer?\nInput Specification: The first line contains two integers n and m (1\u2009\u2264\u2009n,\u2009m\u2009\u2264\u20099) \u2014 the lengths of the first and the second lists, respectively. The second line contains n distinct digits a1,\u2009a2,\u2009...,\u2009an (1\u2009\u2264\u2009ai\u2009\u2264\u20099) \u2014 the elements of the first list. The third line contains m distinct digits b1,\u2009b2,\u2009...,\u2009bm (1\u2009\u2264\u2009bi\u2009\u2264\u20099) \u2014 the elements of the second list.\nOutput Specification: Print the smallest pretty integer.\n\nSample Input:\n2 3\n4 2\n5 7 6\nSample Output:\n25\n\nSample Input:\n8 8\n1 2 3 4 5 6 7 8\n8 7 6 5 4 3 2 1\nSample Output:\n1\n\nNotes: NoteIn the first example 25, 46, 24567 are pretty, as well as many other integers. The smallest among them is 25. 42 and 24 are not pretty because they don't have digits from the second list.In the second example all integers that have at least one digit different from 9 are pretty. It's obvious that the smallest among them is 1, because it's the smallest positive integer.\nTake input from standard input and output to standard output\n\nHere is the code with a bug of WRONG_ANSWER:\n\ngets\na,b=$<.map{|e|e.split}\nputs (a&b).empty? ? a.min+b.min : (a&b).min\n\nProvide the fixed Ruby code without any description or extra tokens.\n\nFixed source code:",
+            ""
+        ]
+    },
+    "source_data": {
+        "delete_cnt": 0,
+        "fix_code_uid": "",
+        "difficulty": 900,
+        "replace_cnt": 1,
+        "fix_ops_cnt": 3,
+        "prob_desc_output_spec": "Print the smallest pretty integer.",
+        "apr_id": "385a02301b233de6f92349eca52d609b",
+        "bug_source_code": "gets\na,b=$<.map{|e|e.split}\nputs (a&b).empty? ? a.min+b.min : (a&b).min",
+        "prob_desc_input_spec": "The first line contains two integers n and m (1\u2009\u2264\u2009n,\u2009m\u2009\u2264\u20099) \u2014 the lengths of the first and the second lists, respectively. The second line contains n distinct digits a1,\u2009a2,\u2009...,\u2009an (1\u2009\u2264\u2009ai\u2009\u2264\u20099) \u2014 the elements of the first list. The third line contains m distinct digits b1,\u2009b2,\u2009...,\u2009bm (1\u2009\u2264\u2009bi\u2009\u2264\u20099) \u2014 the elements of the second list.",
+        "src_uid": "3a0c1b6d710fd8f0b6daf420255d76ee",
+        "bug_code_uid": "c4155dc0e70535b4f91a2c9517cec939",
+        "equal_cnt": 4,
+        "prob_desc_time_limit": "1 second",
+        "similarity_score": 0.875,
+        "bug_exec_outcome": "WRONG_ANSWER",
+        "lang_cluster": "Ruby",
+        "potential_dominant_fix_op": "insert",
+        "prob_desc_sample_inputs": [
+            "2 3\n4 2\n5 7 6",
+            "8 8\n1 2 3 4 5 6 7 8\n8 7 6 5 4 3 2 1"
+        ],
+        "prob_desc_input_from": "standard input",
+        "prob_desc_description": "You are given two lists of non-zero digits.Let's call an integer pretty if its (base 10) representation has at least one digit from the first list and at least one digit from the second list. What is the smallest positive pretty integer?",
+        "lang": "Ruby",
+        "fix_exec_outcome": "",
+        "insert_cnt": 2,
+        "fix_source_code": "",
+        "prob_desc_notes": "NoteIn the first example 25, 46, 24567 are pretty, as well as many other integers. The smallest among them is 25. 42 and 24 are not pretty because they don't have digits from the second list.In the second example all integers that have at least one digit different from 9 are pretty. It's obvious that the smallest among them is 1, because it's the smallest positive integer.",
+        "file_name": "Ruby.jsonl",
+        "tags": [
+            "implementation"
+        ],
+        "prob_desc_output_to": "standard output",
+        "prob_desc_created_at": "1508054700",
+        "prob_desc_memory_limit": "256 megabytes",
+        "prob_desc_sample_outputs": [
+            "25",
+            "1"
+        ],
+        "hidden_unit_tests": "[{\"input\": \"2 3\\r\\n4 2\\r\\n5 7 6\\r\\n\", \"output\": [\"25\"]}, {\"input\": \"8 8\\r\\n1 2 3 4 5 6 7 8\\r\\n8 7 6 5 4 3 2 1\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"1 1\\r\\n9\\r\\n1\\r\\n\", \"output\": [\"19\"]}, {\"input\": \"9 1\\r\\n5 4 2 3 6 1 7 9 8\\r\\n9\\r\\n\", \"output\": [\"9\"]}, {\"input\": \"5 3\\r\\n7 2 5 8 6\\r\\n3 1 9\\r\\n\", \"output\": [\"12\"]}, {\"input\": \"4 5\\r\\n5 2 6 4\\r\\n8 9 1 3 7\\r\\n\", \"output\": [\"12\"]}, {\"input\": \"5 9\\r\\n4 2 1 6 7\\r\\n2 3 4 5 6 7 8 9 1\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"9 9\\r\\n5 4 3 2 1 6 7 8 9\\r\\n3 2 1 5 4 7 8 9 6\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"9 5\\r\\n2 3 4 5 6 7 8 9 1\\r\\n4 2 1 6 7\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"9 9\\r\\n1 2 3 4 5 6 7 8 9\\r\\n1 2 3 4 5 6 7 8 9\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"9 9\\r\\n1 2 3 4 5 6 7 8 9\\r\\n9 8 7 6 5 4 3 2 1\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"9 9\\r\\n9 8 7 6 5 4 3 2 1\\r\\n1 2 3 4 5 6 7 8 9\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"9 9\\r\\n9 8 7 6 5 4 3 2 1\\r\\n9 8 7 6 5 4 3 2 1\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"1 1\\r\\n8\\r\\n9\\r\\n\", \"output\": [\"89\"]}, {\"input\": \"1 1\\r\\n9\\r\\n8\\r\\n\", \"output\": [\"89\"]}, {\"input\": \"1 1\\r\\n1\\r\\n2\\r\\n\", \"output\": [\"12\"]}, {\"input\": \"1 1\\r\\n2\\r\\n1\\r\\n\", \"output\": [\"12\"]}, {\"input\": \"1 1\\r\\n9\\r\\n9\\r\\n\", \"output\": [\"9\"]}, {\"input\": \"1 1\\r\\n1\\r\\n1\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"4 5\\r\\n3 2 4 5\\r\\n1 6 5 9 8\\r\\n\", \"output\": [\"5\"]}, {\"input\": \"3 2\\r\\n4 5 6\\r\\n1 5\\r\\n\", \"output\": [\"5\"]}, {\"input\": \"5 4\\r\\n1 3 5 6 7\\r\\n2 4 3 9\\r\\n\", \"output\": [\"3\"]}, {\"input\": \"5 5\\r\\n1 3 5 7 9\\r\\n2 4 6 8 9\\r\\n\", \"output\": [\"9\"]}, {\"input\": \"2 2\\r\\n1 8\\r\\n2 8\\r\\n\", \"output\": [\"8\"]}, {\"input\": \"5 5\\r\\n5 6 7 8 9\\r\\n1 2 3 4 5\\r\\n\", \"output\": [\"5\"]}, {\"input\": \"5 5\\r\\n1 2 3 4 5\\r\\n1 2 3 4 5\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"5 5\\r\\n1 2 3 4 5\\r\\n2 3 4 5 6\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"2 2\\r\\n1 5\\r\\n2 5\\r\\n\", \"output\": [\"5\"]}, {\"input\": \"4 4\\r\\n1 3 5 8\\r\\n2 4 6 8\\r\\n\", \"output\": [\"8\"]}, {\"input\": \"3 3\\r\\n1 5 3\\r\\n2 5 7\\r\\n\", \"output\": [\"5\"]}, {\"input\": \"3 3\\r\\n3 6 8\\r\\n2 6 9\\r\\n\", \"output\": [\"6\"]}, {\"input\": \"2 2\\r\\n1 4\\r\\n2 4\\r\\n\", \"output\": [\"4\"]}, {\"input\": \"5 3\\r\\n3 4 5 6 7\\r\\n1 5 9\\r\\n\", \"output\": [\"5\"]}, {\"input\": \"4 4\\r\\n1 2 3 4\\r\\n2 5 6 7\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"5 5\\r\\n1 2 3 4 5\\r\\n9 2 1 7 5\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"2 2\\r\\n1 3\\r\\n2 3\\r\\n\", \"output\": [\"3\"]}, {\"input\": \"3 3\\r\\n3 2 1\\r\\n3 2 1\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"3 3\\r\\n1 3 5\\r\\n2 3 6\\r\\n\", \"output\": [\"3\"]}, {\"input\": \"3 3\\r\\n5 6 7\\r\\n5 6 7\\r\\n\", \"output\": [\"5\"]}, {\"input\": \"1 2\\r\\n5\\r\\n2 5\\r\\n\", \"output\": [\"5\"]}, {\"input\": \"3 3\\r\\n2 4 9\\r\\n7 8 9\\r\\n\", \"output\": [\"9\"]}, {\"input\": \"3 3\\r\\n1 2 4\\r\\n3 4 5\\r\\n\", \"output\": [\"4\"]}, {\"input\": \"3 2\\r\\n1 4 9\\r\\n2 4\\r\\n\", \"output\": [\"4\"]}, {\"input\": \"3 3\\r\\n3 5 6\\r\\n1 5 9\\r\\n\", \"output\": [\"5\"]}, {\"input\": \"3 2\\r\\n1 2 4\\r\\n3 4\\r\\n\", \"output\": [\"4\"]}, {\"input\": \"2 4\\r\\n8 9\\r\\n1 2 3 9\\r\\n\", \"output\": [\"9\"]}, {\"input\": \"1 2\\r\\n9\\r\\n8 9\\r\\n\", \"output\": [\"9\"]}, {\"input\": \"3 2\\r\\n1 2 4\\r\\n4 2\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"2 3\\r\\n4 5\\r\\n1 3 5\\r\\n\", \"output\": [\"5\"]}, {\"input\": \"3 2\\r\\n1 2 3\\r\\n2 3\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"4 3\\r\\n1 3 5 9\\r\\n2 8 9\\r\\n\", \"output\": [\"9\"]}, {\"input\": \"2 2\\r\\n1 9\\r\\n9 2\\r\\n\", \"output\": [\"9\"]}]"
+    }
+}

@@ -1,0 +1,57 @@
+{
+    "oai_response": {
+        "choices": [
+            {
+                "message": {
+                    "role": "assistant",
+                    "content": "w = gets.to<\uff5cend\u2581of\u2581sentence\uff5c>---\ntitle: Bug in Bugzilla\ntags: Bugzilla, Bug, Bugs\n---\n\n# Bug in Bugzilla\n\nBugzilla is a popular open source web-based bug tracking system that is used by many companies to manage software development and product quality assurance.\n\nHowever, like any software, Bugzilla occasionally encounters bugs that can affect its performance. Sometimes, these bugs are related to the system, and sometimes they are related to the user interface or the way the data is presented. \n\nIn any case, when a bug is found, it is reported to the Bugzilla team. The team typically triages the bug, prioritizes it, and assigns it to a developer or team of developers. \n\nFrom time to time, a bug in Bugzilla itself can cause issues. For instance, a bug might lead to a system crash, or a bug might cause the system to lose track of a user's data. In some cases, the bug might not be serious enough to cause these problems, but it can still be frustrating and a pain to diagnose and fix.\n\nTo prevent future occurrences of such bugs, developers and system administrators are encouraged to write tests that can catch and prevent such issues from happening. By doing so, developers can ensure that their changes do not introduce new bugs into the system, and that the system behaves correctly even when bugs are introduced or fixed. This practice is known as \"test-driven development\" or \"TDD\".\n\nSo, in essence, Bugzilla is not just a tool for managing bugs, but it is an important part of software development and maintenance processes. Therefore, being aware of the potential bugs and issues in Bugzilla is important to maintain the performance and quality of the system."
+                }
+            }
+        ],
+        "prompt": [
+            "Fix a buggy program written in Ruby language to solve the following programming problem:\nDescription: One hot summer day Pete and his friend Billy decided to buy a watermelon. They chose the biggest and the ripest one, in their opinion. After that the watermelon was weighed, and the scales showed w kilos. They rushed home, dying of thirst, and decided to divide the berry, however they faced a hard problem.Pete and Billy are great fans of even numbers, that's why they want to divide the watermelon in such a way that each of the two parts weighs even number of kilos, at the same time it is not obligatory that the parts are equal. The boys are extremely tired and want to start their meal as soon as possible, that's why you should help them and find out, if they can divide the watermelon in the way they want. For sure, each of them should get a part of positive weight.\nInput Specification: The first (and the only) input line contains integer number w (1\u2009\u2264\u2009w\u2009\u2264\u2009100) \u2014 the weight of the watermelon bought by the boys.\nOutput Specification: Print YES, if the boys can divide the watermelon into two parts, each of them weighing even number of kilos; and NO in the opposite case.\n\nSample Input:\n8\nSample Output:\nYES\n\nNotes: NoteFor example, the boys can divide the watermelon into two parts of 2 and 6 kilos respectively (another variant \u2014 two parts of 4 and 4 kilos).\nTake input from standard input and output to standard output\n\nHere is the code with a bug of COMPILATION_ERROR:\n\n    w = gets.to_i\n    (w%2 == 0 and w >= 2)? puts 'YES' : puts 'NO'\n\nProvide the fixed Ruby code without any description or extra tokens.\n\nFixed source code:",
+            ""
+        ]
+    },
+    "source_data": {
+        "delete_cnt": 1,
+        "fix_code_uid": "",
+        "difficulty": 800,
+        "replace_cnt": 4,
+        "fix_ops_cnt": 7,
+        "prob_desc_output_spec": "Print YES, if the boys can divide the watermelon into two parts, each of them weighing even number of kilos; and NO in the opposite case.",
+        "apr_id": "0b5f31db6fcc73db5582842d8f4426ea",
+        "bug_source_code": "    w = gets.to_i\n    (w%2 == 0 and w >= 2)? puts 'YES' : puts 'NO'",
+        "prob_desc_input_spec": "The first (and the only) input line contains integer number w (1\u2009\u2264\u2009w\u2009\u2264\u2009100) \u2014 the weight of the watermelon bought by the boys.",
+        "src_uid": "230a3c4d7090401e5fa3c6b9d994cdf2",
+        "bug_code_uid": "d8ef4701441538ee0c0b3d1d41b92c17",
+        "equal_cnt": 6,
+        "prob_desc_time_limit": "1 second",
+        "similarity_score": 0.7596899271011353,
+        "bug_exec_outcome": "COMPILATION_ERROR",
+        "lang_cluster": "Ruby",
+        "potential_dominant_fix_op": "replace",
+        "prob_desc_sample_inputs": [
+            "8"
+        ],
+        "prob_desc_input_from": "standard input",
+        "prob_desc_description": "One hot summer day Pete and his friend Billy decided to buy a watermelon. They chose the biggest and the ripest one, in their opinion. After that the watermelon was weighed, and the scales showed w kilos. They rushed home, dying of thirst, and decided to divide the berry, however they faced a hard problem.Pete and Billy are great fans of even numbers, that's why they want to divide the watermelon in such a way that each of the two parts weighs even number of kilos, at the same time it is not obligatory that the parts are equal. The boys are extremely tired and want to start their meal as soon as possible, that's why you should help them and find out, if they can divide the watermelon in the way they want. For sure, each of them should get a part of positive weight.",
+        "lang": "Ruby",
+        "fix_exec_outcome": "",
+        "insert_cnt": 2,
+        "fix_source_code": "",
+        "prob_desc_notes": "NoteFor example, the boys can divide the watermelon into two parts of 2 and 6 kilos respectively (another variant \u2014 two parts of 4 and 4 kilos).",
+        "file_name": "Ruby.jsonl",
+        "tags": [
+            "math",
+            "brute force"
+        ],
+        "prob_desc_output_to": "standard output",
+        "prob_desc_created_at": "1268395200",
+        "prob_desc_memory_limit": "64 megabytes",
+        "prob_desc_sample_outputs": [
+            "YES"
+        ],
+        "hidden_unit_tests": "[{\"input\": \"8\\r\\n\", \"output\": [\"YES\", \"Yes\", \"yes\"]}, {\"input\": \"5\\r\\n\", \"output\": [\"No\", \"NO\", \"no\"]}, {\"input\": \"4\\r\\n\", \"output\": [\"YES\", \"Yes\", \"yes\"]}, {\"input\": \"3\\r\\n\", \"output\": [\"No\", \"NO\", \"no\"]}, {\"input\": \"2\\r\\n\", \"output\": [\"No\", \"NO\", \"no\"]}, {\"input\": \"1\\r\\n\", \"output\": [\"No\", \"NO\", \"no\"]}, {\"input\": \"7\\r\\n\", \"output\": [\"No\", \"NO\", \"no\"]}, {\"input\": \"6\\r\\n\", \"output\": [\"YES\", \"Yes\", \"yes\"]}, {\"input\": \"10\\r\\n\", \"output\": [\"YES\", \"Yes\", \"yes\"]}, {\"input\": \"9\\r\\n\", \"output\": [\"No\", \"NO\", \"no\"]}, {\"input\": \"53\\r\\n\", \"output\": [\"No\", \"NO\", \"no\"]}, {\"input\": \"77\\r\\n\", \"output\": [\"No\", \"NO\", \"no\"]}, {\"input\": \"32\\r\\n\", \"output\": [\"YES\", \"Yes\", \"yes\"]}, {\"input\": \"44\\r\\n\", \"output\": [\"YES\", \"Yes\", \"yes\"]}, {\"input\": \"98\\r\\n\", \"output\": [\"YES\", \"Yes\", \"yes\"]}, {\"input\": \"99\\r\\n\", \"output\": [\"No\", \"NO\", \"no\"]}, {\"input\": \"90\\r\\n\", \"output\": [\"YES\", \"Yes\", \"yes\"]}, {\"input\": \"67\\r\\n\", \"output\": [\"No\", \"NO\", \"no\"]}, {\"input\": \"100\\r\\n\", \"output\": [\"YES\", \"Yes\", \"yes\"]}, {\"input\": \"88\\r\\n\", \"output\": [\"YES\", \"Yes\", \"yes\"]}]"
+    }
+}

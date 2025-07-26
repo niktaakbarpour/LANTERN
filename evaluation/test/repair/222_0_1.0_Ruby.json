@@ -1,0 +1,56 @@
+{
+    "oai_response": {
+        "choices": [
+            {
+                "message": {
+                    "role": "assistant",
+                    "content": "```ruby\n#!/usr/bin/ruby\nx, y, a, b = gets.split.map(&:to_i)\ng = x/x.gcd(y)*y\nputs b/y-(a-1)/y\n```"
+                }
+            }
+        ],
+        "prompt": [
+            "Fix a buggy program written in Ruby language to solve the following programming problem:\nDescription: Iahub and his friend Floyd have started painting a wall. Iahub is painting the wall red and Floyd is painting it pink. You can consider the wall being made of a very large number of bricks, numbered 1, 2, 3 and so on. Iahub has the following scheme of painting: he skips x\u2009-\u20091 consecutive bricks, then he paints the x-th one. That is, he'll paint bricks x, 2\u00b7x, 3\u00b7x and so on red. Similarly, Floyd skips y\u2009-\u20091 consecutive bricks, then he paints the y-th one. Hence he'll paint bricks y, 2\u00b7y, 3\u00b7y and so on pink.After painting the wall all day, the boys observed that some bricks are painted both red and pink. Iahub has a lucky number a and Floyd has a lucky number b. Boys wonder how many bricks numbered no less than a and no greater than b are painted both red and pink. This is exactly your task: compute and print the answer to the question. \nInput Specification: The input will have a single line containing four integers in this order: x, y, a, b. (1\u2009\u2264\u2009x,\u2009y\u2009\u2264\u20091000, 1\u2009\u2264\u2009a,\u2009b\u2009\u2264\u20092\u00b7109, a\u2009\u2264\u2009b).\nOutput Specification: Output a single integer \u2014 the number of bricks numbered no less than a and no greater than b that are painted both red and pink.\n\nSample Input:\n2 3 6 18\nSample Output:\n3\n\nNotes: NoteLet's look at the bricks from a to b (a\u2009=\u20096,\u2009b\u2009=\u200918). The bricks colored in red are numbered 6, 8, 10, 12, 14, 16, 18. The bricks colored in pink are numbered 6, 9, 12, 15, 18. The bricks colored in both red and pink are numbered with 6, 12 and 18. \nTake input from standard input and output to standard output\n\nHere is the code with a bug of WRONG_ANSWER:\n\n#!/usr/bin/ruby\nrequire 'rational'\nx,y,a,b=gets.split.map(&:to_i)\ng=x/x.gcd(y)*y\np b/y-(a-1)/y\n\nProvide the fixed Ruby code without any description or extra tokens.\n\nFixed source code:",
+            ""
+        ]
+    },
+    "source_data": {
+        "delete_cnt": 0,
+        "fix_code_uid": "",
+        "difficulty": 1200,
+        "replace_cnt": 2,
+        "fix_ops_cnt": 2,
+        "prob_desc_output_spec": "Output a single integer \u2014 the number of bricks numbered no less than a and no greater than b that are painted both red and pink.",
+        "apr_id": "cbd81f1dd1f1ed95e30505fcb523f034",
+        "bug_source_code": "#!/usr/bin/ruby\nrequire 'rational'\nx,y,a,b=gets.split.map(&:to_i)\ng=x/x.gcd(y)*y\np b/y-(a-1)/y",
+        "prob_desc_input_spec": "The input will have a single line containing four integers in this order: x, y, a, b. (1\u2009\u2264\u2009x,\u2009y\u2009\u2264\u20091000, 1\u2009\u2264\u2009a,\u2009b\u2009\u2264\u20092\u00b7109, a\u2009\u2264\u2009b).",
+        "src_uid": "c7aa8a95d5f8832015853cffa1374c48",
+        "bug_code_uid": "43c3cec1e4485edaa308be703d1bff89",
+        "equal_cnt": 2,
+        "prob_desc_time_limit": "1 second",
+        "similarity_score": 0.978723406791687,
+        "bug_exec_outcome": "WRONG_ANSWER",
+        "lang_cluster": "Ruby",
+        "potential_dominant_fix_op": "replace",
+        "prob_desc_sample_inputs": [
+            "2 3 6 18"
+        ],
+        "prob_desc_input_from": "standard input",
+        "prob_desc_description": "Iahub and his friend Floyd have started painting a wall. Iahub is painting the wall red and Floyd is painting it pink. You can consider the wall being made of a very large number of bricks, numbered 1, 2, 3 and so on. Iahub has the following scheme of painting: he skips x\u2009-\u20091 consecutive bricks, then he paints the x-th one. That is, he'll paint bricks x, 2\u00b7x, 3\u00b7x and so on red. Similarly, Floyd skips y\u2009-\u20091 consecutive bricks, then he paints the y-th one. Hence he'll paint bricks y, 2\u00b7y, 3\u00b7y and so on pink.After painting the wall all day, the boys observed that some bricks are painted both red and pink. Iahub has a lucky number a and Floyd has a lucky number b. Boys wonder how many bricks numbered no less than a and no greater than b are painted both red and pink. This is exactly your task: compute and print the answer to the question. ",
+        "lang": "Ruby",
+        "fix_exec_outcome": "",
+        "insert_cnt": 0,
+        "fix_source_code": "",
+        "prob_desc_notes": "NoteLet's look at the bricks from a to b (a\u2009=\u20096,\u2009b\u2009=\u200918). The bricks colored in red are numbered 6, 8, 10, 12, 14, 16, 18. The bricks colored in pink are numbered 6, 9, 12, 15, 18. The bricks colored in both red and pink are numbered with 6, 12 and 18. ",
+        "file_name": "Ruby.jsonl",
+        "tags": [
+            "math"
+        ],
+        "prob_desc_output_to": "standard output",
+        "prob_desc_created_at": "1377876600",
+        "prob_desc_memory_limit": "256 megabytes",
+        "prob_desc_sample_outputs": [
+            "3"
+        ],
+        "hidden_unit_tests": "[{\"input\": \"2 3 6 18\\r\\n\", \"output\": [\"3\"]}, {\"input\": \"4 6 20 201\\r\\n\", \"output\": [\"15\"]}, {\"input\": \"15 27 100 10000\\r\\n\", \"output\": [\"74\"]}, {\"input\": \"105 60 3456 78910\\r\\n\", \"output\": [\"179\"]}, {\"input\": \"1 1 1000 100000\\r\\n\", \"output\": [\"99001\"]}, {\"input\": \"3 2 5 5\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"555 777 1 1000000\\r\\n\", \"output\": [\"257\"]}, {\"input\": \"1000 1000 1 32323\\r\\n\", \"output\": [\"32\"]}, {\"input\": \"45 125 93451125 100000000\\r\\n\", \"output\": [\"5821\"]}, {\"input\": \"101 171 1 1000000000\\r\\n\", \"output\": [\"57900\"]}, {\"input\": \"165 255 69696 1000000000\\r\\n\", \"output\": [\"356482\"]}, {\"input\": \"555 777 666013 1000000000\\r\\n\", \"output\": [\"257229\"]}, {\"input\": \"23 46 123321 900000000\\r\\n\", \"output\": [\"19562537\"]}, {\"input\": \"321 123 15 1000000\\r\\n\", \"output\": [\"75\"]}, {\"input\": \"819 1000 9532 152901000\\r\\n\", \"output\": [\"186\"]}, {\"input\": \"819 1000 10000 1000000\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"1 1 1 1\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"1 2 2 1000003\\r\\n\", \"output\": [\"500001\"]}, {\"input\": \"1 1 1 1000000000\\r\\n\", \"output\": [\"1000000000\"]}, {\"input\": \"10 15 69 195610342\\r\\n\", \"output\": [\"6520342\"]}, {\"input\": \"2 1 1 1000000000\\r\\n\", \"output\": [\"500000000\"]}, {\"input\": \"1000 1000 1 20\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"1 1 1 2000000000\\r\\n\", \"output\": [\"2000000000\"]}, {\"input\": \"1 2 1 2000000000\\r\\n\", \"output\": [\"1000000000\"]}, {\"input\": \"2 1 1 2000000000\\r\\n\", \"output\": [\"1000000000\"]}, {\"input\": \"2 3 1 1000000000\\r\\n\", \"output\": [\"166666666\"]}, {\"input\": \"2 3 1 2000000000\\r\\n\", \"output\": [\"333333333\"]}, {\"input\": \"3 7 1 1000000000\\r\\n\", \"output\": [\"47619047\"]}, {\"input\": \"1 1 1000000000 2000000000\\r\\n\", \"output\": [\"1000000001\"]}, {\"input\": \"2 2 1 2000000000\\r\\n\", \"output\": [\"1000000000\"]}, {\"input\": \"1 1 2 2000000000\\r\\n\", \"output\": [\"1999999999\"]}, {\"input\": \"3 2 1 2000000000\\r\\n\", \"output\": [\"333333333\"]}, {\"input\": \"1 1 2000000000 2000000000\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"2 3 7 7\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"3 3 3 7\\r\\n\", \"output\": [\"2\"]}]"
+    }
+}

@@ -39,7 +39,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     cd = Coordinator(args.config, args.restart, llm=llm)
-    cd.run()
+    cd._base_run()
     end_time = time.time()
     log_resources("[END]")
     print(f"Total time: {end_time - start_time:.2f} seconds")

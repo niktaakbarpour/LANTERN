@@ -1,0 +1,62 @@
+{
+    "oai_response": {
+        "choices": [
+            {
+                "message": {
+                    "role": "assistant",
+                    "content": "```csharp\nusing System;\n\nnamespace Rextester\n{\n    public class Program\n    {\n        public static void Main(string[] args)\n        {\n            int n = int.Parse(Console.ReadLine());\n            var slimes = new int[n];\n            Array.Fill(slimes, 1);\n            \n            for (int i = 1; i < n; i++)\n            {\n                for (int j = 0; j < n - i; j++)\n                {\n                    if (slimes[j] == slimes[j + 1])\n                    {\n                        slimes[j] += 1;\n                    }\n                }\n            }\n            \n            foreach (var slime in slimes)\n            {\n                Console.Write(slime + \" \");\n            }\n        }\n    }\n}\n```"
+                }
+            }
+        ],
+        "prompt": [
+            "Fix a buggy program written in C# language to solve the following programming problem:\nDescription: Your friend recently gave you some slimes for your birthday. You have n slimes all initially with value 1.You are going to play a game with these slimes. Initially, you put a single slime by itself in a row. Then, you will add the other n\u2009-\u20091 slimes one by one. When you add a slime, you place it at the right of all already placed slimes. Then, while the last two slimes in the row have the same value v, you combine them together to create a slime with value v\u2009+\u20091.You would like to see what the final state of the row is after you've added all n slimes. Please print the values of the slimes in the row from left to right.\nInput Specification: The first line of the input will contain a single integer, n (1\u2009\u2264\u2009n\u2009\u2264\u2009100\u2009000).\nOutput Specification: Output a single line with k integers, where k is the number of slimes in the row after you've finished the procedure described in the problem statement. The i-th of these numbers should be the value of the i-th slime from the left.\n\nSample Input:\n1\nSample Output:\n1\n\nSample Input:\n2\nSample Output:\n2\n\nSample Input:\n3\nSample Output:\n2 1\n\nSample Input:\n8\nSample Output:\n4\n\nNotes: NoteIn the first sample, we only have a single slime with value 1. The final state of the board is just a single slime with value 1.In the second sample, we perform the following steps:Initially we place a single slime in a row by itself. Thus, row is initially 1.Then, we will add another slime. The row is now 1 1. Since two rightmost slimes have the same values, we should replace these slimes with one with value 2. Thus, the final state of the board is 2.In the third sample, after adding the first two slimes, our row is 2. After adding one more slime, the row becomes 2 1.In the last sample, the steps look as follows:   1  2  2 1  3  3 1  3 2  3 2 1  4 \nTake input from standard input and output to standard output\n\nHere is the code with a bug of WRONG_ANSWER:\n\n//Rextester.Program.Main is the entry point for your code. Don't change it.\n//Compiler version 4.0.30319.17929 for Microsoft (R) .NET Framework 4.5\n\nusing System;\nusing System.Collections.Generic;\nusing System.Linq;\nusing System.Text.RegularExpressions;\n\nnamespace Rextester\n{\n    public class Program\n    {\n        public static void Main(string[] args)\n        {\n            //input BITCH\n            int n=int.Parse(Console.ReadLine());\n            \n            //Logic BITCH\n            int ans=0;\n            while(n>0){\n                int pow=(int)(Math.Log(n,2));\n                ans+=1+pow;\n                n-=(int)Math.Pow(2,pow);\n            }\n            Console.WriteLine(ans);\n        }\n    }\n}\n\nProvide the fixed C# code without any description or extra tokens.\n\nFixed source code:",
+            ""
+        ]
+    },
+    "source_data": {
+        "delete_cnt": 3,
+        "fix_code_uid": "",
+        "difficulty": 800,
+        "replace_cnt": 3,
+        "fix_ops_cnt": 8,
+        "prob_desc_output_spec": "Output a single line with k integers, where k is the number of slimes in the row after you've finished the procedure described in the problem statement. The i-th of these numbers should be the value of the i-th slime from the left.",
+        "apr_id": "9960fa5e7042f068f4bf0af9a6a5631b",
+        "bug_source_code": "//Rextester.Program.Main is the entry point for your code. Don't change it.\n//Compiler version 4.0.30319.17929 for Microsoft (R) .NET Framework 4.5\n\nusing System;\nusing System.Collections.Generic;\nusing System.Linq;\nusing System.Text.RegularExpressions;\n\nnamespace Rextester\n{\n    public class Program\n    {\n        public static void Main(string[] args)\n        {\n            //input BITCH\n            int n=int.Parse(Console.ReadLine());\n            \n            //Logic BITCH\n            int ans=0;\n            while(n>0){\n                int pow=(int)(Math.Log(n,2));\n                ans+=1+pow;\n                n-=(int)Math.Pow(2,pow);\n            }\n            Console.WriteLine(ans);\n        }\n    }\n}",
+        "prob_desc_input_spec": "The first line of the input will contain a single integer, n (1\u2009\u2264\u2009n\u2009\u2264\u2009100\u2009000).",
+        "src_uid": "757cd804aba01dc4bc108cb0722f68dc",
+        "bug_code_uid": "74f9150fcd17fbf338b35d60ce90c6dc",
+        "equal_cnt": 9,
+        "prob_desc_time_limit": "2 seconds",
+        "similarity_score": 0.9128137230873108,
+        "bug_exec_outcome": "WRONG_ANSWER",
+        "lang_cluster": "C#",
+        "potential_dominant_fix_op": "replace",
+        "prob_desc_sample_inputs": [
+            "1",
+            "2",
+            "3",
+            "8"
+        ],
+        "prob_desc_input_from": "standard input",
+        "prob_desc_description": "Your friend recently gave you some slimes for your birthday. You have n slimes all initially with value 1.You are going to play a game with these slimes. Initially, you put a single slime by itself in a row. Then, you will add the other n\u2009-\u20091 slimes one by one. When you add a slime, you place it at the right of all already placed slimes. Then, while the last two slimes in the row have the same value v, you combine them together to create a slime with value v\u2009+\u20091.You would like to see what the final state of the row is after you've added all n slimes. Please print the values of the slimes in the row from left to right.",
+        "lang": "MS C#",
+        "fix_exec_outcome": "",
+        "insert_cnt": 2,
+        "fix_source_code": "",
+        "prob_desc_notes": "NoteIn the first sample, we only have a single slime with value 1. The final state of the board is just a single slime with value 1.In the second sample, we perform the following steps:Initially we place a single slime in a row by itself. Thus, row is initially 1.Then, we will add another slime. The row is now 1 1. Since two rightmost slimes have the same values, we should replace these slimes with one with value 2. Thus, the final state of the board is 2.In the third sample, after adding the first two slimes, our row is 2. After adding one more slime, the row becomes 2 1.In the last sample, the steps look as follows:   1  2  2 1  3  3 1  3 2  3 2 1  4 ",
+        "file_name": "C#.jsonl",
+        "tags": [
+            "implementation"
+        ],
+        "prob_desc_output_to": "standard output",
+        "prob_desc_created_at": "1454087400",
+        "prob_desc_memory_limit": "256 megabytes",
+        "prob_desc_sample_outputs": [
+            "1",
+            "2",
+            "2 1",
+            "4"
+        ],
+        "hidden_unit_tests": "[{\"input\": \"1\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"2\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"3\\r\\n\", \"output\": [\"2 1\", \"2  1\"]}, {\"input\": \"8\\r\\n\", \"output\": [\"4\"]}, {\"input\": \"100000\\r\\n\", \"output\": [\"17  16  11  10  8  6\", \"17 16 11 10 8 6\"]}, {\"input\": \"12345\\r\\n\", \"output\": [\"14  13  6  5  4  1\", \"14 13 6 5 4 1\"]}, {\"input\": \"32\\r\\n\", \"output\": [\"6\"]}, {\"input\": \"70958\\r\\n\", \"output\": [\"17  13  11  9  6  4  3  2\", \"17 13 11 9 6 4 3 2\"]}, {\"input\": \"97593\\r\\n\", \"output\": [\"17 15 14 13 12 11 9 6 5 4 1\", \"17  15  14  13  12  11  9  6  5  4  1\"]}, {\"input\": \"91706\\r\\n\", \"output\": [\"17  15  14  11  10  6  5  4  2\", \"17 15 14 11 10 6 5 4 2\"]}, {\"input\": \"85371\\r\\n\", \"output\": [\"17 15 12 11 9 7 6 5 4 2 1\", \"17  15  12  11  9  7  6  5  4  2  1\"]}, {\"input\": \"97205\\r\\n\", \"output\": [\"17  15  14  13  12  10  9  8  6  5  3  1\", \"17 15 14 13 12 10 9 8 6 5 3 1\"]}, {\"input\": \"34768\\r\\n\", \"output\": [\"16  11  10  9  8  7  5\", \"16 11 10 9 8 7 5\"]}, {\"input\": \"12705\\r\\n\", \"output\": [\"14 13 9 8 6 1\", \"14  13  9  8  6  1\"]}, {\"input\": \"30151\\r\\n\", \"output\": [\"15 14 13 11 9 8 7 3 2 1\", \"15  14  13  11  9  8  7  3  2  1\"]}, {\"input\": \"4974\\r\\n\", \"output\": [\"13  10  9  7  6  4  3  2\", \"13 10 9 7 6 4 3 2\"]}, {\"input\": \"32728\\r\\n\", \"output\": [\"15  14  13  12  11  10  9  8  7  5  4\", \"15 14 13 12 11 10 9 8 7 5 4\"]}, {\"input\": \"8192\\r\\n\", \"output\": [\"14\"]}, {\"input\": \"65536\\r\\n\", \"output\": [\"17\"]}, {\"input\": \"32\\r\\n\", \"output\": [\"6\"]}, {\"input\": \"256\\r\\n\", \"output\": [\"9\"]}, {\"input\": \"4096\\r\\n\", \"output\": [\"13\"]}, {\"input\": \"33301\\r\\n\", \"output\": [\"16  10  5  3  1\", \"16 10 5 3 1\"]}, {\"input\": \"16725\\r\\n\", \"output\": [\"15 9 7 5 3 1\", \"15  9  7  5  3  1\"]}, {\"input\": \"149\\r\\n\", \"output\": [\"8 5 3 1\", \"8  5  3  1\"]}, {\"input\": \"16277\\r\\n\", \"output\": [\"14 13 12 11 10 9 8 5 3 1\", \"14  13  12  11  10  9  8  5  3  1\"]}, {\"input\": \"99701\\r\\n\", \"output\": [\"17 16 11 9 7 6 5 3 1\", \"17  16  11  9  7  6  5  3  1\"]}]"
+    }
+}

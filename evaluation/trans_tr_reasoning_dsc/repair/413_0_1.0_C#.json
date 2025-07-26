@@ -1,0 +1,58 @@
+{
+    "oai_response": {
+        "choices": [
+            {
+                "message": {
+                    "role": "assistant",
+                    "content": "```\n\ufeffusing System;\nusing System.IO;\nusing System.Linq;\nusing System.Collections.Generic;\nusing System.Numerics;\n\nnamespace cf461\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            //Console.SetIn(new StreamReader(\"input.txt\"));\n            solve_cf461B();\n        }\n\n        public static void solve_cf461B()\n        {\n            int n = Convert.ToInt32(Console.ReadLine());\n            int max = 0;\n            \n            for (int i = 1; i <= n; i++)            \n            {\n                for (int j = i; j <= n; j++)\n                {\n                    int x = i ^ j;\n                    if (x <= n && i + j > x && x > j)\n                    {\n                        max++;\n                    }\n                }\n            }\n\n            Console.WriteLine(max);\n        }\n\n        public static void solve_cf461A()\n        {\n\n        }\n    }\n}\n```"
+                }
+            }
+        ],
+        "prompt": [
+            "Fix a buggy program written in C# language to solve the following programming problem:\nDescription: Imp is in a magic forest, where xorangles grow (wut?)  A xorangle of order n is such a non-degenerate triangle, that lengths of its sides are integers not exceeding n, and the xor-sum of the lengths is equal to zero. Imp has to count the number of distinct xorangles of order n to get out of the forest. Formally, for a given integer n you have to find the number of such triples (a,\u2009b,\u2009c), that:  1\u2009\u2264\u2009a\u2009\u2264\u2009b\u2009\u2264\u2009c\u2009\u2264\u2009n;  , where  denotes the bitwise xor of integers x and y.  (a,\u2009b,\u2009c) form a non-degenerate (with strictly positive area) triangle. \nInput Specification: The only line contains a single integer n (1\u2009\u2264\u2009n\u2009\u2264\u20092500).\nOutput Specification: Print the number of xorangles of order n.\n\nSample Input:\n6\nSample Output:\n1\n\nSample Input:\n10\nSample Output:\n2\n\nNotes: NoteThe only xorangle in the first sample is (3,\u20095,\u20096).\nTake input from standard input and output to standard output\n\nHere is the code with a bug of WRONG_ANSWER:\n\n\ufeffusing System;\nusing System.IO;\nusing System.Linq;\nusing System.Collections.Generic;\nusing System.Numerics;\n\nnamespace cf461\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            //Console.SetIn(new StreamReader(\"input.txt\"));\n            solve_cf461B();\n        }\n\n        public static void solve_cf461B()\n        {\n            int n = Convert.ToInt32(Console.ReadLine());\n            int max = 0;\n            /*\n            The big mistake was to use this array of used numbers\n            I thought that finding i and j such that their xor gives x\n            is enough to remember the numbers i and j in the used array \n            so that the next time I will not iterate over the numbers that have been\n            used. But the issue with that is that i and j can be from different iterations\n            not necessairly from the same iteration.\n            Example:\n            if i = 2 and j = 3 gives us xor x and we remember i and j in the array - used.\n            then next time\n            if i = 4 and j = 3 also gives us xor x then we will not even consider this case\n            because used[3] will be not 0 which means that we have already considered this case\n            and we will skip it. But we should not have skipped it because it is a different pair of numbers\n            giving xor which is equal to x.\n             */\n            //int[] u = new int[2501];\n            for (int i = 1; i <= n; i++)            \n            {\n                for (int j = 1; j <= n; j++)\n                {\n                    //if (u[i] == 1 && u[j] == 1)\n                    //{\n                    //    continue;\n                    //}\n                    int x = i ^ j;\n                    //(x < i && x + i > j) dont' need to look back as associative\n                    if (x <= n && ((x > j && i + j > x) || (x > i && x < j && i + x > j)))\n                    {\n                        max++;\n                        //u[i] = 1;\n                        //u[j] = 1;\n                    }\n                }\n            }\n\n            Console.WriteLine(max);\n        }\n\n        public static void solve_cf461A()\n        {\n\n        }\n    }\n}\n\n\nProvide the fixed C# code without any description or extra tokens.\n\nFixed source code:",
+            ""
+        ]
+    },
+    "source_data": {
+        "delete_cnt": 3,
+        "fix_code_uid": "",
+        "difficulty": 1300,
+        "replace_cnt": 3,
+        "fix_ops_cnt": 8,
+        "prob_desc_output_spec": "Print the number of xorangles of order n.",
+        "apr_id": "73a9dde5032673094656ce9732ede817",
+        "bug_source_code": "\ufeffusing System;\nusing System.IO;\nusing System.Linq;\nusing System.Collections.Generic;\nusing System.Numerics;\n\nnamespace cf461\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            //Console.SetIn(new StreamReader(\"input.txt\"));\n            solve_cf461B();\n        }\n\n        public static void solve_cf461B()\n        {\n            int n = Convert.ToInt32(Console.ReadLine());\n            int max = 0;\n            /*\n            The big mistake was to use this array of used numbers\n            I thought that finding i and j such that their xor gives x\n            is enough to remember the numbers i and j in the used array \n            so that the next time I will not iterate over the numbers that have been\n            used. But the issue with that is that i and j can be from different iterations\n            not necessairly from the same iteration.\n            Example:\n            if i = 2 and j = 3 gives us xor x and we remember i and j in the array - used.\n            then next time\n            if i = 4 and j = 3 also gives us xor x then we will not even consider this case\n            because used[3] will be not 0 which means that we have already considered this case\n            and we will skip it. But we should not have skipped it because it is a different pair of numbers\n            giving xor which is equal to x.\n             */\n            //int[] u = new int[2501];\n            for (int i = 1; i <= n; i++)            \n            {\n                for (int j = 1; j <= n; j++)\n                {\n                    //if (u[i] == 1 && u[j] == 1)\n                    //{\n                    //    continue;\n                    //}\n                    int x = i ^ j;\n                    //(x < i && x + i > j) dont' need to look back as associative\n                    if (x <= n && ((x > j && i + j > x) || (x > i && x < j && i + x > j)))\n                    {\n                        max++;\n                        //u[i] = 1;\n                        //u[j] = 1;\n                    }\n                }\n            }\n\n            Console.WriteLine(max);\n        }\n\n        public static void solve_cf461A()\n        {\n\n        }\n    }\n}\n",
+        "prob_desc_input_spec": "The only line contains a single integer n (1\u2009\u2264\u2009n\u2009\u2264\u20092500).",
+        "src_uid": "838f2e75fdff0f13f002c0dfff0b2e8d",
+        "bug_code_uid": "cecd4b23ee189b2c6a83f0a35017ab5a",
+        "equal_cnt": 9,
+        "prob_desc_time_limit": "1 second",
+        "similarity_score": 0.9172899127006531,
+        "bug_exec_outcome": "WRONG_ANSWER",
+        "lang_cluster": "C#",
+        "potential_dominant_fix_op": "replace",
+        "prob_desc_sample_inputs": [
+            "6",
+            "10"
+        ],
+        "prob_desc_input_from": "standard input",
+        "prob_desc_description": "Imp is in a magic forest, where xorangles grow (wut?)  A xorangle of order n is such a non-degenerate triangle, that lengths of its sides are integers not exceeding n, and the xor-sum of the lengths is equal to zero. Imp has to count the number of distinct xorangles of order n to get out of the forest. Formally, for a given integer n you have to find the number of such triples (a,\u2009b,\u2009c), that:  1\u2009\u2264\u2009a\u2009\u2264\u2009b\u2009\u2264\u2009c\u2009\u2264\u2009n;  , where  denotes the bitwise xor of integers x and y.  (a,\u2009b,\u2009c) form a non-degenerate (with strictly positive area) triangle. ",
+        "lang": "Mono C#",
+        "fix_exec_outcome": "",
+        "insert_cnt": 2,
+        "fix_source_code": "",
+        "prob_desc_notes": "NoteThe only xorangle in the first sample is (3,\u20095,\u20096).",
+        "file_name": "C#.jsonl",
+        "tags": [
+            "brute force"
+        ],
+        "prob_desc_output_to": "standard output",
+        "prob_desc_created_at": "1518023700",
+        "prob_desc_memory_limit": "256 megabytes",
+        "prob_desc_sample_outputs": [
+            "1",
+            "2"
+        ],
+        "hidden_unit_tests": "[{\"input\": \"6\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"10\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"3\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"4\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"5\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"2500\\r\\n\", \"output\": [\"700393\"]}, {\"input\": \"952\\r\\n\", \"output\": [\"118547\"]}, {\"input\": \"88\\r\\n\", \"output\": [\"536\"]}, {\"input\": \"1216\\r\\n\", \"output\": [\"160822\"]}, {\"input\": \"2140\\r\\n\", \"output\": [\"614785\"]}, {\"input\": \"564\\r\\n\", \"output\": [\"35087\"]}, {\"input\": \"1488\\r\\n\", \"output\": [\"239580\"]}, {\"input\": \"116\\r\\n\", \"output\": [\"1332\"]}, {\"input\": \"1040\\r\\n\", \"output\": [\"145820\"]}, {\"input\": \"1965\\r\\n\", \"output\": [\"545494\"]}, {\"input\": \"593\\r\\n\", \"output\": [\"36605\"]}, {\"input\": \"779\\r\\n\", \"output\": [\"63500\"]}, {\"input\": \"1703\\r\\n\", \"output\": [\"352045\"]}, {\"input\": \"331\\r\\n\", \"output\": [\"9877\"]}, {\"input\": \"1051\\r\\n\", \"output\": [\"145985\"]}, {\"input\": \"2179\\r\\n\", \"output\": [\"618074\"]}, {\"input\": \"603\\r\\n\", \"output\": [\"37312\"]}, {\"input\": \"1731\\r\\n\", \"output\": [\"369691\"]}, {\"input\": \"2451\\r\\n\", \"output\": [\"681980\"]}, {\"input\": \"1079\\r\\n\", \"output\": [\"146833\"]}, {\"input\": \"2207\\r\\n\", \"output\": [\"621708\"]}, {\"input\": \"2394\\r\\n\", \"output\": [\"663240\"]}, {\"input\": \"818\\r\\n\", \"output\": [\"73972\"]}, {\"input\": \"1946\\r\\n\", \"output\": [\"529383\"]}, {\"input\": \"166\\r\\n\", \"output\": [\"2200\"]}, {\"input\": \"1294\\r\\n\", \"output\": [\"175915\"]}, {\"input\": \"2218\\r\\n\", \"output\": [\"623386\"]}, {\"input\": \"846\\r\\n\", \"output\": [\"82106\"]}, {\"input\": \"1566\\r\\n\", \"output\": [\"273341\"]}, {\"input\": \"194\\r\\n\", \"output\": [\"3240\"]}, {\"input\": \"1322\\r\\n\", \"output\": [\"183405\"]}, {\"input\": \"1508\\r\\n\", \"output\": [\"247634\"]}, {\"input\": \"2433\\r\\n\", \"output\": [\"675245\"]}, {\"input\": \"857\\r\\n\", \"output\": [\"85529\"]}, {\"input\": \"1781\\r\\n\", \"output\": [\"402718\"]}, {\"input\": \"1\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"2\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"2444\\r\\n\", \"output\": [\"679373\"]}, {\"input\": \"2498\\r\\n\", \"output\": [\"699536\"]}]"
+    }
+}

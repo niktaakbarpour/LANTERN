@@ -1,0 +1,59 @@
+{
+    "oai_response": {
+        "choices": [
+            {
+                "message": {
+                    "role": "assistant",
+                    "content": "```csharp\nusing System;\n\nnamespace zzadacha_B\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            string[] input = Console.ReadLine().Split();\n            int m = int.Parse(input[0]);\n            int b = int.Parse(input[1]);\n\n            long[][] dp = new long[b + 1][];\n            for (int i = 0; i <= b; i++)\n            {\n                dp[i] = new long[b + 1];\n            }\n\n            for (int y = 0; y <= b; y++)\n            {\n                for (int x = 0; x <= b; x++)\n                {\n                    if (x + y > b)\n                    {\n                        break;\n                    }\n                    long a = (x + 1) * x / 2;\n                    long aa = (y + 1) * y / 2;\n                    dp[x][y] = a * (y + 1) + aa * (x + 1);\n                    if (x > 0 && y > 0)\n                    {\n                        dp[x][y] = Math.Max(dp[x][y], dp[x - 1][y] + (x + 1) * m);\n                        dp[x][y] = Math.Max(dp[x][y], dp[x][y - 1]);\n                    }\n                }\n            }\n\n            long max = 0;\n            for (int y = 0; y <= b; y++)\n            {\n                max = Math.Max(max, dp[b][y]);\n            }\n            Console.WriteLine(max);\n        }\n    }\n}\n```"
+                }
+            }
+        ],
+        "prompt": [
+            "Fix a buggy program written in C# language to solve the following programming problem:\nDescription: Okabe needs bananas for one of his experiments for some strange reason. So he decides to go to the forest and cut banana trees.Consider the point (x,\u2009y) in the 2D plane such that x and y are integers and 0\u2009\u2264\u2009x,\u2009y. There is a tree in such a point, and it has x\u2009+\u2009y bananas. There are no trees nor bananas in other points. Now, Okabe draws a line with equation . Okabe can select a single rectangle with axis aligned sides with all points on or under the line and cut all the trees in all points that are inside or on the border of this rectangle and take their bananas. Okabe's rectangle can be degenerate; that is, it can be a line segment or even a point.Help Okabe and find the maximum number of bananas he can get if he chooses the rectangle wisely.Okabe is sure that the answer does not exceed 1018. You can trust him.\nInput Specification: The first line of input contains two space-separated integers m and b (1\u2009\u2264\u2009m\u2009\u2264\u20091000, 1\u2009\u2264\u2009b\u2009\u2264\u200910000).\nOutput Specification: Print the maximum number of bananas Okabe can get from the trees he cuts.\n\nSample Input:\n1 5\nSample Output:\n30\n\nSample Input:\n2 3\nSample Output:\n25\n\nNotes: Note  The graph above corresponds to sample test 1. The optimal rectangle is shown in red and has 30 bananas.\nTake input from standard input and output to standard output\n\nHere is the code with a bug of TIME_LIMIT_EXCEEDED:\n\n\ufeffusing System;\nusing System.Collections.Generic;\nusing System.Linq;\nusing System.Text;\nusing System.Threading.Tasks;\n\nnamespace zzadacha_B\n{\n    class Program\n    {\n       \n        static void Main(string[] args)\n        {\n            string s = Console.ReadLine();\n            string[] s1 = s.Split(' ');\n            int m =int.Parse(s1[0]);\n            int b = int.Parse(s1[1]);\n            int n = 0;\n\n            //int y = b/2;\n            //int x = (m * b)/2;\n            ////int xo = (m * b) % 2;\n            ////int yo = b % 2;\n            ////if (xo == 1 && yo == 1)\n            ////    y++;\n            ////else\n            ////{\n            ////    if (xo == 1 && yo == 0)\n            ////        y++;\n            ////    else\n            ////    {\n            ////        if (xo == 0 && yo == 1)\n            ////            x++;\n            ////    }\n            ////}\n            int max = 0;\n            for (int y = 0; y <= b; y++)\n            {\n                int a = 0;\n                int aa = 0;\n                int x = (b-y)*m;\n                for (int i = 0; i <= x; i++)\n                    a += i;\n                for (int i = 0; i <= y; i++)\n                    aa += i;\n                n = a * (y + 1) + aa * (x + 1);\n                if (n > max || max == 0)\n                    max = n;\n            }            \n            Console.WriteLine(max);\n            Console.Read();\n        }\n    }\n}\n\n\nProvide the fixed C# code without any description or extra tokens.\n\nFixed source code:",
+            ""
+        ]
+    },
+    "source_data": {
+        "delete_cnt": 0,
+        "fix_code_uid": "",
+        "difficulty": 1300,
+        "replace_cnt": 12,
+        "fix_ops_cnt": 14,
+        "prob_desc_output_spec": "Print the maximum number of bananas Okabe can get from the trees he cuts.",
+        "apr_id": "5753507929921a4e383cfed55c7ec248",
+        "bug_source_code": "\ufeffusing System;\nusing System.Collections.Generic;\nusing System.Linq;\nusing System.Text;\nusing System.Threading.Tasks;\n\nnamespace zzadacha_B\n{\n    class Program\n    {\n       \n        static void Main(string[] args)\n        {\n            string s = Console.ReadLine();\n            string[] s1 = s.Split(' ');\n            int m =int.Parse(s1[0]);\n            int b = int.Parse(s1[1]);\n            int n = 0;\n\n            //int y = b/2;\n            //int x = (m * b)/2;\n            ////int xo = (m * b) % 2;\n            ////int yo = b % 2;\n            ////if (xo == 1 && yo == 1)\n            ////    y++;\n            ////else\n            ////{\n            ////    if (xo == 1 && yo == 0)\n            ////        y++;\n            ////    else\n            ////    {\n            ////        if (xo == 0 && yo == 1)\n            ////            x++;\n            ////    }\n            ////}\n            int max = 0;\n            for (int y = 0; y <= b; y++)\n            {\n                int a = 0;\n                int aa = 0;\n                int x = (b-y)*m;\n                for (int i = 0; i <= x; i++)\n                    a += i;\n                for (int i = 0; i <= y; i++)\n                    aa += i;\n                n = a * (y + 1) + aa * (x + 1);\n                if (n > max || max == 0)\n                    max = n;\n            }            \n            Console.WriteLine(max);\n            Console.Read();\n        }\n    }\n}\n",
+        "prob_desc_input_spec": "The first line of input contains two space-separated integers m and b (1\u2009\u2264\u2009m\u2009\u2264\u20091000, 1\u2009\u2264\u2009b\u2009\u2264\u200910000).",
+        "src_uid": "9300f1c07dd36e0cf7e6cb7911df4cf2",
+        "bug_code_uid": "6324a0ff0c0a65b480a416e8ed3b59be",
+        "equal_cnt": 15,
+        "prob_desc_time_limit": "2 seconds",
+        "similarity_score": 0.5723905563354492,
+        "bug_exec_outcome": "TIME_LIMIT_EXCEEDED",
+        "lang_cluster": "C#",
+        "potential_dominant_fix_op": "replace",
+        "prob_desc_sample_inputs": [
+            "1 5",
+            "2 3"
+        ],
+        "prob_desc_input_from": "standard input",
+        "prob_desc_description": "Okabe needs bananas for one of his experiments for some strange reason. So he decides to go to the forest and cut banana trees.Consider the point (x,\u2009y) in the 2D plane such that x and y are integers and 0\u2009\u2264\u2009x,\u2009y. There is a tree in such a point, and it has x\u2009+\u2009y bananas. There are no trees nor bananas in other points. Now, Okabe draws a line with equation . Okabe can select a single rectangle with axis aligned sides with all points on or under the line and cut all the trees in all points that are inside or on the border of this rectangle and take their bananas. Okabe's rectangle can be degenerate; that is, it can be a line segment or even a point.Help Okabe and find the maximum number of bananas he can get if he chooses the rectangle wisely.Okabe is sure that the answer does not exceed 1018. You can trust him.",
+        "lang": "MS C#",
+        "fix_exec_outcome": "",
+        "insert_cnt": 2,
+        "fix_source_code": "",
+        "prob_desc_notes": "Note  The graph above corresponds to sample test 1. The optimal rectangle is shown in red and has 30 bananas.",
+        "file_name": "C#.jsonl",
+        "tags": [
+            "math",
+            "brute force"
+        ],
+        "prob_desc_output_to": "standard output",
+        "prob_desc_created_at": "1498401300",
+        "prob_desc_memory_limit": "256 megabytes",
+        "prob_desc_sample_outputs": [
+            "30",
+            "25"
+        ],
+        "hidden_unit_tests": "[{\"input\": \"1 5\\r\\n\", \"output\": [\"30\"]}, {\"input\": \"2 3\\r\\n\", \"output\": [\"25\"]}, {\"input\": \"4 6\\r\\n\", \"output\": [\"459\"]}, {\"input\": \"6 3\\r\\n\", \"output\": [\"171\"]}, {\"input\": \"1 1\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"10 1\\r\\n\", \"output\": [\"55\"]}, {\"input\": \"20 10\\r\\n\", \"output\": [\"40326\"]}, {\"input\": \"1000 10000\\r\\n\", \"output\": [\"74133360011484445\"]}, {\"input\": \"139 9252\\r\\n\", \"output\": [\"1137907933561080\"]}, {\"input\": \"859 8096\\r\\n\", \"output\": [\"29032056230649780\"]}, {\"input\": \"987 4237\\r\\n\", \"output\": [\"5495451829240878\"]}, {\"input\": \"411 3081\\r\\n\", \"output\": [\"366755153481948\"]}, {\"input\": \"539 9221\\r\\n\", \"output\": [\"16893595018603386\"]}, {\"input\": \"259 770\\r\\n\", \"output\": [\"2281741798549\"]}, {\"input\": \"387 5422\\r\\n\", \"output\": [\"1771610559998400\"]}, {\"input\": \"515 1563\\r\\n\", \"output\": [\"75233740231341\"]}, {\"input\": \"939 407\\r\\n\", \"output\": [\"4438222781916\"]}, {\"input\": \"518 6518\\r\\n\", \"output\": [\"5511730799718825\"]}, {\"input\": \"646 1171\\r\\n\", \"output\": [\"49802404050106\"]}, {\"input\": \"70 7311\\r\\n\", \"output\": [\"142915220249910\"]}, {\"input\": \"494 6155\\r\\n\", \"output\": [\"4221391613846823\"]}, {\"input\": \"918 7704\\r\\n\", \"output\": [\"28569727339126165\"]}, {\"input\": \"46 3844\\r\\n\", \"output\": [\"9007500020760\"]}, {\"input\": \"174 2688\\r\\n\", \"output\": [\"43730657099581\"]}, {\"input\": \"894 4637\\r\\n\", \"output\": [\"5909849585253250\"]}, {\"input\": \"22 3481\\r\\n\", \"output\": [\"1548544125646\"]}, {\"input\": \"446 5030\\r\\n\", \"output\": [\"1878390629993745\"]}, {\"input\": \"440 8704\\r\\n\", \"output\": [\"9470470760118060\"]}, {\"input\": \"569 7548\\r\\n\", \"output\": [\"10326205017481606\"]}, {\"input\": \"289 6393\\r\\n\", \"output\": [\"1620061541812350\"]}, {\"input\": \"417 1045\\r\\n\", \"output\": [\"14758909519725\"]}, {\"input\": \"841 7185\\r\\n\", \"output\": [\"19452619774222875\"]}, {\"input\": \"969 6030\\r\\n\", \"output\": [\"15265318959845745\"]}, {\"input\": \"393 4874\\r\\n\", \"output\": [\"1327174123029975\"]}, {\"input\": \"817 3719\\r\\n\", \"output\": [\"2546859449982016\"]}, {\"input\": \"945 2563\\r\\n\", \"output\": [\"1115613396515835\"]}, {\"input\": \"369 4511\\r\\n\", \"output\": [\"927715710215505\"]}, {\"input\": \"555 3594\\r\\n\", \"output\": [\"1061060598862891\"]}]"
+    }
+}

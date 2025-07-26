@@ -1,0 +1,61 @@
+{
+    "oai_response": {
+        "choices": [
+            {
+                "message": {
+                    "role": "assistant",
+                    "content": "require 'set'\n\ns = gets.strip\nsp = s.split(\"\")\nr = (0...s.length).map{|i| sp.rotate(i)}\nprint r.to_set.length"
+                }
+            }
+        ],
+        "prompt": [
+            "Fix a buggy program written in Ruby language to solve the following programming problem:\nDescription: Hongcow is learning to spell! One day, his teacher gives him a word that he needs to learn to spell. Being a dutiful student, he immediately learns how to spell the word.Hongcow has decided to try to make new words from this one. He starts by taking the word he just learned how to spell, and moves the last character of the word to the beginning of the word. He calls this a cyclic shift. He can apply cyclic shift many times. For example, consecutively applying cyclic shift operation to the word \"abracadabra\" Hongcow will get words \"aabracadabr\", \"raabracadab\" and so on.Hongcow is now wondering how many distinct words he can generate by doing the cyclic shift arbitrarily many times. The initial string is also counted.\nInput Specification: The first line of input will be a single string s (1\u2009\u2264\u2009|s|\u2009\u2264\u200950), the word Hongcow initially learns how to spell. The string s consists only of lowercase English letters ('a'\u2013'z').\nOutput Specification: Output a single integer equal to the number of distinct strings that Hongcow can obtain by applying the cyclic shift arbitrarily many times to the given string.\n\nSample Input:\nabcd\nSample Output:\n4\n\nSample Input:\nbbb\nSample Output:\n1\n\nSample Input:\nyzyz\nSample Output:\n2\n\nNotes: NoteFor the first sample, the strings Hongcow can generate are \"abcd\", \"dabc\", \"cdab\", and \"bcda\".For the second sample, no matter how many times Hongcow does the cyclic shift, Hongcow can only generate \"bbb\".For the third sample, the two strings Hongcow can generate are \"yzyz\" and \"zyzy\".\nTake input from standard input and output to standard output\n\nHere is the code with a bug of WRONG_ANSWER:\n\nrequire 'set'\nclass Spelling\n  attr_reader(:s)\n  def initialize(s)\n    @s = s\n  end\n\n  def sp\n    @s.split(\"\")\n  end\n\n  def rotated\n    (0..s.length).map{|i| sp.rotate(i)}\n  end\n\n  def result\n    rotated.to_set\n  end\nend\n\nprint Spelling.new(gets).result.length\n\n\nProvide the fixed Ruby code without any description or extra tokens.\n\nFixed source code:",
+            ""
+        ]
+    },
+    "source_data": {
+        "delete_cnt": 0,
+        "fix_code_uid": "",
+        "difficulty": 900,
+        "replace_cnt": 0,
+        "fix_ops_cnt": 1,
+        "prob_desc_output_spec": "Output a single integer equal to the number of distinct strings that Hongcow can obtain by applying the cyclic shift arbitrarily many times to the given string.",
+        "apr_id": "713348e76ab332d5f50e611cc534d908",
+        "bug_source_code": "require 'set'\nclass Spelling\n  attr_reader(:s)\n  def initialize(s)\n    @s = s\n  end\n\n  def sp\n    @s.split(\"\")\n  end\n\n  def rotated\n    (0..s.length).map{|i| sp.rotate(i)}\n  end\n\n  def result\n    rotated.to_set\n  end\nend\n\nprint Spelling.new(gets).result.length\n",
+        "prob_desc_input_spec": "The first line of input will be a single string s (1\u2009\u2264\u2009|s|\u2009\u2264\u200950), the word Hongcow initially learns how to spell. The string s consists only of lowercase English letters ('a'\u2013'z').",
+        "src_uid": "8909ac99ed4ab2ee4d681ec864c7831e",
+        "bug_code_uid": "a1442e15d1b6fabe433e557c788825cc",
+        "equal_cnt": 2,
+        "prob_desc_time_limit": "2 seconds",
+        "similarity_score": 0.9886363744735718,
+        "bug_exec_outcome": "WRONG_ANSWER",
+        "lang_cluster": "Ruby",
+        "potential_dominant_fix_op": "insert",
+        "prob_desc_sample_inputs": [
+            "abcd",
+            "bbb",
+            "yzyz"
+        ],
+        "prob_desc_input_from": "standard input",
+        "prob_desc_description": "Hongcow is learning to spell! One day, his teacher gives him a word that he needs to learn to spell. Being a dutiful student, he immediately learns how to spell the word.Hongcow has decided to try to make new words from this one. He starts by taking the word he just learned how to spell, and moves the last character of the word to the beginning of the word. He calls this a cyclic shift. He can apply cyclic shift many times. For example, consecutively applying cyclic shift operation to the word \"abracadabra\" Hongcow will get words \"aabracadabr\", \"raabracadab\" and so on.Hongcow is now wondering how many distinct words he can generate by doing the cyclic shift arbitrarily many times. The initial string is also counted.",
+        "lang": "Ruby",
+        "fix_exec_outcome": "",
+        "insert_cnt": 1,
+        "fix_source_code": "",
+        "prob_desc_notes": "NoteFor the first sample, the strings Hongcow can generate are \"abcd\", \"dabc\", \"cdab\", and \"bcda\".For the second sample, no matter how many times Hongcow does the cyclic shift, Hongcow can only generate \"bbb\".For the third sample, the two strings Hongcow can generate are \"yzyz\" and \"zyzy\".",
+        "file_name": "Ruby.jsonl",
+        "tags": [
+            "strings",
+            "implementation"
+        ],
+        "prob_desc_output_to": "standard output",
+        "prob_desc_created_at": "1481992500",
+        "prob_desc_memory_limit": "256 megabytes",
+        "prob_desc_sample_outputs": [
+            "4",
+            "1",
+            "2"
+        ],
+        "hidden_unit_tests": "[{\"input\": \"abcd\\r\\n\", \"output\": [\"4\"]}, {\"input\": \"bbb\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"yzyz\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"abcdefghijklmnopqrstuvwxyabcdefghijklmnopqrstuvwxy\\r\\n\", \"output\": [\"25\"]}, {\"input\": \"zclkjadoprqronzclkjadoprqronzclkjadoprqron\\r\\n\", \"output\": [\"14\"]}, {\"input\": \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"y\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"ervbfotfedpozygoumbmxeaqegouaqqzqerlykhmvxvvlcaos\\r\\n\", \"output\": [\"49\"]}, {\"input\": \"zyzzzyyzyyyzyyzyzyzyzyzzzyyyzzyzyyzzzzzyyyzzzzyzyy\\r\\n\", \"output\": [\"50\"]}, {\"input\": \"zzfyftdezzfyftdezzfyftdezzfyftdezzfyftdezzfyftde\\r\\n\", \"output\": [\"8\"]}, {\"input\": \"yehcqdlllqpuxdsaicyjjxiylahgxbygmsopjbxhtimzkashs\\r\\n\", \"output\": [\"49\"]}, {\"input\": \"yyyyzzzyzzzyzyzyzyyyyyzzyzyzyyyyyzyzyyyzyzzyyzzzz\\r\\n\", \"output\": [\"49\"]}, {\"input\": \"zkqcrhzlzsnwzkqcrhzlzsnwzkqcrhzlzsnwzkqcrhzlzsnw\\r\\n\", \"output\": [\"12\"]}, {\"input\": \"xxyxxyxxyxxyxxyxxyxxyxxyxxyxxyxxyxxyxxyxxyxxyxxy\\r\\n\", \"output\": [\"3\"]}, {\"input\": \"aaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaab\\r\\n\", \"output\": [\"25\"]}, {\"input\": \"aabaaabaaabaaabaaabaaabaaabaaabaaabaaabaaabaaaba\\r\\n\", \"output\": [\"4\"]}, {\"input\": \"pqqpqqpqqpqqpqqpqqpqqpqqpqqpqqpqqppqppqppqppqppq\\r\\n\", \"output\": [\"48\"]}, {\"input\": \"zxkljaqzxkljaqzxkljaqzxkljaqzxrljaqzxkljaqzxkljaq\\r\\n\", \"output\": [\"49\"]}, {\"input\": \"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwx\\r\\n\", \"output\": [\"50\"]}, {\"input\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaz\\r\\n\", \"output\": [\"50\"]}, {\"input\": \"abcddcba\\r\\n\", \"output\": [\"8\"]}, {\"input\": \"aabaabaabaacaabaabaabaacaabaabaabaacaabaabaabaac\\r\\n\", \"output\": [\"12\"]}, {\"input\": \"aabaabcaabaabcdaabaabcaabaabcd\\r\\n\", \"output\": [\"15\"]}, {\"input\": \"ababaababaaababaababaaaababaababaaababaababaaaa\\r\\n\", \"output\": [\"47\"]}, {\"input\": \"ababaababaaababaababaaaababaababaaababaababaaa\\r\\n\", \"output\": [\"23\"]}, {\"input\": \"aaababaab\\r\\n\", \"output\": [\"9\"]}, {\"input\": \"aba\\r\\n\", \"output\": [\"3\"]}]"
+    }
+}

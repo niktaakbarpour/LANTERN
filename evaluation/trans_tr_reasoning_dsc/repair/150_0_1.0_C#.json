@@ -1,0 +1,50 @@
+{
+    "oai_response": null,
+    "source_data": {
+        "delete_cnt": 3,
+        "fix_code_uid": "",
+        "difficulty": 2200,
+        "replace_cnt": 5,
+        "fix_ops_cnt": 12,
+        "prob_desc_output_spec": "Print a single integer \u2014 the expected value of the number on the blackboard after $$$k$$$ steps as $$$P \\cdot Q^{-1} \\pmod{10^9+7}$$$ for $$$P$$$, $$$Q$$$ defined above.",
+        "apr_id": "341f7a66b5f73e6ecac2d9ff860d187e",
+        "bug_source_code": "\ufeffusing System;\nusing System.Collections.Generic;\nusing System.IO;\nusing System.Linq;\nusing System.Text;\nusing System.Threading.Tasks;\n\nnamespace Codeforces\n{\n    public class MakotoAndABlackboard\n    {\n        public class ModMath\n        {\n            private int mod;\n            Dictionary<Tuple<long, int>, long> cache = new Dictionary<Tuple<long, int>, long>();\n\n            public ModMath(int mod)\n            {\n                this.mod = mod;\n            }\n\n            public long Pow(long x, int n)\n            {\n                var key = Tuple.Create(x, n);\n                if (cache.ContainsKey(key))\n                {\n                    return cache[key];\n                }\n                long res = 1;\n                for (; n > 0; n >>= 1)\n                {\n                    if ((n & 1) > 0)\n                    {\n                        res = res * x % mod;\n                    }\n                    x = x * x % mod;\n                }\n                return cache[key] = res;\n            }\n\n            public long Div(long l, long r)\n            {\n                return l * Pow(r, mod - 2) % mod;\n            }\n\n            internal long Add(long v1, long v2)\n            {\n                return (v1 + v2) % mod;\n            }\n\n            internal long Mul(long v1, long v2)\n            {\n                return v1 * v2 % mod;\n            }\n        }\n\n        const int MOD = 1000000000 + 7;\n\n        ModMath math = new ModMath(MOD);\n\n        public static void Main()\n        {\n            StreamWriter sw = new StreamWriter(Console.OpenStandardOutput()) { AutoFlush = false };\n            new MakotoAndABlackboard().Solve(Console.In, sw);\n            sw.Flush();\n        }\n\n        public void Solve(TextReader tr, TextWriter tw)\n        {\n            var a = tr.ReadLine().Split();\n            tw.WriteLine(Solve(long.Parse(a[0]), int.Parse(a[1])));\n        }\n\n        public int Solve(long n, int k)\n        {\n            var res = 1L;\n            for (long a = 2; a * a <= n; a++)\n            {\n                var np = GetNumPrime(a, n);\n                var numPrime = np.Item1;\n                n = np.Item2;\n                if (numPrime == 0)\n                {\n                    continue;\n                }\n\n                res = math.Mul(res, Calculate(k, a, numPrime));\n            }\n            if (n != 1)\n            {\n                res = math.Mul(res, Calculate(k, n, 1));\n            }\n            return (int)(res);\n        }\n\n        private long Calculate(int k, long a, long numPrime)\n        {\n            var current = 0;\n            var next = 1;\n            var dp = new long[2, numPrime + 1];\n            dp[current, numPrime] = 1;\n            for (int i = 1; i <= k; i++)\n            {\n                for (int j = 0; j <= numPrime; j++)\n                {\n                    dp[next, j] = 0;\n                    for (int l = j; l <= numPrime; l++)\n                    {\n                        dp[next, j] = math.Add(dp[next, j], math.Div(dp[current, l], l + 1));\n                    }\n                }\n                current ^= 1;\n                next ^= 1;\n            }\n\n            var t = 0L;\n            for (int j = 0; j <= numPrime; j++)\n            {\n                t = math.Add(t, math.Mul(dp[current, j], math.Pow(a, j)));\n            }\n            return t;\n        }\n\n        Tuple<long, long> GetNumPrime(long a, long n)\n        {\n            var numPrime = 0L;\n            while (n % a == 0)\n            {\n                numPrime++;\n                n /= a;\n            }\n            return Tuple.Create(numPrime, n);\n        }\n    }\n}\n",
+        "prob_desc_input_spec": "The only line of the input contains two integers $$$n$$$ and $$$k$$$ ($$$1 \\leq n \\leq 10^{15}$$$, $$$1 \\leq k \\leq 10^4$$$).",
+        "src_uid": "dc466d9c24b7dcb37c0e99337b4124d2",
+        "bug_code_uid": "8ae1c129d64e156a3c5d1d1cb15980be",
+        "equal_cnt": 13,
+        "prob_desc_time_limit": "2 seconds",
+        "similarity_score": 0.9169126749038696,
+        "bug_exec_outcome": "TIME_LIMIT_EXCEEDED",
+        "lang_cluster": "C#",
+        "potential_dominant_fix_op": "replace",
+        "prob_desc_sample_inputs": [
+            "6 1",
+            "6 2",
+            "60 5"
+        ],
+        "prob_desc_input_from": "standard input",
+        "prob_desc_description": "Makoto has a big blackboard with a positive integer $$$n$$$ written on it. He will perform the following action exactly $$$k$$$ times:Suppose the number currently written on the blackboard is $$$v$$$. He will randomly pick one of the divisors of $$$v$$$ (possibly $$$1$$$ and $$$v$$$) and replace $$$v$$$ with this divisor. As Makoto uses his famous random number generator (RNG) and as he always uses $$$58$$$ as his generator seed, each divisor is guaranteed to be chosen with equal probability.He now wonders what is the expected value of the number written on the blackboard after $$$k$$$ steps.It can be shown that this value can be represented as $$$\\frac{P}{Q}$$$ where $$$P$$$ and $$$Q$$$ are coprime integers and $$$Q \\not\\equiv 0 \\pmod{10^9+7}$$$. Print the value of $$$P \\cdot Q^{-1}$$$ modulo $$$10^9+7$$$.",
+        "lang": "Mono C#",
+        "fix_exec_outcome": "",
+        "insert_cnt": 4,
+        "fix_source_code": "",
+        "prob_desc_notes": "NoteIn the first example, after one step, the number written on the blackboard is $$$1$$$, $$$2$$$, $$$3$$$ or $$$6$$$ \u2014 each occurring with equal probability. Hence, the answer is $$$\\frac{1+2+3+6}{4}=3$$$.In the second example, the answer is equal to $$$1 \\cdot \\frac{9}{16}+2 \\cdot \\frac{3}{16}+3 \\cdot \\frac{3}{16}+6 \\cdot \\frac{1}{16}=\\frac{15}{8}$$$.",
+        "file_name": "C#.jsonl",
+        "tags": [
+            "dp",
+            "math",
+            "probabilities",
+            "number theory"
+        ],
+        "prob_desc_output_to": "standard output",
+        "prob_desc_created_at": "1546613100",
+        "prob_desc_memory_limit": "256 megabytes",
+        "prob_desc_sample_outputs": [
+            "3",
+            "875000008",
+            "237178099"
+        ],
+        "hidden_unit_tests": "[{\"input\": \"6 1\\r\\n\", \"output\": [\"3\"]}, {\"input\": \"6 2\\r\\n\", \"output\": [\"875000008\"]}, {\"input\": \"60 5\\r\\n\", \"output\": [\"237178099\"]}, {\"input\": \"2 4\\r\\n\", \"output\": [\"562500005\"]}, {\"input\": \"12 3\\r\\n\", \"output\": [\"775462970\"]}, {\"input\": \"55 5\\r\\n\", \"output\": [\"789062507\"]}, {\"input\": \"935 9\\r\\n\", \"output\": [\"658825880\"]}, {\"input\": \"1 10000\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"120 1\\r\\n\", \"output\": [\"500000026\"]}, {\"input\": \"1000000000000000 10000\\r\\n\", \"output\": [\"215514159\"]}, {\"input\": \"671058194037157 8673\\r\\n\", \"output\": [\"298638658\"]}, {\"input\": \"900018062553298 4801\\r\\n\", \"output\": [\"345432320\"]}, {\"input\": \"128973636102142 5521\\r\\n\", \"output\": [\"99152648\"]}, {\"input\": \"999999999999993 8123\\r\\n\", \"output\": [\"868053217\"]}, {\"input\": \"260858031033600 9696\\r\\n\", \"output\": [\"692221824\"]}, {\"input\": \"562949953421312 9779\\r\\n\", \"output\": [\"98057767\"]}, {\"input\": \"357933504618282 1649\\r\\n\", \"output\": [\"197730476\"]}, {\"input\": \"586884783199831 5073\\r\\n\", \"output\": [\"883678085\"]}, {\"input\": \"187877211524483 8497\\r\\n\", \"output\": [\"562808746\"]}, {\"input\": \"866421317361600 10000\\r\\n\", \"output\": [\"82212846\"]}, {\"input\": \"782574093100800 9999\\r\\n\", \"output\": [\"293217028\"]}, {\"input\": \"577614211574400 9998\\r\\n\", \"output\": [\"681915605\"]}, {\"input\": \"65214507758400 9997\\r\\n\", \"output\": [\"677959603\"]}, {\"input\": \"963761198400 9996\\r\\n\", \"output\": [\"669401143\"]}, {\"input\": \"5587021440 9995\\r\\n\", \"output\": [\"360750834\"]}, {\"input\": \"17297280 9994\\r\\n\", \"output\": [\"94383698\"]}, {\"input\": \"7560 9993\\r\\n\", \"output\": [\"412712546\"]}, {\"input\": \"120 9992\\r\\n\", \"output\": [\"167656619\"]}, {\"input\": \"1 1\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"609359740010496 1337\\r\\n\", \"output\": [\"263703037\"]}, {\"input\": \"912750790581630 9876\\r\\n\", \"output\": [\"291557094\"]}, {\"input\": \"617673396283947 7777\\r\\n\", \"output\": [\"488769014\"]}, {\"input\": \"890604418498560 9119\\r\\n\", \"output\": [\"185509970\"]}, {\"input\": \"524288004718592 8888\\r\\n\", \"output\": [\"851726115\"]}, {\"input\": \"999999999999989 8998\\r\\n\", \"output\": [\"391873310\"]}, {\"input\": \"999999999999999 8123\\r\\n\", \"output\": [\"41003922\"]}, {\"input\": \"817237005720659 4233\\r\\n\", \"output\": [\"533017938\"]}, {\"input\": \"1000000007 1\\r\\n\", \"output\": [\"500000004\"]}, {\"input\": \"1000000007 2\\r\\n\", \"output\": [\"750000006\"]}, {\"input\": \"999999999999970 8998\\r\\n\", \"output\": [\"939941657\"]}, {\"input\": \"900000060000001 8123\\r\\n\", \"output\": [\"865356488\"]}, {\"input\": \"999011322032079 4233\\r\\n\", \"output\": [\"546309400\"]}, {\"input\": \"999005327998113 9119\\r\\n\", \"output\": [\"106270540\"]}, {\"input\": \"900000720000023 9876\\r\\n\", \"output\": [\"511266473\"]}]"
+    }
+}

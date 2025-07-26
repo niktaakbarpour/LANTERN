@@ -1,0 +1,64 @@
+{
+    "oai_response": {
+        "choices": [
+            {
+                "message": {
+                    "role": "assistant",
+                    "content": "```\nusing System;\nusing System.Linq;\n\n\nnamespace _611B\n{\n    class Program\n    {\n        static void Main()\n        {\n            var s = Console.ReadLine().Split().Select(long.Parse).ToArray();\n            var a = s[0] - 1; var b = s[1];\n            Console.WriteLine(Calc(b) - Calc(a));\n        }\n        static long Calc(long num)\n        {\n            int n = Convert.ToString(num, 2).Length;\n            long max = n * (n - 1) / 2;\n            long maxValue = (long)Math.Pow(2, n) - 1;\n            for (int k=0; k<n;k++)\n            {\n                if (maxValue - (long)Math.Pow(2, k) > num) max--;\n                else break;\n            }\n            return max;\n        }\n    }\n}\n```"
+                }
+            }
+        ],
+        "prompt": [
+            "Fix a buggy program written in C# language to solve the following programming problem:\nDescription: The year 2015 is almost over.Limak is a little polar bear. He has recently learnt about the binary system. He noticed that the passing year has exactly one zero in its representation in the binary system\u00a0\u2014 201510\u2009=\u2009111110111112. Note that he doesn't care about the number of zeros in the decimal representation.Limak chose some interval of years. He is going to count all years from this interval that have exactly one zero in the binary representation. Can you do it faster?Assume that all positive integers are always written without leading zeros.\nInput Specification: The only line of the input contains two integers a and b (1\u2009\u2264\u2009a\u2009\u2264\u2009b\u2009\u2264\u20091018)\u00a0\u2014 the first year and the last year in Limak's interval respectively.\nOutput Specification: Print one integer\u00a0\u2013 the number of years Limak will count in his chosen interval.\n\nSample Input:\n5 10\nSample Output:\n2\n\nSample Input:\n2015 2015\nSample Output:\n1\n\nSample Input:\n100 105\nSample Output:\n0\n\nSample Input:\n72057594000000000 72057595000000000\nSample Output:\n26\n\nNotes: NoteIn the first sample Limak's interval contains numbers 510\u2009=\u20091012, 610\u2009=\u20091102, 710\u2009=\u20091112, 810\u2009=\u200910002, 910\u2009=\u200910012 and 1010\u2009=\u200910102. Two of them (1012 and 1102) have the described property.\nTake input from standard input and output to standard output\n\nHere is the code with a bug of WRONG_ANSWER:\n\nusing System;\nusing System.Linq;\n\n\nnamespace _611B\n{\n    class Program\n    {\n        static void Main()\n        {\n            var s = Console.ReadLine().Split().Select(long.Parse).ToArray();\n            var a = s[0] - 1; var b = s[1];\n            Console.WriteLine(Calc(b)-Calc(a));\n        }\n        static long Calc(long num)\n        {\n            int n = Convert.ToString(num, 2).Length;\n            long max = n * (n - 1) / 2;            \n            for (int k=0; k<n;k++)\n            {\n                if (Math.Pow(2, n) - 1 - Math.Pow(2, k) > num) max--;\n                else break;\n            }\n            return max;\n        }\n    }\n}\n\n\nProvide the fixed C# code without any description or extra tokens.\n\nFixed source code:",
+            ""
+        ]
+    },
+    "source_data": {
+        "delete_cnt": 3,
+        "fix_code_uid": "",
+        "difficulty": 1300,
+        "replace_cnt": 4,
+        "fix_ops_cnt": 14,
+        "prob_desc_output_spec": "Print one integer\u00a0\u2013 the number of years Limak will count in his chosen interval.",
+        "apr_id": "edd2ac032ad5cc65a8e4656b86ca66b8",
+        "bug_source_code": "using System;\nusing System.Linq;\n\n\nnamespace _611B\n{\n    class Program\n    {\n        static void Main()\n        {\n            var s = Console.ReadLine().Split().Select(long.Parse).ToArray();\n            var a = s[0] - 1; var b = s[1];\n            Console.WriteLine(Calc(b)-Calc(a));\n        }\n        static long Calc(long num)\n        {\n            int n = Convert.ToString(num, 2).Length;\n            long max = n * (n - 1) / 2;            \n            for (int k=0; k<n;k++)\n            {\n                if (Math.Pow(2, n) - 1 - Math.Pow(2, k) > num) max--;\n                else break;\n            }\n            return max;\n        }\n    }\n}\n",
+        "prob_desc_input_spec": "The only line of the input contains two integers a and b (1\u2009\u2264\u2009a\u2009\u2264\u2009b\u2009\u2264\u20091018)\u00a0\u2014 the first year and the last year in Limak's interval respectively.",
+        "src_uid": "581f61b1f50313bf4c75833cefd4d022",
+        "bug_code_uid": "c5e6c18f1e02598dd05a354ae2f53f14",
+        "equal_cnt": 14,
+        "prob_desc_time_limit": "2 seconds",
+        "similarity_score": 0.7637261152267456,
+        "bug_exec_outcome": "WRONG_ANSWER",
+        "lang_cluster": "C#",
+        "potential_dominant_fix_op": "insert",
+        "prob_desc_sample_inputs": [
+            "5 10",
+            "2015 2015",
+            "100 105",
+            "72057594000000000 72057595000000000"
+        ],
+        "prob_desc_input_from": "standard input",
+        "prob_desc_description": "The year 2015 is almost over.Limak is a little polar bear. He has recently learnt about the binary system. He noticed that the passing year has exactly one zero in its representation in the binary system\u00a0\u2014 201510\u2009=\u2009111110111112. Note that he doesn't care about the number of zeros in the decimal representation.Limak chose some interval of years. He is going to count all years from this interval that have exactly one zero in the binary representation. Can you do it faster?Assume that all positive integers are always written without leading zeros.",
+        "lang": "MS C#",
+        "fix_exec_outcome": "",
+        "insert_cnt": 7,
+        "fix_source_code": "",
+        "prob_desc_notes": "NoteIn the first sample Limak's interval contains numbers 510\u2009=\u20091012, 610\u2009=\u20091102, 710\u2009=\u20091112, 810\u2009=\u200910002, 910\u2009=\u200910012 and 1010\u2009=\u200910102. Two of them (1012 and 1102) have the described property.",
+        "file_name": "C#.jsonl",
+        "tags": [
+            "bitmasks",
+            "brute force",
+            "implementation"
+        ],
+        "prob_desc_output_to": "standard output",
+        "prob_desc_created_at": "1451487900",
+        "prob_desc_memory_limit": "256 megabytes",
+        "prob_desc_sample_outputs": [
+            "2",
+            "1",
+            "0",
+            "26"
+        ],
+        "hidden_unit_tests": "[{\"input\": \"5 10\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"2015 2015\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"100 105\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"72057594000000000 72057595000000000\\r\\n\", \"output\": [\"26\"]}, {\"input\": \"1 100\\r\\n\", \"output\": [\"16\"]}, {\"input\": \"1000000000000000000 1000000000000000000\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"1 1000000000000000000\\r\\n\", \"output\": [\"1712\"]}, {\"input\": \"1 1\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"1 2\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"1 3\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"1 4\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"1 5\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"1 6\\r\\n\", \"output\": [\"3\"]}, {\"input\": \"1 7\\r\\n\", \"output\": [\"3\"]}, {\"input\": \"2 2\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"2 3\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"2 4\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"2 5\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"2 6\\r\\n\", \"output\": [\"3\"]}, {\"input\": \"2 7\\r\\n\", \"output\": [\"3\"]}, {\"input\": \"3 3\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"3 4\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"3 5\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"3 6\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"3 7\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"4 4\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"4 5\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"4 6\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"4 7\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"5 5\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"5 6\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"5 7\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"6 6\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"6 7\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"7 7\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"1 8\\r\\n\", \"output\": [\"3\"]}, {\"input\": \"6 8\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"7 8\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"8 8\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"1 1022\\r\\n\", \"output\": [\"45\"]}, {\"input\": \"1 1023\\r\\n\", \"output\": [\"45\"]}, {\"input\": \"1 1024\\r\\n\", \"output\": [\"45\"]}, {\"input\": \"1 1025\\r\\n\", \"output\": [\"45\"]}, {\"input\": \"1 1026\\r\\n\", \"output\": [\"45\"]}, {\"input\": \"509 1022\\r\\n\", \"output\": [\"11\"]}, {\"input\": \"510 1022\\r\\n\", \"output\": [\"10\"]}, {\"input\": \"511 1022\\r\\n\", \"output\": [\"9\"]}, {\"input\": \"512 1022\\r\\n\", \"output\": [\"9\"]}, {\"input\": \"513 1022\\r\\n\", \"output\": [\"9\"]}, {\"input\": \"509 1023\\r\\n\", \"output\": [\"11\"]}, {\"input\": \"510 1023\\r\\n\", \"output\": [\"10\"]}, {\"input\": \"511 1023\\r\\n\", \"output\": [\"9\"]}, {\"input\": \"512 1023\\r\\n\", \"output\": [\"9\"]}, {\"input\": \"513 1023\\r\\n\", \"output\": [\"9\"]}, {\"input\": \"509 1024\\r\\n\", \"output\": [\"11\"]}, {\"input\": \"510 1024\\r\\n\", \"output\": [\"10\"]}, {\"input\": \"511 1024\\r\\n\", \"output\": [\"9\"]}, {\"input\": \"512 1024\\r\\n\", \"output\": [\"9\"]}, {\"input\": \"513 1024\\r\\n\", \"output\": [\"9\"]}, {\"input\": \"509 1025\\r\\n\", \"output\": [\"11\"]}, {\"input\": \"510 1025\\r\\n\", \"output\": [\"10\"]}, {\"input\": \"511 1025\\r\\n\", \"output\": [\"9\"]}, {\"input\": \"512 1025\\r\\n\", \"output\": [\"9\"]}, {\"input\": \"513 1025\\r\\n\", \"output\": [\"9\"]}, {\"input\": \"1 1000000000\\r\\n\", \"output\": [\"408\"]}, {\"input\": \"10000000000 70000000000000000\\r\\n\", \"output\": [\"961\"]}, {\"input\": \"1 935829385028502935\\r\\n\", \"output\": [\"1712\"]}, {\"input\": \"500000000000000000 1000000000000000000\\r\\n\", \"output\": [\"58\"]}, {\"input\": \"500000000000000000 576460752303423488\\r\\n\", \"output\": [\"57\"]}, {\"input\": \"576460752303423488 1000000000000000000\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"999999999999999999 1000000000000000000\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"1124800395214847 36011204832919551\\r\\n\", \"output\": [\"257\"]}, {\"input\": \"1124800395214847 36011204832919550\\r\\n\", \"output\": [\"256\"]}, {\"input\": \"1124800395214847 36011204832919552\\r\\n\", \"output\": [\"257\"]}, {\"input\": \"1124800395214846 36011204832919551\\r\\n\", \"output\": [\"257\"]}, {\"input\": \"1124800395214848 36011204832919551\\r\\n\", \"output\": [\"256\"]}, {\"input\": \"1 287104476244869119\\r\\n\", \"output\": [\"1603\"]}, {\"input\": \"1 287104476244869118\\r\\n\", \"output\": [\"1602\"]}, {\"input\": \"1 287104476244869120\\r\\n\", \"output\": [\"1603\"]}, {\"input\": \"492581209243647 1000000000000000000\\r\\n\", \"output\": [\"583\"]}, {\"input\": \"492581209243646 1000000000000000000\\r\\n\", \"output\": [\"583\"]}, {\"input\": \"492581209243648 1000000000000000000\\r\\n\", \"output\": [\"582\"]}, {\"input\": \"1099444518911 1099444518911\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"1099444518910 1099444518911\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"1099444518911 1099444518912\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"1099444518910 1099444518912\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"864691128455135231 864691128455135231\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"864691128455135231 864691128455135232\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"864691128455135230 864691128455135232\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"864691128455135230 864691128455135231\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"864691128455135231 1000000000000000000\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"864691128455135232 1000000000000000000\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"864691128455135230 1000000000000000000\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"576460752303423487 576460752303423487\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"1 576460752303423487\\r\\n\", \"output\": [\"1711\"]}, {\"input\": \"1 576460752303423486\\r\\n\", \"output\": [\"1711\"]}, {\"input\": \"2 1000000000000000000\\r\\n\", \"output\": [\"1712\"]}, {\"input\": \"3 1000000000000000000\\r\\n\", \"output\": [\"1711\"]}, {\"input\": \"4 1000000000000000000\\r\\n\", \"output\": [\"1711\"]}, {\"input\": \"5 1000000000000000000\\r\\n\", \"output\": [\"1711\"]}, {\"input\": \"6 1000000000000000000\\r\\n\", \"output\": [\"1710\"]}]"
+    }
+}

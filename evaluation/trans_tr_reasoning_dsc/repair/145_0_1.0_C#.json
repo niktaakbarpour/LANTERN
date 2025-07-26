@@ -1,0 +1,50 @@
+{
+    "oai_response": null,
+    "source_data": {
+        "delete_cnt": 1,
+        "fix_code_uid": "",
+        "difficulty": 2200,
+        "replace_cnt": 21,
+        "fix_ops_cnt": 33,
+        "prob_desc_output_spec": "Print a single integer \u2014 the expected value of the number on the blackboard after $$$k$$$ steps as $$$P \\cdot Q^{-1} \\pmod{10^9+7}$$$ for $$$P$$$, $$$Q$$$ defined above.",
+        "apr_id": "4d9b7d06648ed3228e1d04292b1bdf81",
+        "bug_source_code": "using System;\nusing System.Collections.Generic;\nclass Program\n{\n\tstatic void Main(string[] args)\n\t{\n\t    long mod = 1000000007;\n\t\tstring[] str = Console.ReadLine().Split();\n\t\tlong N = long.Parse(str[0]);\n\t\tlong K = long.Parse(str[1]);\n\t\tvar Elist = enum_div(N);\n\t\tElist.Sort((x,y)=>(int)x-(int)y);\n\t\tvar Plist = PrimeFactors(N);\n\t\tPlist.Sort((x,y)=>(int)x-(int)y);\n\t\tvar PAlist = new List<long[]>();\n\t\tlong t = Plist[0];\n\t\tlong ct = 1;\n\t\tfor(var i=1;i<Plist.Count;i++){\n\t\t\tif(t!=Plist[i]){\n\t\t\t\tPAlist.Add(new long[2]{t,ct});\n\t\t\t\tt = Plist[i];\n\t\t\t\tct = 1;\n\t\t\t} else {\n\t\t\t\tct++;\n\t\t\t}\n\t\t}\n\t\tPAlist.Add(new long[2]{t,ct});\n\t\tlong[]Pma = new long[PAlist.Count];\n\t\tlong[]Qma = new long[PAlist.Count];\n\t\tlong[]PQma = new long[PAlist.Count];\n\t\tfor(var i=0;i<PAlist.Count;i++){\n\t\t\tlong[] Pa = new long[PAlist[i][1]+1];\n\t\t\tlong[] Qa = new long[PAlist[i][1]+1];\n\t\t\tlong[] PQa = new long[PAlist[i][1]+1];\n\t\t\tfor(var j=0;j<=PAlist[i][1];j++){\n\t\t\t\tPa[j] = 1;\n\t\t\t\tQa[j] = PAlist[i][1]+1;\n\t\t\t\tPQa[j] = Pa[j] * Mpow(Qa[j],mod-2,mod) % mod;\n\t\t\t}\n\t\t\tfor(var k=1;k<K;k++){\n\t\t\t    for(var j=1;j<=PAlist[i][1];j++){\n\t\t\t\t    for(var h=0;h<j;h++){\n\t\t\t\t\t    long Pa0 = Pa[h];\n\t\t\t\t\t    long Qa0 = Qa[h];\n\t\t\t\t\t    long Pa1 = Pa[j];\n\t\t\t\t\t    long Qa1 = Qa[j]*(j+1);\n\t\t\t\t\t    Pa[h] = (Pa0*Qa1+Pa1*Qa0) % mod;\n\t\t\t\t\t    Qa[h] = (Qa0*Qa1) % mod;\n\t\t\t\t\t\tPQa[h] = PQa[h] + PQa[j] * Mpow(j+1,mod-2,mod) % mod;\n    \t\t\t\t}\n\t\t\t\t    Qa[j] = Qa[j]*(j+1);\n\t\t\t\t\tPQa[j] = PQa[j] * Mpow(j+1,mod-2,mod) % mod;\n\t\t\t    }\n\t\t\t}\n\t\t\tlong Psum = Pa[0];\n\t\t\tlong Qsum = Qa[0];\n\t\t\tlong PQsum = PQa[0];\n\t\t\tfor(var j=1;j<=PAlist[i][1];j++){\n\t\t\t\tlong Pa0 = Psum;\n\t\t\t\tlong Qa0 = Qsum;\n\t\t\t\tlong PQa0 = PQsum;\n\t\t\t\tlong Pn = 1;\n\t\t\t\tfor(var a=0;a<j;a++){\n\t\t\t\t    Pn = Pn * PAlist[i][0] % mod;\n\t\t\t\t}\n\t\t\t\tPsum = (Pa0*Qa[j]+Pn*Pa[j]*Qa0) % mod;\n\t\t\t\tQsum = (Qa0 * Qa[j]) % mod;\n\t\t\t\tPQsum = (PQsum + Pn*PQa[j]) % mod;\n\t\t\t}\n\t\t\tPma[i] = Psum;\n\t\t\tQma[i] = Qsum;\n\t\t\tPQma[i] = PQsum;\n\t\t}\n\t\tlong Pm = Pma[0];\n\t\tlong Qm = Qma[0];\n\t\tlong PQm = PQma[0];\n\t\tfor(var i=1;i<PAlist.Count;i++){\n\t\t    Pm *= Pma[i] % mod;\n\t\t    Qm *= Qma[i] % mod;\n\t\t\tPQm = PQm * PQma[i] % mod;\n\t\t}\n\t    Console.WriteLine(PQm);\n\t}\n\n\tpublic static List<long> PrimeFactors(long n){\n\t\tlong i = 2;\n\t\tlong tmp = n;\n\t\tvar list = new List<long>();\n\t\twhile(i*i<=n){\n\t\t\tif(tmp%i==0){\n\t\t\t\ttmp /= i;\n\t\t\t\tlist.Add(i);\n\t\t\t} else {\n\t\t\t\ti++;\n\t\t\t}\n\t\t}\n\t\tif(tmp != 1){\n\t\t\tlist.Add(tmp);\n\t\t}\n\t\treturn list;\n\t}\n\tpublic static List<long> enum_div(long n){\n\t\tlong tmp = n;\n\t\tvar list = new List<long>();\n\t\tfor(var i=1;i*i<=n;i++){\n\t\t\tif(n%i==0){\n\t\t\t\tlist.Add(i);\n\t\t\t\tif(i*i!=n){\n\t\t\t\t\tlist.Add(n/i);\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\treturn list;\n\t}\n\tpublic static long Mpow(long x,long n,long m)\n\t{\n\t\tlong ans = 1;\n\t\twhile(n > 0){\n\t\t\tif(n % 2 == 1){\n\t\t\t\tans = ans * x % m;\n\t\t\t\tn -= 1;\n\t\t\t}\n\t\t\tx = x * x % m;\n\t\t\tn /= 2;\n\t\t}\n\t\treturn ans;\n\t}\n}",
+        "prob_desc_input_spec": "The only line of the input contains two integers $$$n$$$ and $$$k$$$ ($$$1 \\leq n \\leq 10^{15}$$$, $$$1 \\leq k \\leq 10^4$$$).",
+        "src_uid": "dc466d9c24b7dcb37c0e99337b4124d2",
+        "bug_code_uid": "37a3fe54ccf5349922b6882fbaa7211c",
+        "equal_cnt": 34,
+        "prob_desc_time_limit": "2 seconds",
+        "similarity_score": 0.4762667715549469,
+        "bug_exec_outcome": "RUNTIME_ERROR",
+        "lang_cluster": "C#",
+        "potential_dominant_fix_op": "replace",
+        "prob_desc_sample_inputs": [
+            "6 1",
+            "6 2",
+            "60 5"
+        ],
+        "prob_desc_input_from": "standard input",
+        "prob_desc_description": "Makoto has a big blackboard with a positive integer $$$n$$$ written on it. He will perform the following action exactly $$$k$$$ times:Suppose the number currently written on the blackboard is $$$v$$$. He will randomly pick one of the divisors of $$$v$$$ (possibly $$$1$$$ and $$$v$$$) and replace $$$v$$$ with this divisor. As Makoto uses his famous random number generator (RNG) and as he always uses $$$58$$$ as his generator seed, each divisor is guaranteed to be chosen with equal probability.He now wonders what is the expected value of the number written on the blackboard after $$$k$$$ steps.It can be shown that this value can be represented as $$$\\frac{P}{Q}$$$ where $$$P$$$ and $$$Q$$$ are coprime integers and $$$Q \\not\\equiv 0 \\pmod{10^9+7}$$$. Print the value of $$$P \\cdot Q^{-1}$$$ modulo $$$10^9+7$$$.",
+        "lang": "Mono C#",
+        "fix_exec_outcome": "",
+        "insert_cnt": 11,
+        "fix_source_code": "",
+        "prob_desc_notes": "NoteIn the first example, after one step, the number written on the blackboard is $$$1$$$, $$$2$$$, $$$3$$$ or $$$6$$$ \u2014 each occurring with equal probability. Hence, the answer is $$$\\frac{1+2+3+6}{4}=3$$$.In the second example, the answer is equal to $$$1 \\cdot \\frac{9}{16}+2 \\cdot \\frac{3}{16}+3 \\cdot \\frac{3}{16}+6 \\cdot \\frac{1}{16}=\\frac{15}{8}$$$.",
+        "file_name": "C#.jsonl",
+        "tags": [
+            "dp",
+            "math",
+            "probabilities",
+            "number theory"
+        ],
+        "prob_desc_output_to": "standard output",
+        "prob_desc_created_at": "1546613100",
+        "prob_desc_memory_limit": "256 megabytes",
+        "prob_desc_sample_outputs": [
+            "3",
+            "875000008",
+            "237178099"
+        ],
+        "hidden_unit_tests": "[{\"input\": \"6 1\\r\\n\", \"output\": [\"3\"]}, {\"input\": \"6 2\\r\\n\", \"output\": [\"875000008\"]}, {\"input\": \"60 5\\r\\n\", \"output\": [\"237178099\"]}, {\"input\": \"2 4\\r\\n\", \"output\": [\"562500005\"]}, {\"input\": \"12 3\\r\\n\", \"output\": [\"775462970\"]}, {\"input\": \"55 5\\r\\n\", \"output\": [\"789062507\"]}, {\"input\": \"935 9\\r\\n\", \"output\": [\"658825880\"]}, {\"input\": \"1 10000\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"120 1\\r\\n\", \"output\": [\"500000026\"]}, {\"input\": \"1000000000000000 10000\\r\\n\", \"output\": [\"215514159\"]}, {\"input\": \"671058194037157 8673\\r\\n\", \"output\": [\"298638658\"]}, {\"input\": \"900018062553298 4801\\r\\n\", \"output\": [\"345432320\"]}, {\"input\": \"128973636102142 5521\\r\\n\", \"output\": [\"99152648\"]}, {\"input\": \"999999999999993 8123\\r\\n\", \"output\": [\"868053217\"]}, {\"input\": \"260858031033600 9696\\r\\n\", \"output\": [\"692221824\"]}, {\"input\": \"562949953421312 9779\\r\\n\", \"output\": [\"98057767\"]}, {\"input\": \"357933504618282 1649\\r\\n\", \"output\": [\"197730476\"]}, {\"input\": \"586884783199831 5073\\r\\n\", \"output\": [\"883678085\"]}, {\"input\": \"187877211524483 8497\\r\\n\", \"output\": [\"562808746\"]}, {\"input\": \"866421317361600 10000\\r\\n\", \"output\": [\"82212846\"]}, {\"input\": \"782574093100800 9999\\r\\n\", \"output\": [\"293217028\"]}, {\"input\": \"577614211574400 9998\\r\\n\", \"output\": [\"681915605\"]}, {\"input\": \"65214507758400 9997\\r\\n\", \"output\": [\"677959603\"]}, {\"input\": \"963761198400 9996\\r\\n\", \"output\": [\"669401143\"]}, {\"input\": \"5587021440 9995\\r\\n\", \"output\": [\"360750834\"]}, {\"input\": \"17297280 9994\\r\\n\", \"output\": [\"94383698\"]}, {\"input\": \"7560 9993\\r\\n\", \"output\": [\"412712546\"]}, {\"input\": \"120 9992\\r\\n\", \"output\": [\"167656619\"]}, {\"input\": \"1 1\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"609359740010496 1337\\r\\n\", \"output\": [\"263703037\"]}, {\"input\": \"912750790581630 9876\\r\\n\", \"output\": [\"291557094\"]}, {\"input\": \"617673396283947 7777\\r\\n\", \"output\": [\"488769014\"]}, {\"input\": \"890604418498560 9119\\r\\n\", \"output\": [\"185509970\"]}, {\"input\": \"524288004718592 8888\\r\\n\", \"output\": [\"851726115\"]}, {\"input\": \"999999999999989 8998\\r\\n\", \"output\": [\"391873310\"]}, {\"input\": \"999999999999999 8123\\r\\n\", \"output\": [\"41003922\"]}, {\"input\": \"817237005720659 4233\\r\\n\", \"output\": [\"533017938\"]}, {\"input\": \"1000000007 1\\r\\n\", \"output\": [\"500000004\"]}, {\"input\": \"1000000007 2\\r\\n\", \"output\": [\"750000006\"]}, {\"input\": \"999999999999970 8998\\r\\n\", \"output\": [\"939941657\"]}, {\"input\": \"900000060000001 8123\\r\\n\", \"output\": [\"865356488\"]}, {\"input\": \"999011322032079 4233\\r\\n\", \"output\": [\"546309400\"]}, {\"input\": \"999005327998113 9119\\r\\n\", \"output\": [\"106270540\"]}, {\"input\": \"900000720000023 9876\\r\\n\", \"output\": [\"511266473\"]}]"
+    }
+}

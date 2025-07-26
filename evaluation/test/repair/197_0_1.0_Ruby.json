@@ -1,0 +1,60 @@
+{
+    "oai_response": {
+        "choices": [
+            {
+                "message": {
+                    "role": "assistant",
+                    "content": "```ruby\nn = gets.to_i\ns = gets.chomp.chars.map(&:to_i)\nl = [nil, [], [2], [3], [2, 2, 3], [5], [5, 3, 2], [7], [2, 2, 2], [3, 3]]\nsol = []\ns.each{|x| sol += l[x]}\nputs sol.sort.reverse.join(\"\")\n```"
+                }
+            }
+        ],
+        "prompt": [
+            "Fix a buggy program written in Ruby language to solve the following programming problem:\nDescription: Drazil is playing a math game with Varda.Let's define  for positive integer x as a product of factorials of its digits. For example, .First, they choose a decimal number a consisting of n digits that contains at least one digit larger than 1. This number may possibly start with leading zeroes. Then they should find maximum positive number x satisfying following two conditions:1. x doesn't contain neither digit 0 nor digit 1.2.  = .Help friends find such number.\nInput Specification: The first line contains an integer n (1\u2009\u2264\u2009n\u2009\u2264\u200915) \u2014 the number of digits in a. The second line contains n digits of a. There is at least one digit in a that is larger than 1. Number a may possibly contain leading zeroes.\nOutput Specification: Output a maximum possible integer satisfying the conditions above. There should be no zeroes and ones in this number decimal representation.\n\nSample Input:\n4\n1234\nSample Output:\n33222\n\nSample Input:\n3\n555\nSample Output:\n555\n\nNotes: NoteIn the first case, \nTake input from standard input and output to standard output\n\nHere is the code with a bug of RUNTIME_ERROR:\n\nn = gets.to_i\ns = gets.chomp.chars.map(&:to_i)\nl = [nil, [], [2], [3], [2, 2, 3], [5], [5, 3, 2], [7], [2, 2, 2], [3, 3]]\nsol = []\ns.each{|x| sol += l[x]}\nputs sol.sort.reverse.join(\"\")\n\n\nProvide the fixed Ruby code without any description or extra tokens.\n\nFixed source code:",
+            ""
+        ]
+    },
+    "source_data": {
+        "delete_cnt": 1,
+        "fix_code_uid": "",
+        "difficulty": 1400,
+        "replace_cnt": 3,
+        "fix_ops_cnt": 6,
+        "prob_desc_output_spec": "Output a maximum possible integer satisfying the conditions above. There should be no zeroes and ones in this number decimal representation.",
+        "apr_id": "8c4ed7b26706f3f5ce6627eaf6da61d7",
+        "bug_source_code": "n = gets.to_i\ns = gets.chomp.chars.map(&:to_i)\nl = [nil, [], [2], [3], [2, 2, 3], [5], [5, 3, 2], [7], [2, 2, 2], [3, 3]]\nsol = []\ns.each{|x| sol += l[x]}\nputs sol.sort.reverse.join(\"\")\n",
+        "prob_desc_input_spec": "The first line contains an integer n (1\u2009\u2264\u2009n\u2009\u2264\u200915) \u2014 the number of digits in a. The second line contains n digits of a. There is at least one digit in a that is larger than 1. Number a may possibly contain leading zeroes.",
+        "src_uid": "60dbfc7a65702ae8bd4a587db1e06398",
+        "bug_code_uid": "40994af36d6fd0147c45a33d62a40e82",
+        "equal_cnt": 7,
+        "prob_desc_time_limit": "2 seconds",
+        "similarity_score": 0.9442970752716064,
+        "bug_exec_outcome": "RUNTIME_ERROR",
+        "lang_cluster": "Ruby",
+        "potential_dominant_fix_op": "replace",
+        "prob_desc_sample_inputs": [
+            "4\n1234",
+            "3\n555"
+        ],
+        "prob_desc_input_from": "standard input",
+        "prob_desc_description": "Drazil is playing a math game with Varda.Let's define  for positive integer x as a product of factorials of its digits. For example, .First, they choose a decimal number a consisting of n digits that contains at least one digit larger than 1. This number may possibly start with leading zeroes. Then they should find maximum positive number x satisfying following two conditions:1. x doesn't contain neither digit 0 nor digit 1.2.  = .Help friends find such number.",
+        "lang": "Ruby",
+        "fix_exec_outcome": "",
+        "insert_cnt": 2,
+        "fix_source_code": "",
+        "prob_desc_notes": "NoteIn the first case, ",
+        "file_name": "Ruby.jsonl",
+        "tags": [
+            "greedy",
+            "math",
+            "sortings"
+        ],
+        "prob_desc_output_to": "standard output",
+        "prob_desc_created_at": "1424190900",
+        "prob_desc_memory_limit": "256 megabytes",
+        "prob_desc_sample_outputs": [
+            "33222",
+            "555"
+        ],
+        "hidden_unit_tests": "[{\"input\": \"4\\r\\n1234\\r\\n\", \"output\": [\"33222\"]}, {\"input\": \"3\\r\\n555\\r\\n\", \"output\": [\"555\"]}, {\"input\": \"15\\r\\n012345781234578\\r\\n\", \"output\": [\"7777553333222222222222\"]}, {\"input\": \"1\\r\\n8\\r\\n\", \"output\": [\"7222\"]}, {\"input\": \"10\\r\\n1413472614\\r\\n\", \"output\": [\"75333332222222\"]}, {\"input\": \"8\\r\\n68931246\\r\\n\", \"output\": [\"77553333332222222\"]}, {\"input\": \"7\\r\\n4424368\\r\\n\", \"output\": [\"75333332222222222\"]}, {\"input\": \"6\\r\\n576825\\r\\n\", \"output\": [\"7755532222\"]}, {\"input\": \"5\\r\\n97715\\r\\n\", \"output\": [\"7775332\"]}, {\"input\": \"3\\r\\n915\\r\\n\", \"output\": [\"75332\"]}, {\"input\": \"2\\r\\n26\\r\\n\", \"output\": [\"532\"]}, {\"input\": \"1\\r\\n4\\r\\n\", \"output\": [\"322\"]}, {\"input\": \"15\\r\\n028745260720699\\r\\n\", \"output\": [\"7777755533333332222222222\"]}, {\"input\": \"13\\r\\n5761790121605\\r\\n\", \"output\": [\"7775555333322\"]}, {\"input\": \"10\\r\\n3312667105\\r\\n\", \"output\": [\"755533332\"]}, {\"input\": \"1\\r\\n7\\r\\n\", \"output\": [\"7\"]}, {\"input\": \"15\\r\\n989898989898989\\r\\n\", \"output\": [\"777777777777777333333333333333322222222222222222222222222222\"]}, {\"input\": \"15\\r\\n000000000000007\\r\\n\", \"output\": [\"7\"]}, {\"input\": \"15\\r\\n999999999999990\\r\\n\", \"output\": [\"77777777777777333333333333333333333333333322222222222222\"]}, {\"input\": \"1\\r\\n2\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"1\\r\\n3\\r\\n\", \"output\": [\"3\"]}, {\"input\": \"1\\r\\n5\\r\\n\", \"output\": [\"5\"]}, {\"input\": \"1\\r\\n6\\r\\n\", \"output\": [\"53\"]}, {\"input\": \"1\\r\\n9\\r\\n\", \"output\": [\"7332\"]}, {\"input\": \"2\\r\\n09\\r\\n\", \"output\": [\"7332\"]}, {\"input\": \"13\\r\\n1337251172966\\r\\n\", \"output\": [\"777555333333222\"]}, {\"input\": \"15\\r\\n987654329876543\\r\\n\", \"output\": [\"777777555533333333332222222222222\"]}, {\"input\": \"9\\r\\n234567899\\r\\n\", \"output\": [\"777755333333322222222\"]}, {\"input\": \"2\\r\\n99\\r\\n\", \"output\": [\"77333322\"]}, {\"input\": \"2\\r\\n66\\r\\n\", \"output\": [\"5533\"]}, {\"input\": \"3\\r\\n999\\r\\n\", \"output\": [\"777333333222\"]}, {\"input\": \"5\\r\\n99999\\r\\n\", \"output\": [\"77777333333333322222\"]}, {\"input\": \"9\\r\\n123456789\\r\\n\", \"output\": [\"77755333332222222\"]}, {\"input\": \"9\\r\\n987654321\\r\\n\", \"output\": [\"77755333332222222\"]}, {\"input\": \"3\\r\\n666\\r\\n\", \"output\": [\"555333\"]}, {\"input\": \"6\\r\\n555777\\r\\n\", \"output\": [\"777555\"]}, {\"input\": \"10\\r\\n1234567899\\r\\n\", \"output\": [\"777755333333322222222\"]}, {\"input\": \"4\\r\\n6666\\r\\n\", \"output\": [\"55553333\"]}, {\"input\": \"4\\r\\n9754\\r\\n\", \"output\": [\"775333222\"]}, {\"input\": \"2\\r\\n95\\r\\n\", \"output\": [\"75332\"]}, {\"input\": \"14\\r\\n11122233344455\\r\\n\", \"output\": [\"55333333222222222\"]}, {\"input\": \"12\\r\\n836544897832\\r\\n\", \"output\": [\"77777553333333222222222222222\"]}]"
+    }
+}

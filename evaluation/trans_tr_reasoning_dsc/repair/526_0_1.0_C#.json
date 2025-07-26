@@ -1,0 +1,59 @@
+{
+    "oai_response": {
+        "choices": [
+            {
+                "message": {
+                    "role": "assistant",
+                    "content": "```csharp\nusing System;\n\nclass Program\n{\n    static void Main()\n    {\n        string dna = Console.ReadLine();\n        int maxRun = 0;\n        int currRun = 1;\n\n        for(int i = 1; i < dna.Length; i++)\n        {\n            if (dna[i] == dna[i - 1])\n            {\n                currRun++;\n            }\n            else\n            {\n                if (currRun > maxRun)\n                {\n                    maxRun = currRun;\n                }\n\n                currRun = 1;\n            }\n        }\n\n        if (currRun > maxRun)\n        {\n            maxRun = currRun;\n        }\n\n        if (maxRun % 2 == 0)\n        {\n            Console.WriteLine(1);\n        }\n        else\n        {\n            Console.WriteLine(0);\n        }\n    }\n}\n```"
+                }
+            }
+        ],
+        "prompt": [
+            "Fix a buggy program written in C# language to solve the following programming problem:\nDescription: You will receive 3 points for solving this problem.Manao is designing the genetic code for a new type of algae to efficiently produce fuel. Specifically, Manao is focusing on a stretch of DNA that encodes one protein. The stretch of DNA is represented by a string containing only the characters 'A', 'T', 'G' and 'C'.Manao has determined that if the stretch of DNA contains a maximal sequence of consecutive identical nucleotides that is of even length, then the protein will be nonfunctional. For example, consider a protein described by DNA string \"GTTAAAG\". It contains four maximal sequences of consecutive identical nucleotides: \"G\", \"TT\", \"AAA\", and \"G\". The protein is nonfunctional because sequence \"TT\" has even length.Manao is trying to obtain a functional protein from the protein he currently has. Manao can insert additional nucleotides into the DNA stretch. Each additional nucleotide is a character from the set {'A', 'T', 'G', 'C'}. Manao wants to determine the minimum number of insertions necessary to make the DNA encode a functional protein.\nInput Specification: The input consists of a single line, containing a string s of length n (1\u2009\u2264\u2009n\u2009\u2264\u2009100). Each character of s will be from the set {'A', 'T', 'G', 'C'}. This problem doesn't have subproblems. You will get 3 points for the correct submission.\nOutput Specification: The program should print on one line a single integer representing the minimum number of 'A', 'T', 'G', 'C' characters that are required to be inserted into the input string in order to make all runs of identical characters have odd length.\n\nSample Input:\nGTTAAAG\nSample Output:\n1\n\nSample Input:\nAACCAACCAAAAC\nSample Output:\n5\n\nNotes: NoteIn the first example, it is sufficient to insert a single nucleotide of any type between the two 'T's in the sequence to restore the functionality of the protein.\nTake input from standard input and output to standard output\n\nHere is the code with a bug of WRONG_ANSWER:\n\n\ufeff\ufeff\ufeffusing System;\nusing System.Collections.Generic;\nusing System.Linq;\nusing System.Text;\nusing System.IO;\n\nnamespace ZODACHA\n{\n    class Program\n    {\n        static int GetIdent(string dnk)\n        {\n            int count = 0, ofs = 0;\n            char ch = '0';\n\n            for (int i = 0; i < dnk.Length; i++)\n            {\n                if (ch == '0')\n                {\n                    ch = dnk[i];\n                    count++;\n                }\n                else\n                {\n                    if (ch == dnk[i])\n                    {\n                        count++;\n                        continue;\n                    }\n                    else if (count % 2 == 0)\n                    {\n                        ch = '0';\n                        ofs++;\n                        count = 1;\n\n                        continue;\n                    }\n                    else\n                    {\n                        ch = '0';\n                        count = 1;\n\n                        continue;\n                    }\n                }\n            }\n\n            if (count % 2 == 0)\n                ofs++;\n\n            return ofs;\n        }\n\n        static void Main(string[] args)\n        {\n            string dnk = Console.ReadLine();\n            Console.WriteLine(GetIdent(dnk));\n        }\n    }\n}\n\n\nProvide the fixed C# code without any description or extra tokens.\n\nFixed source code:",
+            ""
+        ]
+    },
+    "source_data": {
+        "delete_cnt": 2,
+        "fix_code_uid": "",
+        "difficulty": null,
+        "replace_cnt": 8,
+        "fix_ops_cnt": 10,
+        "prob_desc_output_spec": "The program should print on one line a single integer representing the minimum number of 'A', 'T', 'G', 'C' characters that are required to be inserted into the input string in order to make all runs of identical characters have odd length.",
+        "apr_id": "87f17c86fe43e95489ab1bd7029c24b8",
+        "bug_source_code": "\ufeff\ufeff\ufeffusing System;\nusing System.Collections.Generic;\nusing System.Linq;\nusing System.Text;\nusing System.IO;\n\nnamespace ZODACHA\n{\n    class Program\n    {\n        static int GetIdent(string dnk)\n        {\n            int count = 0, ofs = 0;\n            char ch = '0';\n\n            for (int i = 0; i < dnk.Length; i++)\n            {\n                if (ch == '0')\n                {\n                    ch = dnk[i];\n                    count++;\n                }\n                else\n                {\n                    if (ch == dnk[i])\n                    {\n                        count++;\n                        continue;\n                    }\n                    else if (count % 2 == 0)\n                    {\n                        ch = '0';\n                        ofs++;\n                        count = 1;\n\n                        continue;\n                    }\n                    else\n                    {\n                        ch = '0';\n                        count = 1;\n\n                        continue;\n                    }\n                }\n            }\n\n            if (count % 2 == 0)\n                ofs++;\n\n            return ofs;\n        }\n\n        static void Main(string[] args)\n        {\n            string dnk = Console.ReadLine();\n            Console.WriteLine(GetIdent(dnk));\n        }\n    }\n}\n",
+        "prob_desc_input_spec": "The input consists of a single line, containing a string s of length n (1\u2009\u2264\u2009n\u2009\u2264\u2009100). Each character of s will be from the set {'A', 'T', 'G', 'C'}. This problem doesn't have subproblems. You will get 3 points for the correct submission.",
+        "src_uid": "8b26ca1ca2b28166c3d25dceb1f3d49f",
+        "bug_code_uid": "6517d3ec91a8b932415f62953bca44c7",
+        "equal_cnt": 11,
+        "prob_desc_time_limit": "1 second",
+        "similarity_score": 0.38147369027137756,
+        "bug_exec_outcome": "WRONG_ANSWER",
+        "lang_cluster": "C#",
+        "potential_dominant_fix_op": "replace",
+        "prob_desc_sample_inputs": [
+            "GTTAAAG",
+            "AACCAACCAAAAC"
+        ],
+        "prob_desc_input_from": "standard input",
+        "prob_desc_description": "You will receive 3 points for solving this problem.Manao is designing the genetic code for a new type of algae to efficiently produce fuel. Specifically, Manao is focusing on a stretch of DNA that encodes one protein. The stretch of DNA is represented by a string containing only the characters 'A', 'T', 'G' and 'C'.Manao has determined that if the stretch of DNA contains a maximal sequence of consecutive identical nucleotides that is of even length, then the protein will be nonfunctional. For example, consider a protein described by DNA string \"GTTAAAG\". It contains four maximal sequences of consecutive identical nucleotides: \"G\", \"TT\", \"AAA\", and \"G\". The protein is nonfunctional because sequence \"TT\" has even length.Manao is trying to obtain a functional protein from the protein he currently has. Manao can insert additional nucleotides into the DNA stretch. Each additional nucleotide is a character from the set {'A', 'T', 'G', 'C'}. Manao wants to determine the minimum number of insertions necessary to make the DNA encode a functional protein.",
+        "lang": "MS C#",
+        "fix_exec_outcome": "",
+        "insert_cnt": 0,
+        "fix_source_code": "",
+        "prob_desc_notes": "NoteIn the first example, it is sufficient to insert a single nucleotide of any type between the two 'T's in the sequence to restore the functionality of the protein.",
+        "file_name": "C#.jsonl",
+        "tags": [
+            "implementation",
+            "two pointers"
+        ],
+        "prob_desc_output_to": "standard output",
+        "prob_desc_created_at": "1392573600",
+        "prob_desc_memory_limit": "256 megabytes",
+        "prob_desc_sample_outputs": [
+            "1",
+            "5"
+        ],
+        "hidden_unit_tests": "[{\"input\": \"GTTAAAG\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"AACCAACCAAAAC\\r\\n\", \"output\": [\"5\"]}, {\"input\": \"GTGAATTTCC\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"CAGGGGGCCGCCCATGAAAAAAACCCGGCCCCTTGGGAAAACTTGGGTTA\\r\\n\", \"output\": [\"7\"]}, {\"input\": \"CCCTTCACCCGGATCCAAATCCCTTAGAAATAATCCCCGACGGCGTTGTATCACCTCTGCACTTGTTAGTAAGGTCAGGCGTCCATTACGGAAGAACGTA\\r\\n\", \"output\": [\"19\"]}, {\"input\": \"GCATTACATGGGGGGGTCCTACGAGCCCGGCATCCCGGAAACTAGCCGGTTAATTTGGTTTAAACCCTCCCACCCCGGATTGTAACCCCCCTCATTGGTT\\r\\n\", \"output\": [\"17\"]}, {\"input\": \"TTCCCAGAGAAAAAAAGGGGCCCAAATGCCCTAAAAACCCCCTTTGCCCCCCAACCCCTTTTTAAAATAAAAAGGGGCCCATTCCCTTAAAAATTTTTTG\\r\\n\", \"output\": [\"10\"]}, {\"input\": \"AGCCGCCCCCCCAAAAAAGGGGGAAAAAAAAAAAAAAAAAAAAACTTTTGGAAACCCCCCCCTTTTTTTTTTTTTTTTTTTTTTTTTGGGGAAGGGGGGG\\r\\n\", \"output\": [\"7\"]}, {\"input\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"AAAAAAAAAAAAAAAAAATTTTTTTTTTTTTTTTGGGGGGGGGGGGGGGGGGGGGGGTTTTTTTTTTTTTTGGGGGGGGGGGGGGGGGGGGAAAAATTTT\\r\\n\", \"output\": [\"5\"]}, {\"input\": \"AACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTCCGG\\r\\n\", \"output\": [\"50\"]}, {\"input\": \"A\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"TTT\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"G\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"T\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"C\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"AA\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"GGG\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"AAG\\r\\n\", \"output\": [\"1\"]}]"
+    }
+}

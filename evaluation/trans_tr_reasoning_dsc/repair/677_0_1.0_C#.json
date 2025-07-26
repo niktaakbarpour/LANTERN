@@ -1,0 +1,61 @@
+{
+    "oai_response": {
+        "choices": [
+            {
+                "message": {
+                    "role": "assistant",
+                    "content": "```csharp\nusing System;\nusing System.Linq;\n\nnamespace CSharp_Contests\n{\n    public class Program\n    {\n        public static void Main()\n        {\n            int[] rc = Console.ReadLine().Split(new char[1] { ' ' }).Select(a => int.Parse(a)).ToArray();\n            int t1 = Math.Abs(rc[1] - rc[3]); \n            int t2 = Mathrt(Math.Pow(t1, 2) + Math.Pow((t1 = Math.Abs(rc[2] - rc[4])), 2));\n            rc[0] += rc[0];\n            int md = (int)Math.Ceiling(t2 / rc[0]);\n            Console.WriteLine(md);\n        }\n    }\n}\n```"
+                }
+            }
+        ],
+        "prompt": [
+            "Fix a buggy program written in C# language to solve the following programming problem:\nDescription: Amr loves Geometry. One day he came up with a very interesting problem.Amr has a circle of radius r and center in point (x,\u2009y). He wants the circle center to be in new position (x',\u2009y').In one step Amr can put a pin to the border of the circle in a certain point, then rotate the circle around that pin by any angle and finally remove the pin.Help Amr to achieve his goal in minimum number of steps.\nInput Specification: Input consists of 5 space-separated integers r, x, y, x' y' (1\u2009\u2264\u2009r\u2009\u2264\u2009105, \u2009-\u2009105\u2009\u2264\u2009x,\u2009y,\u2009x',\u2009y'\u2009\u2264\u2009105), circle radius, coordinates of original center of the circle and coordinates of destination center of the circle respectively.\nOutput Specification: Output a single integer \u2014 minimum number of steps required to move the center of the circle to the destination point.\n\nSample Input:\n2 0 0 0 4\nSample Output:\n1\n\nSample Input:\n1 1 1 4 4\nSample Output:\n3\n\nSample Input:\n4 5 6 5 6\nSample Output:\n0\n\nNotes: NoteIn the first sample test the optimal way is to put a pin at point (0,\u20092) and rotate the circle by 180 degrees counter-clockwise (or clockwise, no matter).\nTake input from standard input and output to standard output\n\nHere is the code with a bug of WRONG_ANSWER:\n\nusing System;\nusing System.Collections.Generic;\nusing System.Linq;\nusing System.Text;\nusing System.Threading;\n\nnamespace CSharp_Contests\n{\n    public class Program\n    {\n        public static void Main() {\n            int[] rc = Console.ReadLine().Split(new char[1] { ' ' }).Select(a => int.Parse(a)).ToArray();\n            int t1, t2;\n            int dif = (int)Math.Ceiling(Math.Sqrt(( ( t1 = Math.Abs(rc[1] - rc[3]) ) * t1 ) + ( ( t2 = Math.Abs(rc[2] - rc[4]) ) * t2 )));\n            rc[0] += rc[0];\n            int md = dif % rc[0];\n            Console.WriteLine(( dif - md ) / rc[0] + ( ( md != 0 ) ? 1 : 0 ));\n#if DEBUG\n            Console.ReadLine();\n#endif\n        }\n    }\n}\n\nProvide the fixed C# code without any description or extra tokens.\n\nFixed source code:",
+            ""
+        ]
+    },
+    "source_data": {
+        "delete_cnt": 4,
+        "fix_code_uid": "",
+        "difficulty": 1400,
+        "replace_cnt": 6,
+        "fix_ops_cnt": 10,
+        "prob_desc_output_spec": "Output a single integer \u2014 minimum number of steps required to move the center of the circle to the destination point.",
+        "apr_id": "e94c0d3bbec7684044614ee22321dc6a",
+        "bug_source_code": "using System;\nusing System.Collections.Generic;\nusing System.Linq;\nusing System.Text;\nusing System.Threading;\n\nnamespace CSharp_Contests\n{\n    public class Program\n    {\n        public static void Main() {\n            int[] rc = Console.ReadLine().Split(new char[1] { ' ' }).Select(a => int.Parse(a)).ToArray();\n            int t1, t2;\n            int dif = (int)Math.Ceiling(Math.Sqrt(( ( t1 = Math.Abs(rc[1] - rc[3]) ) * t1 ) + ( ( t2 = Math.Abs(rc[2] - rc[4]) ) * t2 )));\n            rc[0] += rc[0];\n            int md = dif % rc[0];\n            Console.WriteLine(( dif - md ) / rc[0] + ( ( md != 0 ) ? 1 : 0 ));\n#if DEBUG\n            Console.ReadLine();\n#endif\n        }\n    }\n}",
+        "prob_desc_input_spec": "Input consists of 5 space-separated integers r, x, y, x' y' (1\u2009\u2264\u2009r\u2009\u2264\u2009105, \u2009-\u2009105\u2009\u2264\u2009x,\u2009y,\u2009x',\u2009y'\u2009\u2264\u2009105), circle radius, coordinates of original center of the circle and coordinates of destination center of the circle respectively.",
+        "src_uid": "698da80c7d24252b57cca4e4f0ca7031",
+        "bug_code_uid": "1d25370d26f8cfaaf40d632c5fb1edf8",
+        "equal_cnt": 11,
+        "prob_desc_time_limit": "1 second",
+        "similarity_score": 0.9540740847587585,
+        "bug_exec_outcome": "WRONG_ANSWER",
+        "lang_cluster": "C#",
+        "potential_dominant_fix_op": "replace",
+        "prob_desc_sample_inputs": [
+            "2 0 0 0 4",
+            "1 1 1 4 4",
+            "4 5 6 5 6"
+        ],
+        "prob_desc_input_from": "standard input",
+        "prob_desc_description": "Amr loves Geometry. One day he came up with a very interesting problem.Amr has a circle of radius r and center in point (x,\u2009y). He wants the circle center to be in new position (x',\u2009y').In one step Amr can put a pin to the border of the circle in a certain point, then rotate the circle around that pin by any angle and finally remove the pin.Help Amr to achieve his goal in minimum number of steps.",
+        "lang": "MS C#",
+        "fix_exec_outcome": "",
+        "insert_cnt": 0,
+        "fix_source_code": "",
+        "prob_desc_notes": "NoteIn the first sample test the optimal way is to put a pin at point (0,\u20092) and rotate the circle by 180 degrees counter-clockwise (or clockwise, no matter).",
+        "file_name": "C#.jsonl",
+        "tags": [
+            "geometry",
+            "math"
+        ],
+        "prob_desc_output_to": "standard output",
+        "prob_desc_created_at": "1422028800",
+        "prob_desc_memory_limit": "256 megabytes",
+        "prob_desc_sample_outputs": [
+            "1",
+            "3",
+            "0"
+        ],
+        "hidden_unit_tests": "[{\"input\": \"2 0 0 0 4\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"1 1 1 4 4\\r\\n\", \"output\": [\"3\"]}, {\"input\": \"4 5 6 5 6\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"10 20 0 40 0\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"9 20 0 40 0\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"5 -1 -6 -5 1\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"99125 26876 -21414 14176 17443\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"8066 7339 19155 -90534 -60666\\r\\n\", \"output\": [\"8\"]}, {\"input\": \"100000 -100000 -100000 100000 100000\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"10 20 0 41 0\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"25 -64 -6 -56 64\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"125 455 450 439 721\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"5 6 3 7 2\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"24 130 14786 3147 2140\\r\\n\", \"output\": [\"271\"]}, {\"input\": \"125 -363 176 93 330\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"1 14 30 30 14\\r\\n\", \"output\": [\"12\"]}, {\"input\": \"25 96 13 7 2\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"4 100000 -100000 100000 -100000\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"1 3 4 2 5\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"1 -3 3 2 6\\r\\n\", \"output\": [\"3\"]}, {\"input\": \"2 7 20 13 -5\\r\\n\", \"output\": [\"7\"]}, {\"input\": \"1 1 1 1 4\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"249 -54242 -30537 -45023 -89682\\r\\n\", \"output\": [\"121\"]}, {\"input\": \"4 100000 -100000 100000 -99999\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"97741 23818 78751 97583 26933\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"56767 -29030 51625 79823 -56297\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"98260 13729 74998 23701 9253\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"67377 -80131 -90254 -57320 14102\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"1 100000 100000 100000 -100000\\r\\n\", \"output\": [\"100000\"]}, {\"input\": \"19312 19470 82059 58064 62231\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"67398 -68747 -79056 -34193 29400\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"91099 37184 -71137 75650 -3655\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"46456 -2621 -23623 -98302 -99305\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"100 100000 -100000 100000 -99999\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"1 100000 -100000 100000 -100000\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"8 0 0 0 32\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"100000 100000 1 -100000 0\\r\\n\", \"output\": [\"2\"]}]"
+    }
+}

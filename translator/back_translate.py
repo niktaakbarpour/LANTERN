@@ -68,20 +68,21 @@ LANGS = sorted(set([v for k, v in SHORT_LANG_MAP.items()]))
 # model_name = os.environ["MODEL_NAME"]
 
 def gen(prompt_text, temperature, nsample, llm):
+    """
+    Generate a response using local DeepSeekCoder, mimicking OpenAI ChatCompletion style.
+    """
     cnt = 0
     while cnt < 999:
         try:
             messages = [Message(role="user", content=prompt_text)]
-            prompt = llm.prepare_prompt(messages)
-            full_prompt = prompt + "Assistant:"
-            tokens = llm.tokenizer.encode(full_prompt, return_tensors="pt").to(llm.model.device)
-            outputs = llm.model.generate(
-                tokens,
-                max_new_tokens=512,
-                # do_sample=True,
+
+            # Use llm.generate_chat to handle prompt construction & generation
+            c = llm.generate_chat(
+                messages,
                 temperature=temperature,
-                top_p=1.0,
+                num_comps=nsample
             )
+
             print("get deepseek response......")
             break
         except Exception as e:
@@ -91,10 +92,9 @@ def gen(prompt_text, temperature, nsample, llm):
     else:
         return None
 
-    text = llm.tokenizer.decode(outputs[0], skip_special_tokens=True)
-    content = llm.extract_output(text)
-    # mimic OpenAI structure
-    return {"choices": [{"message": {"content": content}}], "prompt": prompt_text}
+    # Add prompt field to mimic OpenAI response
+    c["prompt"] = prompt_text
+    return c
 
 def gen_request(prompt_text, temperature, nsample, llm):
     # alias to gen, returns data/type format

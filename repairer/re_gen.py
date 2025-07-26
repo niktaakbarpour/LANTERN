@@ -73,36 +73,32 @@ LANGS = sorted(set([v for k, v in SHORT_LANG_MAP.items()]))
 # openai.api_base = os.environ["API_BASE"]
 # model_name = os.environ["MODEL_NAME"]
 
-
 def gen(prompt_text, temperature, nsample, mode, llm, msg=None):
     """
-    Generate a response using the local DeepSeekCoder model.
-    Returns a dict matching the original structure: {"data":[{"content":...,"type":"text"}],"prompt":...}
+    Generate a response using local DeepSeekCoder, matching OpenAI's ChatCompletion format.
     """
     cnt = 0
+
+    # Prepare messages
     if mode == "ultimate2":
-        messages = msg
+        messages = msg  # Already formatted messages
     else:
         messages = [
-                Message(role="system", content=prompt.PROMPTS["system"]),
-                Message(role="user", content=prompt_text),
-            ]
-        input_tokens = llm.prepare_prompt(messages)
-        full_prompt = input_tokens + "Assistant:"
-        tokens = llm.tokenizer.encode(full_prompt, return_tensors="pt").to(llm.model.device)
-            
-    while True:
-        if cnt == 999:
-            return None
+            {"role": "system", "content": prompt.PROMPTS['system']},
+            {"role": "user", "content": prompt_text},
+        ]
+
+    while cnt < 999:
         try:
-            output_tokens = llm.model.generate(
-                tokens,
-                max_new_tokens=512,
-                # do_sample=True,
+            # Convert messages to the structure expected by DeepSeekCoder
+            msg_objs = [Message(role=m["role"], content=m["content"]) for m in messages]
+
+            # Generate responses
+            c = llm.generate_chat(
+                msg_objs,
                 temperature=temperature,
-                top_p=1.0,
+                num_comps=nsample
             )
-            print("get deepseek response......")
             break
         except Exception as e:
             cnt += 1
@@ -110,14 +106,13 @@ def gen(prompt_text, temperature, nsample, mode, llm, msg=None):
             print(f"Gen Error: {e}")
     else:
         return None
-    text = llm.tokenizer.decode(output_tokens[0], skip_special_tokens=True)
-    content = llm.extract_output(text)
-    # if mode == "ultimate2":
-    #     content["conversation"] = msg
-    # else:
-    #     content["prompt"] = prompt_text
 
-    return {"choices": [{"message": {"content": content}}], "prompt": prompt_text}
+    # Add metadata to mimic OpenAI response
+    if mode == "ultimate2":
+        c["conversation"] = msg
+    else:
+        c["prompt"] = prompt_text
+    return c
 
 
 def gen_request(prompt_text, temperature, nsample, llm):
@@ -217,7 +212,7 @@ def run(base_dir, num_proc, dry_run, nsample, nattempt, it, mode, temperature, d
         transed_dataset = load_json_files(transed_dir)
     elif mode == 'cmp':
         apr_dataset = datasets.load_from_disk(dataset_path)
-        transed_dataset = apr_dataset.filter(lambda x: x["bug_code_uid"] in unfixed_ids)
+        # transed_dataset = apr_dataset.filter(lambda x: x["bug_code_uid"] in unfixed_ids)
     # elif mode == 'ultimate2':
     #     transed_dataset = get_last_incorrect_samples_cr(base_dir, it, unfixed_ids)
 

@@ -6,4 +6,158 @@
 2025-01-22 17:21:18 - INFO - Iteration 1: Performing action <decide> - determining target language
 2025-01-22 17:21:18 - INFO - Iteration 1: Performing action <translate> - translating unfixed bugs
 
-......
+......2025-07-24 14:04:26 - INFO - Iteration 0: Performing action <gen_apr> - generating patched code
+2025-07-24 14:04:27 - INFO - Iteration 0: Performing action <eval_apr> - evaluating patched code
+2025-07-24 14:04:27 - INFO - Iteration 0: Performing action <cal> - calculating results
+2025-07-24 14:04:27 - INFO - Iteration 0: Performing action <save_history> - saving historical data
+2025-07-24 14:05:01 - INFO - Iteration 0: Performing action <gen_apr> - generating patched code
+2025-07-24 14:05:02 - INFO - Iteration 0: Performing action <eval_apr> - evaluating patched code
+2025-07-24 14:05:02 - INFO - Iteration 0: Performing action <cal> - calculating results
+2025-07-24 14:05:02 - INFO - Iteration 0: Performing action <save_history> - saving historical data
+2025-07-24 14:08:05 - INFO - Iteration 0: Performing action <gen_apr> - generating patched code
+2025-07-24 14:08:06 - INFO - Iteration 0: Performing action <eval_apr> - evaluating patched code
+2025-07-24 14:08:06 - INFO - Iteration 0: Performing action <cal> - calculating results
+2025-07-24 14:08:06 - INFO - Iteration 0: Performing action <save_history> - saving historical data
+2025-07-24 14:11:17 - INFO - Iteration 0: Performing action <gen_apr> - generating patched code
+2025-07-24 14:14:00 - INFO - Iteration 0: Performing action <gen_apr> - generating patched code
+2025-07-24 14:17:04 - INFO - Iteration 0: Performing action <gen_apr> - generating patched code
+2025-07-24 14:27:32 - INFO - Iteration 0: Performing action <gen_apr> - generating patched code
+2025-07-24 14:28:19 - INFO - Iteration 0: Performing action <eval_apr> - evaluating patched code
+2025-07-24 14:28:21 - INFO - Iteration 0: Performing action <cal> - calculating results
+2025-07-24 14:28:21 - INFO - Iteration 0: Performing action <save_history> - saving historical data
+2025-07-24 14:37:40 - INFO - Iteration 0: Performing action <gen_apr> - generating patched code
+2025-07-24 14:38:16 - INFO - Iteration 0: Performing action <eval_apr> - evaluating patched code
+2025-07-24 14:38:19 - INFO - Iteration 0: Performing action <cal> - calculating results
+2025-07-24 14:38:19 - INFO - Iteration 0: Performing action <save_history> - saving historical data
+2025-07-24 14:42:15 - INFO - Iteration 0: Performing action <gen_apr> - generating patched code
+2025-07-24 14:42:52 - INFO - Iteration 0: Performing action <eval_apr> - evaluating patched code
+2025-07-24 14:42:55 - INFO - Iteration 0: Performing action <cal> - calculating results
+2025-07-24 14:42:55 - INFO - Iteration 0: Performing action <save_history> - saving historical data
+2025-07-24 14:48:35 - INFO - Iteration 0: Performing action <gen_apr> - generating patched code
+2025-07-24 14:48:35 - INFO - Iteration 0: Performing action <eval_apr> - evaluating patched code
+2025-07-24 14:48:35 - INFO - Iteration 0: Performing action <cal> - calculating results
+2025-07-24 14:48:35 - INFO - Iteration 0: Performing action <save_history> - saving historical data
+2025-07-24 14:49:24 - INFO - Iteration 0: Performing action <gen_apr> - generating patched code
+2025-07-24 14:50:00 - INFO - Iteration 0: Performing action <gen_apr> - generating patched code
+2025-07-24 17:34:30 - INFO - Iteration 0: Performing action <eval_apr> - evaluating patched code
+2025-07-24 17:34:46 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:46 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:46 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:46 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:46 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:46 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:46 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:47 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:47 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:47 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:47 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:47 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:47 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:47 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:47 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:47 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:47 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:47 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:47 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:47 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:48 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:48 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:48 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:48 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:48 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:48 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:48 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:48 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:48 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:49 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:49 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:49 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:49 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:49 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:49 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:49 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:50 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:50 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:50 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:50 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:50 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:51 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:51 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:51 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:51 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:51 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:51 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:51 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:51 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:51 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:51 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:51 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:52 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:52 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:52 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:52 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:52 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:52 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:53 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:53 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:53 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:53 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:53 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:53 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:53 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:53 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:53 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:53 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:53 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:53 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:54 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:54 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:54 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:54 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:54 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:54 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:54 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:54 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:54 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:54 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:54 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:54 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:54 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:54 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:55 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:55 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:55 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:55 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:55 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:55 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:56 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:56 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:56 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:56 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:56 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:56 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:56 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:56 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:56 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:56 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:56 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:56 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:56 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:56 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:56 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:57 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:57 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:57 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:57 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:57 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:34:57 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:35:38 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:35:47 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:36:26 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:36:51 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:36:51 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:37:34 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:37:38 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:38:08 - WARNING - Connection pool is full, discarding connection: localhost. Connection pool size: 10
+2025-07-24 17:38:08 - INFO - Iteration 0: Performing action <cal> - calculating results
+2025-07-24 17:38:08 - INFO - Iteration 0: Performing action <save_history> - saving historical data

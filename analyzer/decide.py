@@ -77,24 +77,25 @@ LANGS = sorted(set([v for k, v in SHORT_LANG_MAP.items()]))
 
 import time
 
-
-def gen(prompt_text, temperature, nsample, llm):
+def gen(prompt_text, temperature, nsample, llm, model_name="deepseek"):
     cnt = 0
     while cnt < 999:
         try:
+            # Select system prompt based on model_name
+            system_prompt = (
+                prompt.PROMPTS['system_decide']
+                if 'claude' not in model_name
+                else prompt.PROMPTS['system_decide_cs']
+            )
+
             messages = [
-                Message(role="system", content=prompt.PROMPTS["system"]),
+                Message(role="system", content=system_prompt),
                 Message(role="user", content=prompt_text),
             ]
-            input_tokens = llm.prepare_prompt(messages)
-            full_prompt = input_tokens + "Assistant:"
-            tokens = llm.tokenizer.encode(full_prompt, return_tensors="pt").to(llm.model.device)
-            output_tokens = llm.model.generate(
-                tokens,
-                max_new_tokens=512,
-                temperature=temperature,
-                top_p=1.0,
-            )
+
+            # Generate using local DeepSeek model
+            c = llm.generate_chat(messages, temperature=temperature, num_comps=nsample)
+            print("get deepseek response......")
             break
         except Exception as e:
             cnt += 1
@@ -103,92 +104,122 @@ def gen(prompt_text, temperature, nsample, llm):
     else:
         return None
 
-    raw_text = llm.tokenizer.decode(output_tokens[0], skip_special_tokens=True)
-
-    # 1) Try strict(ish) JSON from raw
-    content = try_extract_json(raw_text)
-    if content is None:
-        # 2) Heuristic fields from raw
-        fields = extract_decision_fields(raw_text)
-        if fields is None:
-            # 3) Last resort: run your code-cleaner & retry both
-            cleaned = llm.extract_output(raw_text)
-            fields = extract_decision_fields(cleaned)
-            if fields is None:
-                content = json.dumps({
-                    "Target Language": "Unknown",
-                    "Justification": cleaned or raw_text
-                })
-            else:
-                content = json.dumps(fields)
-        else:
-            content = json.dumps(fields)
-
-    return {
-        "data": [{"content": content, "type": "text"}],
-        "choices": [{"index": 0, "message": {"role": "assistant", "content": content}}],
-        "prompt": prompt_text
-    }
+    # Add prompt field to mimic OpenAI structure
+    c["prompt"] = prompt_text
+    return c
 
 
+# def gen(prompt_text, temperature, nsample, llm):
+#     cnt = 0
+#     while cnt < 999:
+#         try:
+#             messages = [
+#                 Message(role="system", content=prompt.PROMPTS["system"]),
+#                 Message(role="user", content=prompt_text),
+#             ]
+#             input_tokens = llm.prepare_prompt(messages)
+#             full_prompt = input_tokens + "Assistant:"
+#             tokens = llm.tokenizer.encode(full_prompt, return_tensors="pt").to(llm.model.device)
+#             output_tokens = llm.model.generate(
+#                 tokens,
+#                 max_new_tokens=512,
+#                 temperature=temperature,
+#                 top_p=1.0,
+#             )
+#             break
+#         except Exception as e:
+#             cnt += 1
+#             time.sleep(5)
+#             print(f"Gen Error: {e}")
+#     else:
+#         return None
 
-PLACEHOLDER = re.compile(r'your (recommended language|reasoning)', re.I)
+#     raw_text = llm.tokenizer.decode(output_tokens[0], skip_special_tokens=True)
 
-def extract_decision_fields(text: str):
-    """
-    Pull TL/Justification ONLY from the Assistant block.
-    Returns dict or None.
-    """
-    # grab the Assistant block that contains "- Target Language:" lines
-    block_m = re.search(r'Assistant:\s*(.*?)(?:\n\s*User:|$)', text, re.S | re.I)
-    if not block_m:
-        return None
-    block = block_m.group(1)
+#     # 1) Try strict(ish) JSON from raw
+#     content = try_extract_json(raw_text)
+#     if content is None:
+#         # 2) Heuristic fields from raw
+#         fields = extract_decision_fields(raw_text)
+#         if fields is None:
+#             # 3) Last resort: run your code-cleaner & retry both
+#             cleaned = llm.extract_output(raw_text)
+#             fields = extract_decision_fields(cleaned)
+#             if fields is None:
+#                 content = json.dumps({
+#                     "Target Language": "Unknown",
+#                     "Justification": cleaned or raw_text
+#                 })
+#             else:
+#                 content = json.dumps(fields)
+#         else:
+#             content = json.dumps(fields)
 
-    # exact lines inside that block
-    tl_m = re.search(r'-\s*Target Language\s*:\s*([^\n]+)', block, re.I)
-    ju_m = re.search(r'-\s*Justification\s*:\s*(.+)', block, re.I | re.S)
-    if not tl_m or not ju_m:
-        return None
-
-    lang = tl_m.group(1).strip()
-    just = ju_m.group(1).strip()
-
-    # ignore placeholders
-    if PLACEHOLDER.search(lang) or PLACEHOLDER.search(just):
-        return None
-
-    return {
-        "Target Language": f"{lang}",
-        "Justification": f"{just}\n"
-    }
+#     return {
+#         "data": [{"content": content, "type": "text"}],
+#         "choices": [{"index": 0, "message": {"role": "assistant", "content": content}}],
+#         "prompt": prompt_text
+#     }
 
 
-def try_extract_json(text: str):
-    """
-    Try any real JSON blobs first; skip placeholders.
-    Fallback to regex extractor.
-    """
-    for m in re.finditer(r'\{[^{}]*\}', text, re.S):
-        cand = m.group(0)
-        try:
-            obj = json.loads(cand)
-        except Exception:
-            continue
 
-        if {"Target Language", "Justification"} <= obj.keys():
-            tl, ju = obj["Target Language"], obj["Justification"]
-            # skip placeholder JSON
-            if PLACEHOLDER.search(str(tl)) or PLACEHOLDER.search(str(ju)):
-                continue
-            return json.dumps({
-                "Target Language": f"[{tl}]",
-                "Justification": f"[{ju}]\n"
-            })
+# PLACEHOLDER = re.compile(r'your (recommended language|reasoning)', re.I)
 
-    # fallback
-    fields = extract_decision_fields(text)
-    return json.dumps(fields) if fields else None
+# def extract_decision_fields(text: str):
+#     """
+#     Pull TL/Justification ONLY from the Assistant block.
+#     Returns dict or None.
+#     """
+#     # grab the Assistant block that contains "- Target Language:" lines
+#     block_m = re.search(r'Assistant:\s*(.*?)(?:\n\s*User:|$)', text, re.S | re.I)
+#     if not block_m:
+#         return None
+#     block = block_m.group(1)
+
+#     # exact lines inside that block
+#     tl_m = re.search(r'-\s*Target Language\s*:\s*([^\n]+)', block, re.I)
+#     ju_m = re.search(r'-\s*Justification\s*:\s*(.+)', block, re.I | re.S)
+#     if not tl_m or not ju_m:
+#         return None
+
+#     lang = tl_m.group(1).strip()
+#     just = ju_m.group(1).strip()
+
+#     # ignore placeholders
+#     if PLACEHOLDER.search(lang) or PLACEHOLDER.search(just):
+#         return None
+
+#     return {
+#         "Target Language": f"{lang}",
+#         "Justification": f"{just}\n"
+#     }
+
+
+# def try_extract_json(text: str):
+#     """
+#     Try any real JSON blobs first; skip placeholders.
+#     Fallback to regex extractor.
+#     """
+#     for m in re.finditer(r'\{[^{}]*\}', text, re.S):
+#         cand = m.group(0)
+#         try:
+#             obj = json.loads(cand)
+#         except Exception:
+#             continue
+
+#         if {"Target Language", "Justification"} <= obj.keys():
+#             tl, ju = obj["Target Language"], obj["Justification"]
+#             # skip placeholder JSON
+#             if PLACEHOLDER.search(str(tl)) or PLACEHOLDER.search(str(ju)):
+#                 continue
+#             return json.dumps({
+#                 "Target Language": f"[{tl}]",
+#                 "Justification": f"[{ju}]\n"
+#             })
+
+#     # fallback
+#     fields = extract_decision_fields(text)
+#     return json.dumps(fields) if fields else None
 
 
 def gen_request(prompt_text, temperature, nsample, llm):
@@ -255,11 +286,11 @@ def run(base_dir, num_proc, dry_run, it, mode, hist_top_k, dataset_path, llm):
         os.makedirs(dec_dir, exist_ok=True)
 
     apr_dataset = datasets.load_from_disk(dataset_path)
-    # langs = ["Ruby"]
+    langs = ["Ruby"]
     # apr_dataset = apr_dataset.filter(lambda example: example["lang_cluster"] in langs)
     # apr_dataset = apr_dataset.select(range(2))
 
-    first_entry = apr_dataset.select(range(10))
+    # first_entry = apr_dataset.select(range(10))
 
     unfixed_file = os.path.join(iter_dir, "unfixed.json")
     if os.path.exists(unfixed_file):
@@ -275,7 +306,7 @@ def run(base_dir, num_proc, dry_run, it, mode, hist_top_k, dataset_path, llm):
 
     retrieval.init_vec_db(base_dir, dataset_path)
     retrieval.init_cos_similarity(base_dir)
-    bug_properties, cos = retrieval.prepare_db(base_dir, first_entry)
+    bug_properties, cos = retrieval.prepare_db(base_dir, apr_dataset)
     retrieval.update_pass_10(base_dir, it)
     
     decision_path = os.path.join(base_dir, f"iter_{it}/decision.json")

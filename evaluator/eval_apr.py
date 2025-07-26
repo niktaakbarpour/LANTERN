@@ -251,6 +251,8 @@ def run(base_dir, it, mode, llm=None):
                     path_to_eval = os.path.join(path, "back_trans")
                 elif it and mode in ['check_original', 'check_trans']:
                     path_to_eval = os.path.join(path, 'trans')
+                elif mode == 'self_planning':
+                    path_to_eval = os.path.join(path, 'imp')
                 else:
                     path_to_eval = os.path.join(path, "repair")
                 files = sorted(os.listdir(path_to_eval))

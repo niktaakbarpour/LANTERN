@@ -1,0 +1,62 @@
+{
+    "oai_response": {
+        "choices": [
+            {
+                "message": {
+                    "role": "assistant",
+                    "content": "```csharp\nusing System;\nusing System.Linq;\n\nclass Program\n{\n    static void Main(string[] args)\n    {\n        var line = Console.ReadLine().Split(' ');\n        var a = int.Parse(line[0]);\n        var b = int.Parse(line[1]);\n        var c = int.Parse(line[2]);\n\n        Console.WriteLine(Math.Max(0, Math.Max(b + c - a, a + c - b) + 1));\n    }\n}\n```"
+                }
+            }
+        ],
+        "prompt": [
+            "Fix a buggy program written in C# language to solve the following programming problem:\nDescription: Masha has three sticks of length $$$a$$$, $$$b$$$ and $$$c$$$ centimeters respectively. In one minute Masha can pick one arbitrary stick and increase its length by one centimeter. She is not allowed to break sticks.What is the minimum number of minutes she needs to spend increasing the stick's length in order to be able to assemble a triangle of positive area. Sticks should be used as triangle's sides (one stick for one side) and their endpoints should be located at triangle's vertices.\nInput Specification: The only line contains tree integers $$$a$$$, $$$b$$$ and $$$c$$$ ($$$1 \\leq a, b, c \\leq 100$$$)\u00a0\u2014 the lengths of sticks Masha possesses.\nOutput Specification: Print a single integer\u00a0\u2014 the minimum number of minutes that Masha needs to spend in order to be able to make the triangle of positive area from her sticks.\n\nSample Input:\n3 4 5\nSample Output:\n0\n\nSample Input:\n2 5 3\nSample Output:\n1\n\nSample Input:\n100 10 10\nSample Output:\n81\n\nNotes: NoteIn the first example, Masha can make a triangle from the sticks without increasing the length of any of them.In the second example, Masha can't make a triangle of positive area from the sticks she has at the beginning, but she can spend one minute to increase the length $$$2$$$ centimeter stick by one and after that form a triangle with sides $$$3$$$, $$$3$$$ and $$$5$$$ centimeters.In the third example, Masha can take $$$33$$$ minutes to increase one of the $$$10$$$ centimeters sticks by $$$33$$$ centimeters, and after that take $$$48$$$ minutes to increase another $$$10$$$ centimeters stick by $$$48$$$ centimeters. This way she can form a triangle with lengths $$$43$$$, $$$58$$$ and $$$100$$$ centimeters in $$$81$$$ minutes. One can show that it is impossible to get a valid triangle faster.\nTake input from standard input and output to standard output\n\nHere is the code with a bug of COMPILATION_ERROR:\n\n\ufeff\nMicrosoft Visual Studio Solution File, Format Version 12.00\n# Visual Studio 15\nVisualStudioVersion = 15.0.26730.16\nMinimumVisualStudioVersion = 10.0.40219.1\nProject(\"{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}\") = \"ConsoleApp1\", \"ConsoleApp1\\ConsoleApp1.csproj\", \"{ABB1C275-B0DD-4207-98C6-3E1AF08D4A7C}\"\nEndProject\nGlobal\n\tGlobalSection(SolutionConfigurationPlatforms) = preSolution\n\t\tDebug|Any CPU = Debug|Any CPU\n\t\tRelease|Any CPU = Release|Any CPU\n\tEndGlobalSection\n\tGlobalSection(ProjectConfigurationPlatforms) = postSolution\n\t\t{ABB1C275-B0DD-4207-98C6-3E1AF08D4A7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU\n\t\t{ABB1C275-B0DD-4207-98C6-3E1AF08D4A7C}.Debug|Any CPU.Build.0 = Debug|Any CPU\n\t\t{ABB1C275-B0DD-4207-98C6-3E1AF08D4A7C}.Release|Any CPU.ActiveCfg = Release|Any CPU\n\t\t{ABB1C275-B0DD-4207-98C6-3E1AF08D4A7C}.Release|Any CPU.Build.0 = Release|Any CPU\n\tEndGlobalSection\n\tGlobalSection(SolutionProperties) = preSolution\n\t\tHideSolutionNode = FALSE\n\tEndGlobalSection\n\tGlobalSection(ExtensibilityGlobals) = postSolution\n\t\tSolutionGuid = {1753EC7D-E288-4292-84B8-C1654AC04FA8}\n\tEndGlobalSection\nEndGlobal\n\n\nProvide the fixed C# code without any description or extra tokens.\n\nFixed source code:",
+            ""
+        ]
+    },
+    "source_data": {
+        "delete_cnt": 1,
+        "fix_code_uid": "",
+        "difficulty": 800,
+        "replace_cnt": 10,
+        "fix_ops_cnt": 13,
+        "prob_desc_output_spec": "Print a single integer\u00a0\u2014 the minimum number of minutes that Masha needs to spend in order to be able to make the triangle of positive area from her sticks.",
+        "apr_id": "c341ad66ad1beae9f09edf75f07f6e7b",
+        "bug_source_code": "\ufeff\nMicrosoft Visual Studio Solution File, Format Version 12.00\n# Visual Studio 15\nVisualStudioVersion = 15.0.26730.16\nMinimumVisualStudioVersion = 10.0.40219.1\nProject(\"{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}\") = \"ConsoleApp1\", \"ConsoleApp1\\ConsoleApp1.csproj\", \"{ABB1C275-B0DD-4207-98C6-3E1AF08D4A7C}\"\nEndProject\nGlobal\n\tGlobalSection(SolutionConfigurationPlatforms) = preSolution\n\t\tDebug|Any CPU = Debug|Any CPU\n\t\tRelease|Any CPU = Release|Any CPU\n\tEndGlobalSection\n\tGlobalSection(ProjectConfigurationPlatforms) = postSolution\n\t\t{ABB1C275-B0DD-4207-98C6-3E1AF08D4A7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU\n\t\t{ABB1C275-B0DD-4207-98C6-3E1AF08D4A7C}.Debug|Any CPU.Build.0 = Debug|Any CPU\n\t\t{ABB1C275-B0DD-4207-98C6-3E1AF08D4A7C}.Release|Any CPU.ActiveCfg = Release|Any CPU\n\t\t{ABB1C275-B0DD-4207-98C6-3E1AF08D4A7C}.Release|Any CPU.Build.0 = Release|Any CPU\n\tEndGlobalSection\n\tGlobalSection(SolutionProperties) = preSolution\n\t\tHideSolutionNode = FALSE\n\tEndGlobalSection\n\tGlobalSection(ExtensibilityGlobals) = postSolution\n\t\tSolutionGuid = {1753EC7D-E288-4292-84B8-C1654AC04FA8}\n\tEndGlobalSection\nEndGlobal\n",
+        "prob_desc_input_spec": "The only line contains tree integers $$$a$$$, $$$b$$$ and $$$c$$$ ($$$1 \\leq a, b, c \\leq 100$$$)\u00a0\u2014 the lengths of sticks Masha possesses.",
+        "src_uid": "3dc56bc08606a39dd9ca40a43c452f09",
+        "bug_code_uid": "3f82aa6d8c4cf2eb8eb1ae43f47b4370",
+        "equal_cnt": 13,
+        "prob_desc_time_limit": "2 seconds",
+        "similarity_score": 0.030917873606085777,
+        "bug_exec_outcome": "COMPILATION_ERROR",
+        "lang_cluster": "C#",
+        "potential_dominant_fix_op": "replace",
+        "prob_desc_sample_inputs": [
+            "3 4 5",
+            "2 5 3",
+            "100 10 10"
+        ],
+        "prob_desc_input_from": "standard input",
+        "prob_desc_description": "Masha has three sticks of length $$$a$$$, $$$b$$$ and $$$c$$$ centimeters respectively. In one minute Masha can pick one arbitrary stick and increase its length by one centimeter. She is not allowed to break sticks.What is the minimum number of minutes she needs to spend increasing the stick's length in order to be able to assemble a triangle of positive area. Sticks should be used as triangle's sides (one stick for one side) and their endpoints should be located at triangle's vertices.",
+        "lang": "Mono C#",
+        "fix_exec_outcome": "",
+        "insert_cnt": 2,
+        "fix_source_code": "",
+        "prob_desc_notes": "NoteIn the first example, Masha can make a triangle from the sticks without increasing the length of any of them.In the second example, Masha can't make a triangle of positive area from the sticks she has at the beginning, but she can spend one minute to increase the length $$$2$$$ centimeter stick by one and after that form a triangle with sides $$$3$$$, $$$3$$$ and $$$5$$$ centimeters.In the third example, Masha can take $$$33$$$ minutes to increase one of the $$$10$$$ centimeters sticks by $$$33$$$ centimeters, and after that take $$$48$$$ minutes to increase another $$$10$$$ centimeters stick by $$$48$$$ centimeters. This way she can form a triangle with lengths $$$43$$$, $$$58$$$ and $$$100$$$ centimeters in $$$81$$$ minutes. One can show that it is impossible to get a valid triangle faster.",
+        "file_name": "C#.jsonl",
+        "tags": [
+            "geometry",
+            "math",
+            "brute force"
+        ],
+        "prob_desc_output_to": "standard output",
+        "prob_desc_created_at": "1539511500",
+        "prob_desc_memory_limit": "256 megabytes",
+        "prob_desc_sample_outputs": [
+            "0",
+            "1",
+            "81"
+        ],
+        "hidden_unit_tests": "[{\"input\": \"3 4 5\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"2 5 3\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"100 10 10\\r\\n\", \"output\": [\"81\"]}, {\"input\": \"1 1 1\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"100 100 100\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"100 1 1\\r\\n\", \"output\": [\"99\"]}, {\"input\": \"12 34 56\\r\\n\", \"output\": [\"11\"]}, {\"input\": \"68 1 67\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"100 100 1\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"100 1 99\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"23 56 33\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"98 12 23\\r\\n\", \"output\": [\"64\"]}, {\"input\": \"88 2 6\\r\\n\", \"output\": [\"81\"]}, {\"input\": \"1 50 87\\r\\n\", \"output\": [\"37\"]}, {\"input\": \"1 50 100\\r\\n\", \"output\": [\"50\"]}, {\"input\": \"1 92 13\\r\\n\", \"output\": [\"79\"]}, {\"input\": \"56 42 87\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"100 100 99\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"3 1 1\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"14 21 76\\r\\n\", \"output\": [\"42\"]}, {\"input\": \"1 7 35\\r\\n\", \"output\": [\"28\"]}, {\"input\": \"86 43 10\\r\\n\", \"output\": [\"34\"]}, {\"input\": \"2 10 2\\r\\n\", \"output\": [\"7\"]}, {\"input\": \"32 99 10\\r\\n\", \"output\": [\"58\"]}, {\"input\": \"2 3 6\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"4 5 6\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"4 2 7\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"2 5 2\\r\\n\", \"output\": [\"2\"]}]"
+    }
+}

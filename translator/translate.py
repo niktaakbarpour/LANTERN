@@ -74,17 +74,14 @@ def gen(prompt_text, temperature, nsample, llm):
     cnt = 0
     while cnt < 999:
         try:
+            # Construct the messages list like OpenAI's API
             messages = [Message(role="user", content=prompt_text)]
-            prompt = llm.prepare_prompt(messages)
-            full_prompt = prompt + "Assistant:"
-            tokens = llm.tokenizer.encode(full_prompt, return_tensors="pt").to(llm.model.device)
-            outputs = llm.model.generate(
-                tokens,
-                max_new_tokens=512,
-                # do_sample=True,
+            
+            # Call the local model to generate responses
+            c = llm.generate_chat(
+                messages,
                 temperature=temperature,
-                top_p=1.0,
-                eos_token_id=llm.tokenizer.encode("<|end▁of▁sentence|>")[0]
+                num_comps=nsample
             )
             print("get deepseek response......")
             break
@@ -95,11 +92,10 @@ def gen(prompt_text, temperature, nsample, llm):
     else:
         return None
 
-    raw = llm.tokenizer.decode(outputs[0], skip_special_tokens=True)
-    raw = raw.split("<|end▁of▁sentence|>")[0].strip()
-    content = llm.extract_output(raw)
-    temp = {"choices": [{"message": {"content": content}}], "prompt": prompt_text}
-    return {"choices": [{"message": {"content": content}}], "prompt": prompt_text}
+    # Add prompt to match OpenAI's structure
+    c["prompt"] = prompt_text
+    return c
+
 
 # Alias preserving interface
 def gen_request(prompt_text, temperature, nsample, llm):
@@ -153,10 +149,10 @@ def run(base_dir, num_proc, dry_run, it, mode, r_mode, dataset_path, llm, config
         build_target_db(base_dir, it)
 
     apr_dataset = datasets.load_from_disk(dataset_path)
-    # langs = ["Ruby"]
+    langs = ["Ruby"]
     # apr_dataset = apr_dataset.filter(lambda example: example["lang_cluster"] in langs)
 
-    first_entry = apr_dataset.select(range(10))
+    # first_entry = apr_dataset.select(range(10))
     if r_mode == "ultimate2":
         unfixed_dataset = get_last_incorrect_samples(base_dir, it, unfixed_ids)
     else:

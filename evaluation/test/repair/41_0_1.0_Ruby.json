@@ -1,0 +1,61 @@
+{
+    "oai_response": {
+        "choices": [
+            {
+                "message": {
+                    "role": "assistant",
+                    "content": "```ruby\nn = gets.chomp.to_i\ns = gets.chomp\narr = s.split('')\n\ndef process(arr, n)\n\tres = 0\n\tu,d,l,r = 0,0,0,0\n\tstart = {'U'=>0, 'D'=>0, 'L'=>0, 'R'=>0}\n\tfinish = start.clone\n\tfor i in 0...n\n\t\tcase arr[i]\n\t\twhen 'U'\n\t\t\tu += 1\n\t\t\tif finish['L'] == start['R'] && finish['R'] == start['L'] && u == d\n\t\t\t\tres += 1\n\t\t\tend\n\t\t\tfinish['U'] += 1\n\t\twhen 'D'\n\t\t\td += 1\n\t\t\tif finish['L'] == start['R'] && finish['R'] == start['L'] && u == d\n\t\t\t\tres += 1\n\t\t\tend\n\t\t\tfinish['D'] += 1\n\t\twhen 'L'\n\t\t\tl += 1\n\t\t\tif finish['U'] == start['D'] && finish['D'] == start['U'] && l == r\n\t\t\t\tres += 1\n\t\t\tend\n\t\t\tfinish['L'] += 1\n\t\twhen 'R'\n\t\t\tr += 1\n\t\t\tif finish['U'] == start['D'] && finish['D'] == start['U'] && l == r\n\t\t\t\tres += 1\n\t\t\tend\n\t\t\tfinish['R'] += 1\n\t\tend\n\tend\n\tputs res\nend\n\nprocess(arr, n)\n```"
+                }
+            }
+        ],
+        "prompt": [
+            "Fix a buggy program written in Ruby language to solve the following programming problem:\nDescription: Calvin the robot lies in an infinite rectangular grid. Calvin's source code contains a list of n commands, each either 'U', 'R', 'D', or 'L'\u00a0\u2014 instructions to move a single square up, right, down, or left, respectively. How many ways can Calvin execute a non-empty contiguous substrings of commands and return to the same square he starts in? Two substrings are considered different if they have different starting or ending indices.\nInput Specification: The first line of the input contains a single positive integer, n (1\u2009\u2264\u2009n\u2009\u2264\u2009200)\u00a0\u2014 the number of commands. The next line contains n characters, each either 'U', 'R', 'D', or 'L'\u00a0\u2014 Calvin's source code.\nOutput Specification: Print a single integer\u00a0\u2014 the number of contiguous substrings that Calvin can execute and return to his starting square.\n\nSample Input:\n6\nURLLDR\nSample Output:\n2\n\nSample Input:\n4\nDLUU\nSample Output:\n0\n\nSample Input:\n7\nRLRLRLR\nSample Output:\n12\n\nNotes: NoteIn the first case, the entire source code works, as well as the \"RL\" substring in the second and third characters.Note that, in the third case, the substring \"LR\" appears three times, and is therefore counted three times to the total result.\nTake input from standard input and output to standard output\n\nHere is the code with a bug of WRONG_ANSWER:\n\nn = gets.chomp\ns = gets.chomp\narr = s.split('')\ndef process(arr)\n\tres = 0\n\twhile !arr.empty?\n\t\ttmp = arr.pop\n\t\tarr_tmp = []\n\t\tarr_tmp.push(tmp)\n\t\ti = arr.length-1\n\t\twhile i >= 0\n\t\t\tarr_tmp.push(arr[i])\n\t\t\tu = 0\n\t\t\tr = 0\n\t\t\td = 0\n\t\t\tl = 0\n\t\t\tarr_tmp.each{ |e|\n\t\t\t\tif e == 'U'; u += 1;break; end\n\t\t\t\tif e == 'R'; r += 1;break; end\n\t\t\t\tif e == 'D'; d += 1;break; end\n\t\t\t\tif e == 'L'; l += 1;break; end\n\t\t\t}\n\t\t\tres += 1 if u == d && r == l\n\t\t\ti -= 1\n\t\tend\n\tend\n\tputs res\n\t\nend\nprocess(arr)\n\nProvide the fixed Ruby code without any description or extra tokens.\n\nFixed source code:",
+            ""
+        ]
+    },
+    "source_data": {
+        "delete_cnt": 0,
+        "fix_code_uid": "",
+        "difficulty": 1000,
+        "replace_cnt": 8,
+        "fix_ops_cnt": 8,
+        "prob_desc_output_spec": "Print a single integer\u00a0\u2014 the number of contiguous substrings that Calvin can execute and return to his starting square.",
+        "apr_id": "a1bf30402a98ffcd9d403e7035074aa0",
+        "bug_source_code": "n = gets.chomp\ns = gets.chomp\narr = s.split('')\ndef process(arr)\n\tres = 0\n\twhile !arr.empty?\n\t\ttmp = arr.pop\n\t\tarr_tmp = []\n\t\tarr_tmp.push(tmp)\n\t\ti = arr.length-1\n\t\twhile i >= 0\n\t\t\tarr_tmp.push(arr[i])\n\t\t\tu = 0\n\t\t\tr = 0\n\t\t\td = 0\n\t\t\tl = 0\n\t\t\tarr_tmp.each{ |e|\n\t\t\t\tif e == 'U'; u += 1;break; end\n\t\t\t\tif e == 'R'; r += 1;break; end\n\t\t\t\tif e == 'D'; d += 1;break; end\n\t\t\t\tif e == 'L'; l += 1;break; end\n\t\t\t}\n\t\t\tres += 1 if u == d && r == l\n\t\t\ti -= 1\n\t\tend\n\tend\n\tputs res\n\t\nend\nprocess(arr)",
+        "prob_desc_input_spec": "The first line of the input contains a single positive integer, n (1\u2009\u2264\u2009n\u2009\u2264\u2009200)\u00a0\u2014 the number of commands. The next line contains n characters, each either 'U', 'R', 'D', or 'L'\u00a0\u2014 Calvin's source code.",
+        "src_uid": "7bd5521531950e2de9a7b0904353184d",
+        "bug_code_uid": "f011e10fca7a3f45b0b7509b473370aa",
+        "equal_cnt": 9,
+        "prob_desc_time_limit": "2 seconds",
+        "similarity_score": 0.8770833611488342,
+        "bug_exec_outcome": "WRONG_ANSWER",
+        "lang_cluster": "Ruby",
+        "potential_dominant_fix_op": "replace",
+        "prob_desc_sample_inputs": [
+            "6\nURLLDR",
+            "4\nDLUU",
+            "7\nRLRLRLR"
+        ],
+        "prob_desc_input_from": "standard input",
+        "prob_desc_description": "Calvin the robot lies in an infinite rectangular grid. Calvin's source code contains a list of n commands, each either 'U', 'R', 'D', or 'L'\u00a0\u2014 instructions to move a single square up, right, down, or left, respectively. How many ways can Calvin execute a non-empty contiguous substrings of commands and return to the same square he starts in? Two substrings are considered different if they have different starting or ending indices.",
+        "lang": "Ruby",
+        "fix_exec_outcome": "",
+        "insert_cnt": 0,
+        "fix_source_code": "",
+        "prob_desc_notes": "NoteIn the first case, the entire source code works, as well as the \"RL\" substring in the second and third characters.Note that, in the third case, the substring \"LR\" appears three times, and is therefore counted three times to the total result.",
+        "file_name": "Ruby.jsonl",
+        "tags": [
+            "brute force",
+            "implementation"
+        ],
+        "prob_desc_output_to": "standard output",
+        "prob_desc_created_at": "1455384900",
+        "prob_desc_memory_limit": "256 megabytes",
+        "prob_desc_sample_outputs": [
+            "2",
+            "0",
+            "12"
+        ],
+        "hidden_unit_tests": "[{\"input\": \"6\\r\\nURLLDR\\r\\n\", \"output\": [\"2\"]}, {\"input\": \"4\\r\\nDLUU\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"7\\r\\nRLRLRLR\\r\\n\", \"output\": [\"12\"]}, {\"input\": \"1\\r\\nR\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"100\\r\\nURDLURDLURDLURDLURDLURDLURDLURDLURDLURDLURDLURDLURDLURDLURDLURDLURDLURDLURDLURDLURDLURDLURDLURDLURDL\\r\\n\", \"output\": [\"1225\"]}, {\"input\": \"200\\r\\nLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR\\r\\n\", \"output\": [\"100\"]}, {\"input\": \"20\\r\\nLDURLDURRLRUDLRRUDLU\\r\\n\", \"output\": [\"29\"]}, {\"input\": \"140\\r\\nDLDLULULDRDDDLLUDRRDLLUULLDDLDLUURLDLDRDUDDLRRDURUUUUURLDUDDLLRRLLDRRRDDDDDUDUULLURRDLDULUDLLUUDRRLUDULUDUDULULUURURRDUURRDLULLURUDDDDRDRDRD\\r\\n\", \"output\": [\"125\"]}, {\"input\": \"194\\r\\nULLLDLLDRUUDURRULLRLUUURDRLLURDUDDUDLULRLDRUDURLDLRDLLLLUDDRRRULULULUDDULRURURLLDLDLDRUDUUDULRULDDRRLRDRULLDRULLLLRRDDLLLLULDRLUULRUUULDUUDLDLDUUUDDLDDRULDRRLUURRULLDULRRDLLRDURDLUUDUDLLUDDULDDD\\r\\n\", \"output\": [\"282\"]}, {\"input\": \"200\\r\\nDDDURLLUUULUDDURRDLLDDLLRLUULUULDDDLRRDLRRDUDURDUDRRLLDRDUDDLDDRDLURRRLLRDRRLLLRDDDRDRRLLRRLULRUULRLDLUDRRRDDUUURLLUDRLDUDRLLRLRRLUDLRULDUDDRRLLRLURDLRUDDDURLRDUDUUURLLULULRDRLDLDRURDDDLLRUDDRDUDDDLRU\\r\\n\", \"output\": [\"408\"]}, {\"input\": \"197\\r\\nDUUDUDUDUDUUDUUDUUUDDDDUUUDUUUDUUUUUDUUUDDUDDDUUDUDDDUUDDUUUUUUUDUDDDDDUUUUUDDDDDDUUUUDDUDDUDDDUDUUUDUUDUDUDUUUDUDDDDUUDDUDDDDUDDDUDUUUDUUDUUUDDDDUUUDUUDDUUUUUDDDDUUDUUDDDDUDDUUDUUUDDDDUDUUUDDDUUDU\\r\\n\", \"output\": [\"1995\"]}, {\"input\": \"200\\r\\nLLLLRLLRLLRRRRLLRRLRRLRRRLLLRRLRRRRLLRRLLRRRLRLRLRRLLRLLRRLLLRRRRLRLLRLLLRLLLRRLLLRLRLRRRRRRRLRRRLRLRLLLLRLRRRRRLRRLRLLLLRLLLRRLRRLLRLRLLLRRLLRRLRRRRRLRLRRLRLLRLLLLRLRRRLRRLRLLRLRRLRRRRRLRRLLLRRRRRLLR\\r\\n\", \"output\": [\"1368\"]}, {\"input\": \"184\\r\\nUUUDDUDDDDDUDDDDUDDUUUUUDDDUUDDUDUUDUUUDDUDDDDDDDDDDUDUDDUUDDDUUDDUDUDDDUUDUDUUUUDDUDUUUDDUDUUUUDUUDDUUDUUUDUDUDDUDUDDDUUDDDDUUUUUDDDUDUDUDUDUDUUUDUDDUUDDUDUUDUDUUUDUUDDDDUDDDDUDUUDUUD\\r\\n\", \"output\": [\"1243\"]}, {\"input\": \"187\\r\\nRLLRLRRLLRRLRRRRLLRLLRLLLLRRRLLLRLLLLRRLRLRRRRRRLLRRLRLLRRRLLRRLLLRRLRRLRLLLLRRRRLRRLLRRLRRRRLLLLRRLRLRLRRRRRLLRLRLRLRLRLRLLLRLLLLLRRRLLRLRRRLLLRRLLLLLRLLRLLLRRRLLLRRLRRRLLLRRLRLLRRLRLRLR\\r\\n\", \"output\": [\"1501\"]}, {\"input\": \"190\\r\\nUULLLUUULLLULLUULUUUUULUUULLULLULUULLUULLUUULULUULLUULLUUULULLLLLLULLLLLULUULLULLULLLUULUULLLUUUULLLLUUULLUUULLLULULUULULLUULULULUUULLUUUULLUUULULUULLLLULLLLLUULLUULULLULUUUUUULULLLULLUULUUU\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"46\\r\\nULUURRRRLDRDRDDDURRRLLLDDULLRRRRRLUDDLRDRULLLL\\r\\n\", \"output\": [\"23\"]}, {\"input\": \"70\\r\\nUUDRLDRDRUDLLURURULRDULRRDULDUDDRUULLDDDDDRLLRDURRDULRDLRUUUDDLRUURRLD\\r\\n\", \"output\": [\"86\"]}, {\"input\": \"198\\r\\nURLLUDRDUUDRDLLRURULLRRLRRUULRLULUUDRRURLRUURRDRUUDRLRURLLULRDDDDDRDDRRRLRUDULLDDLLLUDRLDRUDRDLDUULLUUUULULLRLDDRDURDRURLULDRURLLDDULURULDLUUUUULDLURRLLDLULLDULRUURRLDLLUUURDLDDUDUULRLUDULLULDRDRLRL\\r\\n\", \"output\": [\"160\"]}, {\"input\": \"22\\r\\nDUDDDURURUDURRUDRDULUL\\r\\n\", \"output\": [\"10\"]}, {\"input\": \"200\\r\\nUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUDUD\\r\\n\", \"output\": [\"10000\"]}, {\"input\": \"4\\r\\nRRDR\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"6\\r\\nUULLLL\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"2\\r\\nDU\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"6\\r\\nUURRRR\\r\\n\", \"output\": [\"0\"]}, {\"input\": \"101\\r\\nRDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD\\r\\n\", \"output\": [\"0\"]}]"
+    }
+}

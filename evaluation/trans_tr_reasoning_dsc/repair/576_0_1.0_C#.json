@@ -1,0 +1,57 @@
+{
+    "oai_response": {
+        "choices": [
+            {
+                "message": {
+                    "role": "assistant",
+                    "content": "```\nusing System;\n\nnamespace CodeForces\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            int n = int.Parse(Console.ReadLine());\n            if (n < 3) \n            {\n                Console.WriteLine(\"NO\");\n                return;\n            }\n\n            if (n % 2 == 0) \n            {\n                Console.WriteLine(\"YES\");\n            \u0007}\n\u001a and so 36:12 90 1629 1706 398 13122 13219 2918 14194 14237 2731 2628 3485 3554 4048 4101 4145 6079 6176 6232 6312 6337 6499 6570 11521 11526 11571 11616 11681 6885 6955 7052 7087 7122 10297 10386 10432 10511 10524 7731 13851 13863 13907 13929 13983 14095 14118 7496 7586 7621 12071 12095 12166 12201 12272 12379 12423 12458 12529 12564 12618 12631 12675 12710 12745 12816 12851 12922 12957 12992 13053 13088 13159 13194 8819 8873 8937 8961 8996 9050 9130 9165 9200 9235 9299 9334 9398 9452 9487 9522 9586 9621 9675 9700 9735 9799 9834 9898 9952 9987 10022 10057 10122 10157 10192 10256 10291 8193 8237 8281 11434 11446 11490 11535 11570 11605 11676 11701 11736 11771 11842 11877 11912 11976 12011 12075 12110 12145 12209 12263 12298 12362 12397 12461 12496 12560 12624 12659 12694 12758 12793 12857 12892 12927 12991 13045 13080 13115 13179 13214 9354 9408 9462 9516 9551 9615 9679 9714 9749 9813 9877 9912 9976 10011 100```"
+                }
+            }
+        ],
+        "prompt": [
+            "Fix a buggy program written in C# language to solve the following programming problem:\nDescription: One hot summer day Pete and his friend Billy decided to buy a watermelon. They chose the biggest and the ripest one, in their opinion. After that the watermelon was weighed, and the scales showed w kilos. They rushed home, dying of thirst, and decided to divide the berry, however they faced a hard problem.Pete and Billy are great fans of even numbers, that's why they want to divide the watermelon in such a way that each of the two parts weighs even number of kilos, at the same time it is not obligatory that the parts are equal. The boys are extremely tired and want to start their meal as soon as possible, that's why you should help them and find out, if they can divide the watermelon in the way they want. For sure, each of them should get a part of positive weight.\nInput Specification: The first (and the only) input line contains integer number w (1\u2009\u2264\u2009w\u2009\u2264\u2009100) \u2014 the weight of the watermelon bought by the boys.\nOutput Specification: Print YES, if the boys can divide the watermelon into two parts, each of them weighing even number of kilos; and NO in the opposite case.\n\nSample Input:\n8\nSample Output:\nYES\n\nNotes: NoteFor example, the boys can divide the watermelon into two parts of 2 and 6 kilos respectively (another variant \u2014 two parts of 4 and 4 kilos).\nTake input from standard input and output to standard output\n\nHere is the code with a bug of COMPILATION_ERROR:\n\n\ufeffusing System;\nusing System.Collections.Generic;\nusing System.Linq;\nusing System.Text;\nusing System.Threading.Tasks;\n\nnamespace CodeForces\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n\n            int n = int.Parse(Console.ReadLine());\n            if ((n   % 2 ==0) && (n/2)%2 == 0)) Console.WriteLine(\"YES\");\n            else Console.WriteLine(\"NO\");\n\n        }\n    }\n}\n\n\nProvide the fixed C# code without any description or extra tokens.\n\nFixed source code:",
+            ""
+        ]
+    },
+    "source_data": {
+        "delete_cnt": 1,
+        "fix_code_uid": "",
+        "difficulty": 800,
+        "replace_cnt": 2,
+        "fix_ops_cnt": 3,
+        "prob_desc_output_spec": "Print YES, if the boys can divide the watermelon into two parts, each of them weighing even number of kilos; and NO in the opposite case.",
+        "apr_id": "df023ccde1f559b0d6cfdc08afa286a4",
+        "bug_source_code": "\ufeffusing System;\nusing System.Collections.Generic;\nusing System.Linq;\nusing System.Text;\nusing System.Threading.Tasks;\n\nnamespace CodeForces\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n\n            int n = int.Parse(Console.ReadLine());\n            if ((n   % 2 ==0) && (n/2)%2 == 0)) Console.WriteLine(\"YES\");\n            else Console.WriteLine(\"NO\");\n\n        }\n    }\n}\n",
+        "prob_desc_input_spec": "The first (and the only) input line contains integer number w (1\u2009\u2264\u2009w\u2009\u2264\u2009100) \u2014 the weight of the watermelon bought by the boys.",
+        "src_uid": "230a3c4d7090401e5fa3c6b9d994cdf2",
+        "bug_code_uid": "13d9e7b8a62af54c096d86c481f91c6a",
+        "equal_cnt": 4,
+        "prob_desc_time_limit": "1 second",
+        "similarity_score": 0.9761605858802795,
+        "bug_exec_outcome": "COMPILATION_ERROR",
+        "lang_cluster": "C#",
+        "potential_dominant_fix_op": "replace",
+        "prob_desc_sample_inputs": [
+            "8"
+        ],
+        "prob_desc_input_from": "standard input",
+        "prob_desc_description": "One hot summer day Pete and his friend Billy decided to buy a watermelon. They chose the biggest and the ripest one, in their opinion. After that the watermelon was weighed, and the scales showed w kilos. They rushed home, dying of thirst, and decided to divide the berry, however they faced a hard problem.Pete and Billy are great fans of even numbers, that's why they want to divide the watermelon in such a way that each of the two parts weighs even number of kilos, at the same time it is not obligatory that the parts are equal. The boys are extremely tired and want to start their meal as soon as possible, that's why you should help them and find out, if they can divide the watermelon in the way they want. For sure, each of them should get a part of positive weight.",
+        "lang": "MS C#",
+        "fix_exec_outcome": "",
+        "insert_cnt": 0,
+        "fix_source_code": "",
+        "prob_desc_notes": "NoteFor example, the boys can divide the watermelon into two parts of 2 and 6 kilos respectively (another variant \u2014 two parts of 4 and 4 kilos).",
+        "file_name": "C#.jsonl",
+        "tags": [
+            "math",
+            "brute force"
+        ],
+        "prob_desc_output_to": "standard output",
+        "prob_desc_created_at": "1268395200",
+        "prob_desc_memory_limit": "64 megabytes",
+        "prob_desc_sample_outputs": [
+            "YES"
+        ],
+        "hidden_unit_tests": "[{\"input\": \"8\\r\\n\", \"output\": [\"YES\", \"Yes\", \"yes\"]}, {\"input\": \"5\\r\\n\", \"output\": [\"No\", \"NO\", \"no\"]}, {\"input\": \"4\\r\\n\", \"output\": [\"YES\", \"Yes\", \"yes\"]}, {\"input\": \"3\\r\\n\", \"output\": [\"No\", \"NO\", \"no\"]}, {\"input\": \"2\\r\\n\", \"output\": [\"No\", \"NO\", \"no\"]}, {\"input\": \"1\\r\\n\", \"output\": [\"No\", \"NO\", \"no\"]}, {\"input\": \"7\\r\\n\", \"output\": [\"No\", \"NO\", \"no\"]}, {\"input\": \"6\\r\\n\", \"output\": [\"YES\", \"Yes\", \"yes\"]}, {\"input\": \"10\\r\\n\", \"output\": [\"YES\", \"Yes\", \"yes\"]}, {\"input\": \"9\\r\\n\", \"output\": [\"No\", \"NO\", \"no\"]}, {\"input\": \"53\\r\\n\", \"output\": [\"No\", \"NO\", \"no\"]}, {\"input\": \"77\\r\\n\", \"output\": [\"No\", \"NO\", \"no\"]}, {\"input\": \"32\\r\\n\", \"output\": [\"YES\", \"Yes\", \"yes\"]}, {\"input\": \"44\\r\\n\", \"output\": [\"YES\", \"Yes\", \"yes\"]}, {\"input\": \"98\\r\\n\", \"output\": [\"YES\", \"Yes\", \"yes\"]}, {\"input\": \"99\\r\\n\", \"output\": [\"No\", \"NO\", \"no\"]}, {\"input\": \"90\\r\\n\", \"output\": [\"YES\", \"Yes\", \"yes\"]}, {\"input\": \"67\\r\\n\", \"output\": [\"No\", \"NO\", \"no\"]}, {\"input\": \"100\\r\\n\", \"output\": [\"YES\", \"Yes\", \"yes\"]}, {\"input\": \"88\\r\\n\", \"output\": [\"YES\", \"Yes\", \"yes\"]}]"
+    }
+}

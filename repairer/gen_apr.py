@@ -72,32 +72,19 @@ LANGS = sorted(set([v for k, v in SHORT_LANG_MAP.items()]))
 # openai.api_base = os.environ["API_BASE"]
 # model_name = os.environ["MODEL_NAME"]
 
-
-
 def gen(prompt_text, temperature, nsample, llm):
-    """
-    Generate a response using the local DeepSeekCoder model.
-    Returns a dict matching the original structure: {"data":[{"content":...,"type":"text"}],"prompt":...}
-    """
     cnt = 0
     while cnt < 999:
         try:
+            # Prepare messages
             messages = [
                 Message(role="system", content=prompt.PROMPTS["system"]),
                 Message(role="user", content=prompt_text),
             ]
-            # Prepare tokens and generate
-            input_tokens = llm.prepare_prompt(messages)
-            full_prompt = input_tokens + "Assistant:"
-            tokens = llm.tokenizer.encode(full_prompt, return_tensors="pt").to(llm.model.device)
-            output_tokens = llm.model.generate(
-                tokens,
-                max_new_tokens=1024,
-                # do_sample=True,
-                temperature=temperature,
-                top_p=1.0,
-            )
-            print("get deepseek response......")
+
+            # Generate response from local model
+            c = llm.generate_chat(messages, temperature=temperature, num_comps=nsample)
+
             break
         except Exception as e:
             cnt += 1
@@ -105,9 +92,10 @@ def gen(prompt_text, temperature, nsample, llm):
             print(f"Gen Error: {e}")
     else:
         return None
-    text = llm.tokenizer.decode(output_tokens[0], skip_special_tokens=True)
-    content = llm.extract_output(text)
-    return {"data": [{"content": content, "type": "text"}], "prompt": prompt_text}
+
+    # Add the prompt field to mimic OpenAI's structure
+    c["prompt"] = prompt_text
+    return c
 
 def gen_request(prompt_text, temperature, nsample, llm):
     """
@@ -140,21 +128,37 @@ def run(base_dir, num_proc, dry_run, nsample, nattempt, temperature, dataset_pat
     apr_dataset = datasets.load_from_disk(dataset_path)
     # apr_dataset = apr_dataset.map(lambda x: {"lang_cluster": "Ruby"})
 
-    # langs = ["Ruby"]
+    langs = ["Ruby"]
 
     # apr_dataset = apr_dataset.filter(lambda example: example["lang_cluster"] in langs)
-    first_entry = apr_dataset.select(range(10))
+    # first_entry = apr_dataset.select(range(5))
     print("Bypassing language filter for single-row test")
     temperature_list = [temperature]
     with concurrent.futures.ThreadPoolExecutor(max_workers=int(num_proc)) as executor:
         futures = []
-        for idx, dt in enumerate(first_entry.to_list()):
+
+        for idx, dt in tqdm.tqdm(
+            enumerate(apr_dataset),
+            total=len(apr_dataset),
+            desc=f"Preparing samples lang",
+        ):
             for attempt in range(nattempt):
-                for temp in temperature_list:
+                for temperature in temperature_list:
+
+    # for idx, dt in enumerate(first_entry.to_list()):
+    #     print("Nikta 1")
+    #     for attempt in range(nattempt):
+    #         print("Nikta 2")
+    #         for temp in temperature_list:
+    #             print("Nikta 3")
+    #             x = process_prompt(dt, temp, nsample,
+    #                     output_dir, idx, attempt, llm, dry_run)
+    #             print(f"Nikta x: {x}")
+                            
                     futures.append(
                         executor.submit(
                             process_prompt,
-                            dt, temp, nsample,
+                            dt, temperature, nsample,
                             output_dir, idx, attempt, llm, dry_run
                         )
                     )

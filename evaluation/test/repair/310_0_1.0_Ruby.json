@@ -1,0 +1,56 @@
+{
+    "oai_response": {
+        "choices": [
+            {
+                "message": {
+                    "role": "assistant",
+                    "content": "```ruby\nrequire 'prime'\nrequire 'set'\nrequire 'matrix'\nrequire 'tsort'\ninclude Math\n\ndef Profiler\n  begin\n    $stdin = File.open(\"./input.txt\", \"r\")\n    start_time = Time.now\n  end if ENV[\"LOGNAME\"]==\"skydos\"\n  \n  yield\n\n  begin\n    end_time = Timenow\n    puts \"\\n\\n\"\n    puts \"===\"*10\n    printf \"Time: %.4f sec\\n\", (end_time-start_time)\n    puts \"===\"*10\n  end if ENV[\"LOGNAME\"]==\"skydos\"\nend\n\nProfiler do\n  n=gets.to_i\n  if n==0\n    puts 0\n  else\n    puts (3**(n)-1)%(10**6+3)\n  end\nend\n```"
+                }
+            }
+        ],
+        "prompt": [
+            "Fix a buggy program written in Ruby language to solve the following programming problem:\nDescription: Fangy collects cookies. Once he decided to take a box and put cookies into it in some way. If we take a square k\u2009\u00d7\u2009k in size, divided into blocks 1\u2009\u00d7\u20091 in size and paint there the main diagonal together with cells, which lie above it, then the painted area will be equal to the area occupied by one cookie k in size. Fangy also has a box with a square base 2n\u2009\u00d7\u20092n, divided into blocks 1\u2009\u00d7\u20091 in size. In a box the cookies should not overlap, and they should not be turned over or rotated. See cookies of sizes 2 and 4 respectively on the figure:    To stack the cookies the little walrus uses the following algorithm. He takes out of the repository the largest cookie which can fit in some place in the box and puts it there. Everything could be perfect but alas, in the repository the little walrus has infinitely many cookies of size 2 and larger, and there are no cookies of size 1, therefore, empty cells will remain in the box. Fangy wants to know how many empty cells will be left in the end.\nInput Specification: The first line contains a single integer n (0\u2009\u2264\u2009n\u2009\u2264\u20091000).\nOutput Specification: Print the single number, equal to the number of empty cells in the box. The answer should be printed modulo 106\u2009+\u20093.\n\nSample Input:\n3\nSample Output:\n9\n\nNotes: NoteIf the box possesses the base of 23\u2009\u00d7\u200923 (as in the example), then the cookies will be put there in the following manner: \nTake input from standard input and output to standard output\n\nHere is the code with a bug of WRONG_ANSWER:\n\n#=================================\n# We trust in God.\n#=================================\n\ndef Profiler\n\t#=================================\n\trequire 'prime'\n\trequire 'set'\n\trequire 'matrix'\n\trequire 'tsort'\n\tinclude Math\n\n\tdef local?; ENV[\"LOGNAME\"]==\"skydos\"; end\n\n\tbegin\n\t\t$stdin = File.open(\"./input.txt\", \"r\")\n\t\t\n\t\tstart_time = Time.now\n\tend if local?\n\t\n\tyield\n\n\tbegin\n\t\tend_time = Time.now\n\t\tputs \"\\n\\n\"\n\t\tputs \"===\"*10\n\t\tprintf \"Time: %.4f sec\\n\", (end_time-start_time)\n\t\tputs \"===\"*10\n\tend if local?\n\t#=================================\nend\n\nProfiler do\n#=================================\n\nn=gets.to_i\n\nif n-1<0\n\tputs 0\nelse\n\tputs 3**(n-1)%(10**6+3)\nend\n\n#=================================\nend\n\n\nProvide the fixed Ruby code without any description or extra tokens.\n\nFixed source code:",
+            ""
+        ]
+    },
+    "source_data": {
+        "delete_cnt": 0,
+        "fix_code_uid": "",
+        "difficulty": 1300,
+        "replace_cnt": 1,
+        "fix_ops_cnt": 1,
+        "prob_desc_output_spec": "Print the single number, equal to the number of empty cells in the box. The answer should be printed modulo 106\u2009+\u20093.",
+        "apr_id": "5a081d79588cf486847e1a2b016f7fb2",
+        "bug_source_code": "#=================================\n# We trust in God.\n#=================================\n\ndef Profiler\n\t#=================================\n\trequire 'prime'\n\trequire 'set'\n\trequire 'matrix'\n\trequire 'tsort'\n\tinclude Math\n\n\tdef local?; ENV[\"LOGNAME\"]==\"skydos\"; end\n\n\tbegin\n\t\t$stdin = File.open(\"./input.txt\", \"r\")\n\t\t\n\t\tstart_time = Time.now\n\tend if local?\n\t\n\tyield\n\n\tbegin\n\t\tend_time = Time.now\n\t\tputs \"\\n\\n\"\n\t\tputs \"===\"*10\n\t\tprintf \"Time: %.4f sec\\n\", (end_time-start_time)\n\t\tputs \"===\"*10\n\tend if local?\n\t#=================================\nend\n\nProfiler do\n#=================================\n\nn=gets.to_i\n\nif n-1<0\n\tputs 0\nelse\n\tputs 3**(n-1)%(10**6+3)\nend\n\n#=================================\nend\n",
+        "prob_desc_input_spec": "The first line contains a single integer n (0\u2009\u2264\u2009n\u2009\u2264\u20091000).",
+        "src_uid": "1a335a9638523ca0315282a67e18eec7",
+        "bug_code_uid": "6a7f43e040c0aa6e00961b26306e8e8e",
+        "equal_cnt": 2,
+        "prob_desc_time_limit": "1 second",
+        "similarity_score": 0.9985693693161011,
+        "bug_exec_outcome": "WRONG_ANSWER",
+        "lang_cluster": "Ruby",
+        "potential_dominant_fix_op": "replace",
+        "prob_desc_sample_inputs": [
+            "3"
+        ],
+        "prob_desc_input_from": "standard input",
+        "prob_desc_description": "Fangy collects cookies. Once he decided to take a box and put cookies into it in some way. If we take a square k\u2009\u00d7\u2009k in size, divided into blocks 1\u2009\u00d7\u20091 in size and paint there the main diagonal together with cells, which lie above it, then the painted area will be equal to the area occupied by one cookie k in size. Fangy also has a box with a square base 2n\u2009\u00d7\u20092n, divided into blocks 1\u2009\u00d7\u20091 in size. In a box the cookies should not overlap, and they should not be turned over or rotated. See cookies of sizes 2 and 4 respectively on the figure:    To stack the cookies the little walrus uses the following algorithm. He takes out of the repository the largest cookie which can fit in some place in the box and puts it there. Everything could be perfect but alas, in the repository the little walrus has infinitely many cookies of size 2 and larger, and there are no cookies of size 1, therefore, empty cells will remain in the box. Fangy wants to know how many empty cells will be left in the end.",
+        "lang": "Ruby",
+        "fix_exec_outcome": "",
+        "insert_cnt": 0,
+        "fix_source_code": "",
+        "prob_desc_notes": "NoteIf the box possesses the base of 23\u2009\u00d7\u200923 (as in the example), then the cookies will be put there in the following manner: ",
+        "file_name": "Ruby.jsonl",
+        "tags": [
+            "math"
+        ],
+        "prob_desc_output_to": "standard output",
+        "prob_desc_created_at": "1301155200",
+        "prob_desc_memory_limit": "256 megabytes",
+        "prob_desc_sample_outputs": [
+            "9"
+        ],
+        "hidden_unit_tests": "[{\"input\": \"3\\r\\n\", \"output\": [\"9\"]}, {\"input\": \"1\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"2\\r\\n\", \"output\": [\"3\"]}, {\"input\": \"4\\r\\n\", \"output\": [\"27\"]}, {\"input\": \"6\\r\\n\", \"output\": [\"243\"]}, {\"input\": \"11\\r\\n\", \"output\": [\"59049\"]}, {\"input\": \"14\\r\\n\", \"output\": [\"594320\"]}, {\"input\": \"15\\r\\n\", \"output\": [\"782957\"]}, {\"input\": \"7\\r\\n\", \"output\": [\"729\"]}, {\"input\": \"0\\r\\n\", \"output\": [\"1\"]}, {\"input\": \"1000\\r\\n\", \"output\": [\"691074\"]}, {\"input\": \"657\\r\\n\", \"output\": [\"874011\"]}, {\"input\": \"561\\r\\n\", \"output\": [\"842553\"]}, {\"input\": \"823\\r\\n\", \"output\": [\"858672\"]}, {\"input\": \"850\\r\\n\", \"output\": [\"557186\"]}, {\"input\": \"298\\r\\n\", \"output\": [\"999535\"]}, {\"input\": \"262\\r\\n\", \"output\": [\"946384\"]}, {\"input\": \"910\\r\\n\", \"output\": [\"678945\"]}, {\"input\": \"617\\r\\n\", \"output\": [\"247876\"]}, {\"input\": \"857\\r\\n\", \"output\": [\"562128\"]}, {\"input\": \"69\\r\\n\", \"output\": [\"327984\"]}, {\"input\": \"589\\r\\n\", \"output\": [\"889192\"]}, {\"input\": \"928\\r\\n\", \"output\": [\"794863\"]}, {\"input\": \"696\\r\\n\", \"output\": [\"695035\"]}, {\"input\": \"226\\r\\n\", \"output\": [\"376094\"]}]"
+    }
+}

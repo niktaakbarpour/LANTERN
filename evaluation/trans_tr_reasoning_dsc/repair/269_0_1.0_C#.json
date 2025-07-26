@@ -1,0 +1,60 @@
+{
+    "oai_response": {
+        "choices": [
+            {
+                "message": {
+                    "role": "assistant",
+                    "content": "```csharp\nusing System;\n\npublic class Program\n{\n    private static int[,] _memo;\n\n    public static void Main()\n    {\n        var n = int.Parse(Console.ReadLine());\n        _memo = new int[n + 1, n + 1];\n        for (int i = 0; i <= n; i++)\n            for (int j = 0; j <= n; j++)\n                _memo[i, j] = -1;\n\n        var min = MinTriangulation(1, n);\n        Console.WriteLine(min);\n    }\n\n    private static int MinTriangulation(int i, int j)\n    {\n        if (j - i < 2)\n            return _memo[i, j] = 0;\n        \n        if _memo[i, j] != -1)\n            return _memo[i, j];\n\n        var min = int.MaxValue;\n        for (int k = i + 1; k <= j - 1; k++)\n        {\n            min = Math.Min(min,\n                MinTriangulation(i, k) + i * k * j + MinTriangulation(k, j));\n        }\n        return _memo[i, j] = min;\n    }\n}\n```"
+                }
+            }
+        ],
+        "prompt": [
+            "Fix a buggy program written in C# language to solve the following programming problem:\nDescription: You are given a regular polygon with $$$n$$$ vertices labeled from $$$1$$$ to $$$n$$$ in counter-clockwise order. The triangulation of a given polygon is a set of triangles such that each vertex of each triangle is a vertex of the initial polygon, there is no pair of triangles such that their intersection has non-zero area, and the total area of all triangles is equal to the area of the given polygon. The weight of a triangulation is the sum of weigths of triangles it consists of, where the weight of a triagle is denoted as the product of labels of its vertices.Calculate the minimum weight among all triangulations of the polygon.\nInput Specification: The first line contains single integer $$$n$$$ ($$$3 \\le n \\le 500$$$) \u2014 the number of vertices in the regular polygon.\nOutput Specification: Print one integer \u2014 the minimum weight among all triangulations of the given polygon.\n\nSample Input:\n3\nSample Output:\n6\n\nSample Input:\n4\nSample Output:\n18\n\nNotes: NoteAccording to Wiki: polygon triangulation is the decomposition of a polygonal area (simple polygon) $$$P$$$ into a set of triangles, i.\u2009e., finding a set of triangles with pairwise non-intersecting interiors whose union is $$$P$$$.In the first example the polygon is a triangle, so we don't need to cut it further, so the answer is $$$1 \\cdot 2 \\cdot 3 = 6$$$.In the second example the polygon is a rectangle, so it should be divided into two triangles. It's optimal to cut it using diagonal $$$1-3$$$ so answer is $$$1 \\cdot 2 \\cdot 3 + 1 \\cdot 3 \\cdot 4 = 6 + 12 = 18$$$.\nTake input from standard input and output to standard output\n\nHere is the code with a bug of TIME_LIMIT_EXCEEDED:\n\nusing System;\n\t\t\t\t\t\npublic class Program\n{\n\tpublic static void Main()\n\t{\n\t\tvar n = int.Parse(Console.ReadLine());\n\t\tvar min = MinTriangulation(1, n);\n\t\tConsole.WriteLine(min);\n\t}\n\t\n\tprivate static int MinTriangulation(int i, int j){\n\t\tif(j-i<2)\n\t\t\treturn 0;\n\t\t\n\t\tvar min = int.MaxValue;\n\t\tfor(int k=i+1; k<=j-1; k++){\n\t\t\tmin = Math.Min(min, MinTriangulation(i,k) + i*k*j + MinTriangulation(k,j));\n\t\t}\n\t\treturn min;\n\t}\n}\n\nProvide the fixed C# code without any description or extra tokens.\n\nFixed source code:",
+            ""
+        ]
+    },
+    "source_data": {
+        "delete_cnt": 0,
+        "fix_code_uid": "",
+        "difficulty": 1200,
+        "replace_cnt": 5,
+        "fix_ops_cnt": 7,
+        "prob_desc_output_spec": "Print one integer \u2014 the minimum weight among all triangulations of the given polygon.",
+        "apr_id": "4e428ecff80a9f714aaf5183a77220e4",
+        "bug_source_code": "using System;\n\t\t\t\t\t\npublic class Program\n{\n\tpublic static void Main()\n\t{\n\t\tvar n = int.Parse(Console.ReadLine());\n\t\tvar min = MinTriangulation(1, n);\n\t\tConsole.WriteLine(min);\n\t}\n\t\n\tprivate static int MinTriangulation(int i, int j){\n\t\tif(j-i<2)\n\t\t\treturn 0;\n\t\t\n\t\tvar min = int.MaxValue;\n\t\tfor(int k=i+1; k<=j-1; k++){\n\t\t\tmin = Math.Min(min, MinTriangulation(i,k) + i*k*j + MinTriangulation(k,j));\n\t\t}\n\t\treturn min;\n\t}\n}",
+        "prob_desc_input_spec": "The first line contains single integer $$$n$$$ ($$$3 \\le n \\le 500$$$) \u2014 the number of vertices in the regular polygon.",
+        "src_uid": "1bd29d7a8793c22e81a1f6fd3991307a",
+        "bug_code_uid": "b95aa387e70c10909604533334b7f79b",
+        "equal_cnt": 8,
+        "prob_desc_time_limit": "2 seconds",
+        "similarity_score": 0.8032786846160889,
+        "bug_exec_outcome": "TIME_LIMIT_EXCEEDED",
+        "lang_cluster": "C#",
+        "potential_dominant_fix_op": "replace",
+        "prob_desc_sample_inputs": [
+            "3",
+            "4"
+        ],
+        "prob_desc_input_from": "standard input",
+        "prob_desc_description": "You are given a regular polygon with $$$n$$$ vertices labeled from $$$1$$$ to $$$n$$$ in counter-clockwise order. The triangulation of a given polygon is a set of triangles such that each vertex of each triangle is a vertex of the initial polygon, there is no pair of triangles such that their intersection has non-zero area, and the total area of all triangles is equal to the area of the given polygon. The weight of a triangulation is the sum of weigths of triangles it consists of, where the weight of a triagle is denoted as the product of labels of its vertices.Calculate the minimum weight among all triangulations of the polygon.",
+        "lang": "Mono C#",
+        "fix_exec_outcome": "",
+        "insert_cnt": 2,
+        "fix_source_code": "",
+        "prob_desc_notes": "NoteAccording to Wiki: polygon triangulation is the decomposition of a polygonal area (simple polygon) $$$P$$$ into a set of triangles, i.\u2009e., finding a set of triangles with pairwise non-intersecting interiors whose union is $$$P$$$.In the first example the polygon is a triangle, so we don't need to cut it further, so the answer is $$$1 \\cdot 2 \\cdot 3 = 6$$$.In the second example the polygon is a rectangle, so it should be divided into two triangles. It's optimal to cut it using diagonal $$$1-3$$$ so answer is $$$1 \\cdot 2 \\cdot 3 + 1 \\cdot 3 \\cdot 4 = 6 + 12 = 18$$$.",
+        "file_name": "C#.jsonl",
+        "tags": [
+            "dp",
+            "math",
+            "greedy"
+        ],
+        "prob_desc_output_to": "standard output",
+        "prob_desc_created_at": "1553267100",
+        "prob_desc_memory_limit": "256 megabytes",
+        "prob_desc_sample_outputs": [
+            "6",
+            "18"
+        ],
+        "hidden_unit_tests": "[{\"input\": \"3\\r\\n\", \"output\": [\"6\"]}, {\"input\": \"4\\r\\n\", \"output\": [\"18\"]}, {\"input\": \"5\\r\\n\", \"output\": [\"38\"]}, {\"input\": \"6\\r\\n\", \"output\": [\"68\"]}, {\"input\": \"7\\r\\n\", \"output\": [\"110\"]}, {\"input\": \"8\\r\\n\", \"output\": [\"166\"]}, {\"input\": \"9\\r\\n\", \"output\": [\"238\"]}, {\"input\": \"10\\r\\n\", \"output\": [\"328\"]}, {\"input\": \"100\\r\\n\", \"output\": [\"333298\"]}, {\"input\": \"101\\r\\n\", \"output\": [\"343398\"]}, {\"input\": \"102\\r\\n\", \"output\": [\"353700\"]}, {\"input\": \"103\\r\\n\", \"output\": [\"364206\"]}, {\"input\": \"104\\r\\n\", \"output\": [\"374918\"]}, {\"input\": \"105\\r\\n\", \"output\": [\"385838\"]}, {\"input\": \"106\\r\\n\", \"output\": [\"396968\"]}, {\"input\": \"107\\r\\n\", \"output\": [\"408310\"]}, {\"input\": \"108\\r\\n\", \"output\": [\"419866\"]}, {\"input\": \"109\\r\\n\", \"output\": [\"431638\"]}, {\"input\": \"110\\r\\n\", \"output\": [\"443628\"]}, {\"input\": \"500\\r\\n\", \"output\": [\"41666498\"]}, {\"input\": \"497\\r\\n\", \"output\": [\"40920990\"]}, {\"input\": \"494\\r\\n\", \"output\": [\"40184428\"]}, {\"input\": \"491\\r\\n\", \"output\": [\"39456758\"]}, {\"input\": \"488\\r\\n\", \"output\": [\"38737926\"]}, {\"input\": \"485\\r\\n\", \"output\": [\"38027878\"]}, {\"input\": \"482\\r\\n\", \"output\": [\"37326560\"]}, {\"input\": \"479\\r\\n\", \"output\": [\"36633918\"]}, {\"input\": \"476\\r\\n\", \"output\": [\"35949898\"]}, {\"input\": \"473\\r\\n\", \"output\": [\"35274446\"]}, {\"input\": \"470\\r\\n\", \"output\": [\"34607508\"]}, {\"input\": \"467\\r\\n\", \"output\": [\"33949030\"]}, {\"input\": \"464\\r\\n\", \"output\": [\"33298958\"]}, {\"input\": \"461\\r\\n\", \"output\": [\"32657238\"]}, {\"input\": \"458\\r\\n\", \"output\": [\"32023816\"]}, {\"input\": \"455\\r\\n\", \"output\": [\"31398638\"]}, {\"input\": \"452\\r\\n\", \"output\": [\"30781650\"]}, {\"input\": \"449\\r\\n\", \"output\": [\"30172798\"]}, {\"input\": \"446\\r\\n\", \"output\": [\"29572028\"]}, {\"input\": \"42\\r\\n\", \"output\": [\"24680\"]}, {\"input\": \"69\\r\\n\", \"output\": [\"109478\"]}, {\"input\": \"228\\r\\n\", \"output\": [\"3950706\"]}, {\"input\": \"233\\r\\n\", \"output\": [\"4216366\"]}, {\"input\": \"420\\r\\n\", \"output\": [\"24695858\"]}, {\"input\": \"368\\r\\n\", \"output\": [\"16611886\"]}, {\"input\": \"225\\r\\n\", \"output\": [\"3796798\"]}, {\"input\": \"11\\r\\n\", \"output\": [\"438\"]}, {\"input\": \"12\\r\\n\", \"output\": [\"570\"]}, {\"input\": \"13\\r\\n\", \"output\": [\"726\"]}, {\"input\": \"14\\r\\n\", \"output\": [\"908\"]}, {\"input\": \"135\\r\\n\", \"output\": [\"820078\"]}, {\"input\": \"199\\r\\n\", \"output\": [\"2626798\"]}, {\"input\": \"137\\r\\n\", \"output\": [\"857070\"]}, {\"input\": \"131\\r\\n\", \"output\": [\"749318\"]}, {\"input\": \"130\\r\\n\", \"output\": [\"732288\"]}, {\"input\": \"139\\r\\n\", \"output\": [\"895158\"]}]"
+    }
+}

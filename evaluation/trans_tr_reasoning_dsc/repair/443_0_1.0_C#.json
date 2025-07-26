@@ -1,0 +1,57 @@
+{
+    "oai_response": {
+        "choices": [
+            {
+                "message": {
+                    "role": "assistant",
+                    "content": "```C#\nusing System;\n\npublic class Solution \n{\n    public static void Main(string[] args)\n    {\n        new Solution().Run();\n    }\n    \n    public void Run()\n    {\n        try\n        {\n            Init();\n            Solve();\n        }\n        catch (Exception e)\n        {\n            Console.WriteLine(e);\n        }\n        \n        Console.ReadLine();\n    }\n    \n    private void Init()\n    {\n        inputBuffer = new string[0];\n        inputBufferIndex = 0;\n    }\n    \n    private string[] inputBuffer;\n    private int inputBufferIndex;\n    \n    private string ReadLine() { return Console.ReadLine(); }\n    \n    private string ReadString()\n    {\n        while (inputBufferIndex == inputBuffer.Length)\n        {\n            inputBuffer = ReadLine().Split(new char[] {' ', '\\t'}, StringSplitOptions.RemoveEmptyEntries);\n            inputBufferIndex = 0;,\n    'N': 48,\n    'O': 49,\n    'P': 50,\n    'Q': 51,\n    'R': 52,\n    'S': 53,\n    'T': 54,\n    'U': 55,\n    'V': 56,\n    'W': 57,\n    'X': 58,\n    'Y': 59,\n    'Z': 60,\n    '[': 61,\n    '\\\\': 62,\n    ']': 63,\n    '^': 64,\n    '_': 65,\n    '`': 66,\n    'a': 97,\n    'b': 98,\n    'c': 99,\n    'd': 100,\n    'e': 101,\n    'f': 102,\n    'g': 103,\n    'h': 104,\n    'i': 105,\n    'j': 106,\n    'k': 107,\n    'l': 108,\n    'm': 109,\n    'n': 110,\n    'o': 111,\n    'p': 112,\n    'q': 113,\n    'r': 114,\n    's': 115,\n    't': 116,\n    'u': 117,\n    'v': 118,\n    'w': 119,\n    'x': 120,\n    'y': 121,\n    'z': 122,\n    '{': 123,\n    '|': 124,\n    '}': 125,\n    '~': 126,\n    '\u00a0': 160,\n    '\u00a1': 161,\n    '\u00a2': 162,\n    '\u00a3': 163,\n    '\u00a4': 164,\n    '\u00a5': 165,\n    '\u00a6': 166,\n    '\u00a7': 167,\n    '\u00a8': 168,\n    '\u00a9': 169,\n    '\u00aa': 170,\n    '\u00ab': 171,\n    '\u00ac': 172,\n    '\u00ad': 173,\n    '\u00ae': 174,\n    '\u00af': 175,\n    '\u00b0': 176,\n    '\u00b1': 177,\n    '\u00b2': 178,\n    '\u00b3': 179,\n    '\u00b4': 180,\n    '\u00b5': 181,\n    '\u00b6': 182,\n    '\u00b7': 183,\n    '\u00b8': 184,\n    '\u00b9': 185,\n    '\u00ba': 186,\n    '\u00bb': 187,\n    '\u00bc': 188,\n    '\u00bd': 189,\n    '\u00be':```"
+                }
+            }
+        ],
+        "prompt": [
+            "Fix a buggy program written in C# language to solve the following programming problem:\nDescription: One hot summer day Pete and his friend Billy decided to buy a watermelon. They chose the biggest and the ripest one, in their opinion. After that the watermelon was weighed, and the scales showed w kilos. They rushed home, dying of thirst, and decided to divide the berry, however they faced a hard problem.Pete and Billy are great fans of even numbers, that's why they want to divide the watermelon in such a way that each of the two parts weighs even number of kilos, at the same time it is not obligatory that the parts are equal. The boys are extremely tired and want to start their meal as soon as possible, that's why you should help them and find out, if they can divide the watermelon in the way they want. For sure, each of them should get a part of positive weight.\nInput Specification: The first (and the only) input line contains integer number w (1\u2009\u2264\u2009w\u2009\u2264\u2009100) \u2014 the weight of the watermelon bought by the boys.\nOutput Specification: Print YES, if the boys can divide the watermelon into two parts, each of them weighing even number of kilos; and NO in the opposite case.\n\nSample Input:\n8\nSample Output:\nYES\n\nNotes: NoteFor example, the boys can divide the watermelon into two parts of 2 and 6 kilos respectively (another variant \u2014 two parts of 4 and 4 kilos).\nTake input from standard input and output to standard output\n\nHere is the code with a bug of COMPILATION_ERROR:\n\nusing System;\n\npublic class Solution \n{\n    public static void Main(string[] args)\n    {\n        new Solution().Run();\n    }\n    \n    public void Run()\n    {\n        try\n        {\n            Init();\n            Solve();\n        }\n        catch (Exception e)\n        {\n            Console.WriteLine(e);\n        }\n        \n        Console.ReadLine();\n    }\n    \n    private void Init()\n    {\n        inputBuffer = new string[0];\n        inputBufferIndex = 0;\n    }\n    \n    private string[] inputBuffer;\n    private int inputBufferIndex;\n    \n    private string ReadLine() { return Console.ReadLine(); }\n    \n    private string ReadString()\n    {\n        while (inputBufferIndex == inputBuffer.Length)\n        {\n            inputBuffer = ReadLine().Split(new char[] {' ', '\\t'}, StringSplitOptions.RemoveEmptyEntries);\n            inputBufferIndex = 0;\n        }\n        \n        return inputBuffer[inputBufferIndex++];\n    }\n    \n    private int ReadInt() { return Int32.Parse(ReadString()); }\n    \n    private long ReadLong() { return Int64.Parse(ReadString()); }\n    \n    private double ReadDouble() { return Double.Parse(ReadString()); }\n    \n    private void Solve()\n    {\n        int weight = ReadInt();\n        \n        bool can = (weight > 2 && weight % 2 == 0);\n        Console.WriteLine(can ? \"YES : \"NO\");\n    }\n}\n\nProvide the fixed C# code without any description or extra tokens.\n\nFixed source code:",
+            ""
+        ]
+    },
+    "source_data": {
+        "delete_cnt": 0,
+        "fix_code_uid": "",
+        "difficulty": 800,
+        "replace_cnt": 0,
+        "fix_ops_cnt": 1,
+        "prob_desc_output_spec": "Print YES, if the boys can divide the watermelon into two parts, each of them weighing even number of kilos; and NO in the opposite case.",
+        "apr_id": "55738613d1b6b9a5b5bcd265c08facdf",
+        "bug_source_code": "using System;\n\npublic class Solution \n{\n    public static void Main(string[] args)\n    {\n        new Solution().Run();\n    }\n    \n    public void Run()\n    {\n        try\n        {\n            Init();\n            Solve();\n        }\n        catch (Exception e)\n        {\n            Console.WriteLine(e);\n        }\n        \n        Console.ReadLine();\n    }\n    \n    private void Init()\n    {\n        inputBuffer = new string[0];\n        inputBufferIndex = 0;\n    }\n    \n    private string[] inputBuffer;\n    private int inputBufferIndex;\n    \n    private string ReadLine() { return Console.ReadLine(); }\n    \n    private string ReadString()\n    {\n        while (inputBufferIndex == inputBuffer.Length)\n        {\n            inputBuffer = ReadLine().Split(new char[] {' ', '\\t'}, StringSplitOptions.RemoveEmptyEntries);\n            inputBufferIndex = 0;\n        }\n        \n        return inputBuffer[inputBufferIndex++];\n    }\n    \n    private int ReadInt() { return Int32.Parse(ReadString()); }\n    \n    private long ReadLong() { return Int64.Parse(ReadString()); }\n    \n    private double ReadDouble() { return Double.Parse(ReadString()); }\n    \n    private void Solve()\n    {\n        int weight = ReadInt();\n        \n        bool can = (weight > 2 && weight % 2 == 0);\n        Console.WriteLine(can ? \"YES : \"NO\");\n    }\n}",
+        "prob_desc_input_spec": "The first (and the only) input line contains integer number w (1\u2009\u2264\u2009w\u2009\u2264\u2009100) \u2014 the weight of the watermelon bought by the boys.",
+        "src_uid": "230a3c4d7090401e5fa3c6b9d994cdf2",
+        "bug_code_uid": "6f101484b15debde1c16f7ce56966676",
+        "equal_cnt": 2,
+        "prob_desc_time_limit": "1 second",
+        "similarity_score": 0.9996222257614136,
+        "bug_exec_outcome": "COMPILATION_ERROR",
+        "lang_cluster": "C#",
+        "potential_dominant_fix_op": "insert",
+        "prob_desc_sample_inputs": [
+            "8"
+        ],
+        "prob_desc_input_from": "standard input",
+        "prob_desc_description": "One hot summer day Pete and his friend Billy decided to buy a watermelon. They chose the biggest and the ripest one, in their opinion. After that the watermelon was weighed, and the scales showed w kilos. They rushed home, dying of thirst, and decided to divide the berry, however they faced a hard problem.Pete and Billy are great fans of even numbers, that's why they want to divide the watermelon in such a way that each of the two parts weighs even number of kilos, at the same time it is not obligatory that the parts are equal. The boys are extremely tired and want to start their meal as soon as possible, that's why you should help them and find out, if they can divide the watermelon in the way they want. For sure, each of them should get a part of positive weight.",
+        "lang": "MS C#",
+        "fix_exec_outcome": "",
+        "insert_cnt": 1,
+        "fix_source_code": "",
+        "prob_desc_notes": "NoteFor example, the boys can divide the watermelon into two parts of 2 and 6 kilos respectively (another variant \u2014 two parts of 4 and 4 kilos).",
+        "file_name": "C#.jsonl",
+        "tags": [
+            "math",
+            "brute force"
+        ],
+        "prob_desc_output_to": "standard output",
+        "prob_desc_created_at": "1268395200",
+        "prob_desc_memory_limit": "64 megabytes",
+        "prob_desc_sample_outputs": [
+            "YES"
+        ],
+        "hidden_unit_tests": "[{\"input\": \"8\\r\\n\", \"output\": [\"YES\", \"Yes\", \"yes\"]}, {\"input\": \"5\\r\\n\", \"output\": [\"No\", \"NO\", \"no\"]}, {\"input\": \"4\\r\\n\", \"output\": [\"YES\", \"Yes\", \"yes\"]}, {\"input\": \"3\\r\\n\", \"output\": [\"No\", \"NO\", \"no\"]}, {\"input\": \"2\\r\\n\", \"output\": [\"No\", \"NO\", \"no\"]}, {\"input\": \"1\\r\\n\", \"output\": [\"No\", \"NO\", \"no\"]}, {\"input\": \"7\\r\\n\", \"output\": [\"No\", \"NO\", \"no\"]}, {\"input\": \"6\\r\\n\", \"output\": [\"YES\", \"Yes\", \"yes\"]}, {\"input\": \"10\\r\\n\", \"output\": [\"YES\", \"Yes\", \"yes\"]}, {\"input\": \"9\\r\\n\", \"output\": [\"No\", \"NO\", \"no\"]}, {\"input\": \"53\\r\\n\", \"output\": [\"No\", \"NO\", \"no\"]}, {\"input\": \"77\\r\\n\", \"output\": [\"No\", \"NO\", \"no\"]}, {\"input\": \"32\\r\\n\", \"output\": [\"YES\", \"Yes\", \"yes\"]}, {\"input\": \"44\\r\\n\", \"output\": [\"YES\", \"Yes\", \"yes\"]}, {\"input\": \"98\\r\\n\", \"output\": [\"YES\", \"Yes\", \"yes\"]}, {\"input\": \"99\\r\\n\", \"output\": [\"No\", \"NO\", \"no\"]}, {\"input\": \"90\\r\\n\", \"output\": [\"YES\", \"Yes\", \"yes\"]}, {\"input\": \"67\\r\\n\", \"output\": [\"No\", \"NO\", \"no\"]}, {\"input\": \"100\\r\\n\", \"output\": [\"YES\", \"Yes\", \"yes\"]}, {\"input\": \"88\\r\\n\", \"output\": [\"YES\", \"Yes\", \"yes\"]}]"
+    }
+}
